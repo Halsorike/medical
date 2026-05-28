@@ -4,9 +4,11 @@ import { Bell, Search, ChevronDown, Menu, LogOut } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { useAdminLocale } from "@/components/admin/admin-locale-provider";
 
 export function AdminTopbar({ onMenuClick }: { onMenuClick?: () => void }) {
   const router = useRouter();
+  const { labels, toggleLocale } = useAdminLocale();
   const name = "Medical Admin";
   const email = "Environment configured";
   const initials = name
@@ -30,6 +32,13 @@ export function AdminTopbar({ onMenuClick }: { onMenuClick?: () => void }) {
         <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
         <Input placeholder="Search…" className="pl-9" />
       </div>
+
+      <button
+        onClick={toggleLocale}
+        className="rounded-full border border-brand-200 px-3 py-1.5 text-sm font-medium text-brand-700 transition hover:bg-brand-50"
+      >
+        {labels.common.language}
+      </button>
 
       <button
         className="relative rounded-full p-2 hover:bg-muted"

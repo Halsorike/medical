@@ -9,6 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Plus, Mail } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useAdminLocale } from "@/components/admin/admin-locale-provider";
 
 type ApiContactMessage = {
   id: string;
@@ -26,6 +27,7 @@ type ApiContactMessage = {
 };
 
 export default function MailPage() {
+  const { labels } = useAdminLocale();
   const [inbox, setInbox] = useState<ApiContactMessage[]>([]);
   const [selected, setSelected] = useState<ApiContactMessage | null>(null);
   const sent: ApiContactMessage[] = [];
@@ -49,9 +51,9 @@ export default function MailPage() {
   }, []);
   return (
     <>
-      <PageHeader title="Mail" description="Patient and team messages" action={<Button variant="gradient"><Plus className="mr-1 h-4 w-4" />New email</Button>} />
+      <PageHeader title={labels.mail.title} description={labels.mail.description} action={<Button variant="gradient"><Plus className="mr-1 h-4 w-4" />{labels.mail.newEmail}</Button>} />
       <Tabs defaultValue="inbox">
-        <TabsList><TabsTrigger value="inbox">Inbox</TabsTrigger><TabsTrigger value="sent">Sent</TabsTrigger><TabsTrigger value="new">New email</TabsTrigger></TabsList>
+        <TabsList><TabsTrigger value="inbox">{labels.mail.inbox}</TabsTrigger><TabsTrigger value="sent">{labels.mail.sent}</TabsTrigger><TabsTrigger value="new">{labels.mail.newEmail}</TabsTrigger></TabsList>
         <TabsContent value="inbox">
           <div className="grid gap-4 lg:grid-cols-[360px_1fr]">
             <div className="rounded-lg border bg-white">
@@ -75,7 +77,7 @@ export default function MailPage() {
                   <div className="mt-4 whitespace-pre-wrap text-sm leading-relaxed text-muted-foreground">{selected.message}</div>
                 </>
               ) : (
-                <p className="grid place-items-center text-sm text-muted-foreground"><Mail className="h-6 w-6" /> Select a message</p>
+                <p className="grid place-items-center text-sm text-muted-foreground"><Mail className="h-6 w-6" /> {labels.mail.selectMessage}</p>
               )}
             </div>
           </div>
@@ -93,7 +95,7 @@ export default function MailPage() {
             <div><Label>CC</Label><Input /></div>
             <div><Label>Subject</Label><Input required /></div>
             <div><Label>Body</Label><Textarea rows={8} required /></div>
-            <div className="flex justify-end gap-2"><Button type="button" variant="outline">Save draft</Button><Button type="submit" variant="gradient">Send</Button></div>
+            <div className="flex justify-end gap-2"><Button type="button" variant="outline">{labels.common.save}</Button><Button type="submit" variant="gradient">{labels.common.save}</Button></div>
           </form>
         </TabsContent>
       </Tabs>

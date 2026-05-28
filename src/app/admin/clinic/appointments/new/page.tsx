@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
+import { useAdminLocale } from "@/components/admin/admin-locale-provider";
 
 type ApiPatient = { id: string; name: string; email: string; phone?: string | null };
 type ApiDoctor = { id: string; name: string };
@@ -15,6 +16,7 @@ type ApiService = { id: string; name: string; departmentId: string };
 
 export default function NewAppointment() {
   const router = useRouter();
+  const { labels } = useAdminLocale();
   const [patients, setPatients] = useState<ApiPatient[]>([]);
   const [doctors, setDoctors] = useState<ApiDoctor[]>([]);
   const [services, setServices] = useState<ApiService[]>([]);
@@ -70,27 +72,27 @@ export default function NewAppointment() {
 
   return (
     <>
-      <PageHeader title="New appointment" description="Book a session for a patient" />
+      <PageHeader title={labels.appointments.newAppointment} description={labels.appointments.description} />
       <form
         onSubmit={handleSubmit}
         className="grid gap-4 rounded-lg border bg-white p-6 md:grid-cols-2"
       >
-        <div><Label>Patient name EN *</Label>
+        <div><Label>{labels.appointments.patient} *</Label>
           <Select value={patientId} onValueChange={setPatientId}><SelectTrigger><SelectValue placeholder="Select patient" /></SelectTrigger>
             <SelectContent>{patients.slice(0, 12).map((p) => <SelectItem key={p.id} value={p.id}>{p.name}</SelectItem>)}</SelectContent>
           </Select>
         </div>
         <div><Label>Patient name AR *</Label><Input dir="rtl" /></div>
-        <div><Label>Email *</Label><Input name="email" type="email" required /></div>
-        <div><Label>Phone *</Label><Input name="phone" required /></div>
-        <div><Label>Date *</Label><Input name="date" type="date" required /></div>
-        <div><Label>Time *</Label><Input name="time" type="time" required /></div>
-        <div><Label>Service *</Label>
+        <div><Label>{labels.patients.email} *</Label><Input name="email" type="email" required /></div>
+        <div><Label>{labels.patients.phone} *</Label><Input name="phone" required /></div>
+        <div><Label>{labels.appointments.date} *</Label><Input name="date" type="date" required /></div>
+        <div><Label>{labels.appointments.time} *</Label><Input name="time" type="time" required /></div>
+        <div><Label>{labels.appointments.service} *</Label>
           <Select value={serviceId} onValueChange={setServiceId}><SelectTrigger><SelectValue placeholder="Select" /></SelectTrigger>
             <SelectContent>{services.map((s) => <SelectItem key={s.id} value={s.id}>{s.name}</SelectItem>)}</SelectContent>
           </Select>
         </div>
-        <div><Label>Employee *</Label>
+        <div><Label>{labels.appointments.employee} *</Label>
           <Select value={doctorId} onValueChange={setDoctorId}><SelectTrigger><SelectValue placeholder="Select" /></SelectTrigger>
             <SelectContent>{doctors.slice(0, 12).map((e) => <SelectItem key={e.id} value={e.id}>{e.name}</SelectItem>)}</SelectContent>
           </Select>
@@ -103,8 +105,8 @@ export default function NewAppointment() {
         <div><Label>Period of session</Label><Input placeholder="e.g. 30 min" /></div>
         <div className="md:col-span-2"><Label>Notes</Label><Textarea rows={3} /></div>
         <div className="md:col-span-2 flex justify-end gap-2">
-          <Button type="button" variant="outline" onClick={() => router.back()}>Cancel</Button>
-          <Button type="submit" variant="gradient">Send invitation</Button>
+          <Button type="button" variant="outline" onClick={() => router.back()}>{labels.common.cancel}</Button>
+          <Button type="submit" variant="gradient">{labels.common.save}</Button>
         </div>
       </form>
     </>

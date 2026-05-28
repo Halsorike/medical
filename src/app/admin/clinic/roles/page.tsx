@@ -5,6 +5,7 @@ import { PageHeader } from "@/components/admin/page-header";
 import { DataTable, Pagination } from "@/components/admin/data-table";
 import { Button } from "@/components/ui/button";
 import { Plus, Pencil, Trash2 } from "lucide-react";
+import { useAdminLocale } from "@/components/admin/admin-locale-provider";
 
 type ApiRole = {
   id: string;
@@ -22,6 +23,7 @@ function permissionCount(permissions: string) {
 }
 
 export default function RolesPage() {
+  const { labels } = useAdminLocale();
   const [roles, setRoles] = useState<ApiRole[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -34,7 +36,7 @@ export default function RolesPage() {
   }, []);
 
   async function deleteRole(id: string) {
-    if (!window.confirm("Are you sure you want to delete this role?")) return;
+    if (!window.confirm(labels.common.confirmDelete)) return;
 
     const response = await fetch(`/api/roles/${id}`, { method: "DELETE" });
 
@@ -49,17 +51,17 @@ export default function RolesPage() {
 
   return (
     <>
-      <PageHeader title="Roles & permission groups" description="Define what each staff role can access" action={<Button variant="gradient"><Plus className="mr-1 h-4 w-4" />New role</Button>} />
+      <PageHeader title={labels.roles.title} description={labels.roles.description} action={<Button variant="gradient"><Plus className="mr-1 h-4 w-4" />{labels.roles.newRole}</Button>} />
       <DataTable
         rows={roles}
-        empty={loading ? "Loading roles..." : "No roles."}
+        empty={loading ? labels.common.loading : labels.common.noData}
         rowKey={(r) => r.id}
         columns={[
-          { header: "ID", accessor: (r) => r.id },
-          { header: "Role", accessor: (r) => r.name },
-          { header: "Members", accessor: () => "-" },
-          { header: "Permissions", accessor: (r) => permissionCount(r.permissions) },
-          { header: "Action", accessor: (r) => (
+          { header: labels.common.id, accessor: (r) => r.id },
+          { header: labels.roles.title, accessor: (r) => r.name },
+          { header: labels.roles.members, accessor: () => "-" },
+          { header: labels.roles.permissions, accessor: (r) => permissionCount(r.permissions) },
+          { header: labels.common.actions, accessor: (r) => (
             <div className="flex gap-2 text-muted-foreground">
               <button className="hover:text-primary" aria-label="Edit"><Pencil className="h-4 w-4" /></button>
               <button className="hover:text-red-600" aria-label="Delete" onClick={() => void deleteRole(r.id)}><Trash2 className="h-4 w-4" /></button>

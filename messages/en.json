@@ -201,5 +201,120 @@
     "orderSummary": "Order Summary",
     "placeOrder": "Place Order",
     "success": "Your order is confirmed!"
+  },
+  "admin": {
+    "dashboard": {
+      "title": "Clinic Dashboard",
+      "totalPatients": "Total Patients",
+      "totalDoctors": "Total Doctors",
+      "totalAppointments": "Total Appointments",
+      "totalDepartments": "Total Departments",
+      "recentPatients": "Recent Patients",
+      "recentAppointments": "Recent Appointments"
+    },
+    "patients": {
+      "title": "Patients",
+      "description": "All registered patients",
+      "newPatient": "New Patient",
+      "search": "Search patients...",
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone",
+      "gender": "Gender",
+      "actions": "Actions"
+    },
+    "team": {
+      "title": "Team",
+      "description": "Manage clinic team",
+      "newMember": "New Member",
+      "name": "Name",
+      "specialization": "Specialization",
+      "department": "Department",
+      "status": "Status"
+    },
+    "departments": {
+      "title": "Departments",
+      "description": "Manage clinic departments",
+      "newDepartment": "New Department",
+      "name": "Name",
+      "doctors": "Doctors",
+      "services": "Services"
+    },
+    "services": {
+      "title": "Services",
+      "description": "Manage clinic services",
+      "name": "Name",
+      "department": "Department",
+      "price": "Price",
+      "duration": "Duration"
+    },
+    "appointments": {
+      "title": "Appointments",
+      "description": "Manage appointments",
+      "newAppointment": "New Appointment",
+      "patient": "Patient",
+      "date": "Date",
+      "time": "Time",
+      "status": "Status",
+      "pending": "Pending",
+      "upcoming": "Upcoming",
+      "done": "Done",
+      "cancelled": "Cancelled"
+    },
+    "schedule": {
+      "title": "Schedule",
+      "description": "Doctors work schedules"
+    },
+    "holidays": {
+      "title": "Holidays & Leaves",
+      "description": "Manage holidays",
+      "newHoliday": "New Holiday"
+    },
+    "contact": {
+      "title": "Contact Messages",
+      "description": "Inbound messages",
+      "new": "New",
+      "read": "Read",
+      "replied": "Replied"
+    },
+    "evaluations": {
+      "title": "Evaluations",
+      "description": "Evaluation results"
+    },
+    "blog": {
+      "title": "Blog",
+      "description": "Manage articles"
+    },
+    "blogCategories": {
+      "title": "Blog Categories",
+      "description": "Manage categories"
+    },
+    "roles": {
+      "title": "Roles & Permissions",
+      "description": "Manage roles"
+    },
+    "accounting": {
+      "title": "Accounting",
+      "description": "Incomes and expenses"
+    },
+    "mail": {
+      "title": "Mail",
+      "description": "Inbox"
+    },
+    "common": {
+      "save": "Save",
+      "cancel": "Cancel",
+      "delete": "Delete",
+      "edit": "Edit",
+      "view": "View",
+      "add": "Add",
+      "search": "Search",
+      "noData": "No data",
+      "loading": "Loading...",
+      "confirmDelete": "Are you sure you want to delete this item?",
+      "savedSuccess": "Saved successfully",
+      "deletedSuccess": "Deleted successfully",
+      "errorOccurred": "Something went wrong"
+    }
   }
 }

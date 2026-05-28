@@ -8,6 +8,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Plus, Eye, Pencil, Trash2, Search, Filter } from "lucide-react";
+import { useAdminLocale } from "@/components/admin/admin-locale-provider";
 
 type ApiEvaluation = {
   id: string;
@@ -20,6 +21,7 @@ type ApiEvaluation = {
 type EvaluationDef = { id: string; name: string; submissions: number };
 
 export default function EvaluationsPage() {
+  const { labels } = useAdminLocale();
   const [q, setQ] = useState("");
   const [evaluationSubmissions, setEvaluationSubmissions] = useState<ApiEvaluation[]>([]);
   const [loading, setLoading] = useState(true);
@@ -93,12 +95,12 @@ export default function EvaluationsPage() {
   return (
     <>
       <PageHeader
-        title="Evaluations"
-        description="Tests, scoring forms and patient submissions"
+        title={labels.evaluations.title}
+        description={labels.evaluations.description}
         action={
           <Button variant="gradient">
             <Plus className="mr-1 h-4 w-4" />
-            New Evaluation
+            {labels.common.add}
           </Button>
         }
       />
@@ -129,15 +131,15 @@ export default function EvaluationsPage() {
         <TabsContent value="submissions">
           <DataTable
             rows={evaluationSubmissions}
-            empty={loading ? "Loading submissions..." : "No submissions."}
+            empty={loading ? labels.common.loading : labels.common.noData}
             rowKey={(r) => r.id}
             columns={[
-              { header: "Submissions ID", accessor: (r) => r.id },
-              { header: "Evaluation", accessor: () => "Hearing Evaluation" },
-              { header: "Email", accessor: (r) => r.email },
-              { header: "Score", accessor: (r) => r.score },
-              { header: "Results", accessor: (r) => (r.score >= 70 ? "Good" : "Needs Attention") },
-              { header: "Date", accessor: (r) => new Date(r.createdAt).toLocaleDateString() },
+              { header: labels.common.id, accessor: (r) => r.id },
+              { header: labels.evaluations.title, accessor: () => "Hearing Evaluation" },
+              { header: labels.patients.email, accessor: (r) => r.email },
+              { header: labels.evaluations.score, accessor: (r) => r.score },
+              { header: labels.evaluations.results, accessor: (r) => (r.score >= 70 ? "Good" : "Needs Attention") },
+              { header: labels.appointments.date, accessor: (r) => new Date(r.createdAt).toLocaleDateString() },
             ]}
           />
           <Pagination total={evaluationSubmissions.length} />

@@ -6,6 +6,7 @@ import { DataTable, Pagination } from "@/components/admin/data-table";
 import { StatusBadge } from "@/components/admin/status-badge";
 import { Button } from "@/components/ui/button";
 import { Plus, Check, X, Pencil } from "lucide-react";
+import { useAdminLocale } from "@/components/admin/admin-locale-provider";
 
 type ApiBlogPost = {
   id: string;
@@ -15,6 +16,7 @@ type ApiBlogPost = {
 };
 
 export default function BlogPage() {
+  const { labels } = useAdminLocale();
   const [blogs, setBlogs] = useState<ApiBlogPost[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -28,18 +30,18 @@ export default function BlogPage() {
 
   return (
     <>
-      <PageHeader title="Blog" description="Articles published on the clinic site" action={<Button variant="gradient"><Plus className="mr-1 h-4 w-4" />New blog</Button>} />
+      <PageHeader title={labels.blog.title} description={labels.blog.description} action={<Button variant="gradient"><Plus className="mr-1 h-4 w-4" />{labels.blog.newBlog}</Button>} />
       <DataTable
         rows={blogs}
-        empty={loading ? "Loading blog posts..." : "No blog posts."}
+        empty={loading ? labels.common.loading : labels.common.noData}
         rowKey={(r) => r.id}
         columns={[
-          { header: "ID", accessor: (r) => r.id },
-          { header: "Blog title", accessor: (r) => r.title },
-          { header: "Creator", accessor: () => "Admin" },
-          { header: "Category", accessor: (r) => r.category },
-          { header: "Status", accessor: () => <StatusBadge value="approved" /> },
-          { header: "Quick action", accessor: () => (
+          { header: labels.common.id, accessor: (r) => r.id },
+          { header: labels.blog.title, accessor: (r) => r.title },
+          { header: labels.blog.creator, accessor: () => "Admin" },
+          { header: labels.blog.category, accessor: (r) => r.category },
+          { header: labels.appointments.status, accessor: () => <StatusBadge value="approved" /> },
+          { header: labels.common.actions, accessor: () => (
             <div className="flex gap-2 text-muted-foreground">
               <button className="hover:text-green-600" aria-label="Approve"><Check className="h-4 w-4" /></button>
               <button className="hover:text-red-600" aria-label="Decline"><X className="h-4 w-4" /></button>

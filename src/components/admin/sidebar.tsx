@@ -6,6 +6,8 @@ import type { KeyboardEvent } from "react";
 import { adminSidebarNav, type AdminNavGroup, type AdminNavItem } from "@/data/admin-nav";
 import * as Icons from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useAdminLocale } from "@/components/admin/admin-locale-provider";
+import type { AdminLabels } from "@/lib/admin-labels";
 
 function getIcon(icon: string) {
   return (Icons as any)[icon] ?? Icons.Circle;
@@ -49,17 +51,25 @@ function writeStoredOpen(key: string, value: boolean) {
   document.cookie = `${encodeURIComponent(key)}=${value}; path=/; SameSite=Lax`;
 }
 
+function translatedNavLabel(href: string, fallback: string, labels: AdminLabels) {
+  if (href === "/admin") return labels.nav.dashboard;
+  if (href === "/admin/website-setup") return labels.nav.websiteSetup;
+  return fallback;
+}
+
 function NavLink({ item, pathname, siblings = [] }: { item: AdminNavItem; pathname: string | null; siblings?: AdminNavItem[] }) {
+  const { labels } = useAdminLocale();
   const Icon = getIcon(item.icon);
   const active = isItemActive(item, pathname, siblings);
   return (
     <Link href={item.href} className={cn("flex items-center gap-2 rounded-md px-3 py-2 transition", active ? "bg-brand-gradient text-white" : "text-foreground hover:bg-muted")}>
-      <Icon className="h-4 w-4" /><span className="truncate">{item.label}</span>
+      <Icon className="h-4 w-4" /><span className="truncate">{translatedNavLabel(item.href, item.label, labels)}</span>
     </Link>
   );
 }
 
 function NavGroup({ group, pathname }: { group: AdminNavGroup; pathname: string | null }) {
+  const { labels } = useAdminLocale();
   const headingId = useId();
   const panelId = useId();
   const storageKey = `admin-sidebar:${group.id}`;
@@ -111,7 +121,7 @@ function NavGroup({ group, pathname }: { group: AdminNavGroup; pathname: string 
         )}
       >
         <Icon className="h-4 w-4" />
-        <span className="min-w-0 flex-1 truncate font-medium">{group.label}</span>
+        <span className="min-w-0 flex-1 truncate font-medium">{group.id === "clinic" ? labels.nav.clinic : group.id === "ecommerce" ? labels.nav.ecommerce : group.label}</span>
         <Icons.ChevronDown className={cn("h-4 w-4 transition-transform", open ? "rotate-180" : "")} />
       </div>
       <div id={panelId} role="region" aria-labelledby={headingId} className={cn("space-y-1 pl-2", open ? "block" : "hidden")}>
@@ -123,10 +133,11 @@ function NavGroup({ group, pathname }: { group: AdminNavGroup; pathname: string 
 
 export function AdminSidebar() {
   const pathname = usePathname();
+  const { labels } = useAdminLocale();
   return (
     <aside className="hidden w-64 shrink-0 overflow-y-auto border-r bg-white md:block">
       <div className="border-b p-4">
-        <Link href="/admin" className="text-xl font-bold"><span className="bg-brand-gradient bg-clip-text text-transparent">Medical</span><span className="ml-1 text-xs text-muted-foreground">Admin</span></Link>
+        <Link href="/admin" className="text-xl font-bold"><span className="bg-brand-gradient bg-clip-text text-transparent">Medical</span><span className="ms-1 text-xs text-muted-foreground">{labels.common.admin}</span></Link>
       </div>
       <nav className="space-y-1 p-3 text-sm">
         {adminSidebarNav.map((entry) => (
@@ -141,6 +152,7 @@ export function AdminSidebar() {
 
 export function MobileAdminSidebar({ open, onClose }: { open: boolean; onClose: () => void }) {
   const pathname = usePathname();
+  const { labels } = useAdminLocale();
 
   useEffect(() => {
     if (open) onClose();
@@ -173,7 +185,7 @@ export function MobileAdminSidebar({ open, onClose }: { open: boolean; onClose: 
         <div className="flex items-center justify-between border-b p-4">
           <Link href="/admin" className="text-xl font-bold">
             <span className="bg-brand-gradient bg-clip-text text-transparent">Medical</span>
-            <span className="ml-1 text-xs text-muted-foreground">Admin</span>
+            <span className="ms-1 text-xs text-muted-foreground">{labels.common.admin}</span>
           </Link>
           <button onClick={onClose} className="rounded-md p-1 hover:bg-muted" aria-label="Close menu">
             <Icons.X className="h-5 w-5" />

@@ -5,6 +5,7 @@ import { PageHeader } from "@/components/admin/page-header";
 import { DataTable, Pagination } from "@/components/admin/data-table";
 import { Button } from "@/components/ui/button";
 import { Plus, Pencil, Trash2 } from "lucide-react";
+import { useAdminLocale } from "@/components/admin/admin-locale-provider";
 
 type ApiBlogCategory = {
   id: string;
@@ -13,6 +14,7 @@ type ApiBlogCategory = {
 };
 
 export default function BlogCategoriesPage() {
+  const { labels } = useAdminLocale();
   const [blogCategories, setBlogCategories] = useState<ApiBlogCategory[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -25,7 +27,7 @@ export default function BlogCategoriesPage() {
   }, []);
 
   async function deleteCategory(id: string) {
-    if (!window.confirm("Are you sure you want to delete this category?")) return;
+    if (!window.confirm(labels.common.confirmDelete)) return;
 
     const response = await fetch(`/api/blog-categories/${id}`, { method: "DELETE" });
 
@@ -40,16 +42,16 @@ export default function BlogCategoriesPage() {
 
   return (
     <>
-      <PageHeader title="Blog categories" description="Group blog posts under categories" action={<Button variant="gradient"><Plus className="mr-1 h-4 w-4" />New category</Button>} />
+      <PageHeader title={labels.blogCategories.title} description={labels.blogCategories.description} action={<Button variant="gradient"><Plus className="mr-1 h-4 w-4" />{labels.blogCategories.newCategory}</Button>} />
       <DataTable
         rows={blogCategories}
-        empty={loading ? "Loading blog categories..." : "No blog categories."}
+        empty={loading ? labels.common.loading : labels.common.noData}
         rowKey={(r) => r.id}
         columns={[
-          { header: "ID", accessor: (r) => r.id },
-          { header: "Category name", accessor: (r) => r.name },
-          { header: "# of blogs", accessor: (r) => r._count?.posts ?? 0 },
-          { header: "Action", accessor: (r) => (
+          { header: labels.common.id, accessor: (r) => r.id },
+          { header: labels.blogCategories.title, accessor: (r) => r.name },
+          { header: labels.blogCategories.blogsCount, accessor: (r) => r._count?.posts ?? 0 },
+          { header: labels.common.actions, accessor: (r) => (
             <div className="flex gap-2 text-muted-foreground">
               <button className="hover:text-primary" aria-label="Edit"><Pencil className="h-4 w-4" /></button>
               <button className="hover:text-red-600" aria-label="Delete" onClick={() => void deleteCategory(r.id)}><Trash2 className="h-4 w-4" /></button>

@@ -6,6 +6,7 @@ import { DataTable, Pagination } from "@/components/admin/data-table";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { formatCurrency } from "@/lib/utils";
+import { useAdminLocale } from "@/components/admin/admin-locale-provider";
 
 type ApiService = {
   id: string;
@@ -16,6 +17,7 @@ type ApiService = {
 };
 
 export default function ServicesPage() {
+  const { labels } = useAdminLocale();
   const [services, setServices] = useState<ApiService[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -29,17 +31,17 @@ export default function ServicesPage() {
 
   return (
     <>
-      <PageHeader title="Services" description="All medical services offered by departments" action={<Button variant="gradient"><Plus className="mr-1 h-4 w-4" />New service</Button>} />
+      <PageHeader title={labels.services.title} description={labels.services.description} action={<Button variant="gradient"><Plus className="mr-1 h-4 w-4" />{labels.common.add}</Button>} />
       <DataTable
         rows={services}
-        empty={loading ? "Loading services..." : "No services."}
+        empty={loading ? labels.common.loading : labels.common.noData}
         rowKey={(r) => r.id}
         columns={[
-          { header: "ID", accessor: (r) => r.id },
-          { header: "Service", accessor: (r) => r.name },
-          { header: "Department", accessor: (r) => r.department?.name ?? "-" },
-          { header: "Duration", accessor: (r) => (r.duration ? `${r.duration} min` : "-") },
-          { header: "Price", accessor: (r) => formatCurrency(r.price ?? 0) },
+          { header: labels.common.id, accessor: (r) => r.id },
+          { header: labels.services.name, accessor: (r) => r.name },
+          { header: labels.services.department, accessor: (r) => r.department?.name ?? "-" },
+          { header: labels.services.duration, accessor: (r) => (r.duration ? `${r.duration} min` : "-") },
+          { header: labels.services.price, accessor: (r) => formatCurrency(r.price ?? 0) },
         ]}
       />
       <Pagination total={services.length} />

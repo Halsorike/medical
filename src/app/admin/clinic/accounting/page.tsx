@@ -5,6 +5,7 @@ import { PageHeader } from "@/components/admin/page-header";
 import { DataTable, Pagination } from "@/components/admin/data-table";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { formatCurrency } from "@/lib/utils";
+import { useAdminLocale } from "@/components/admin/admin-locale-provider";
 
 type ApiOrder = {
   id: string;
@@ -20,6 +21,7 @@ type ExpenseRecord = { id: string; invoice: string; date: string; description: s
 const expenseRecords: ExpenseRecord[] = [];
 
 export default function AccountingPage() {
+  const { labels } = useAdminLocale();
   const [incomeRecords, setIncomeRecords] = useState<ApiOrder[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -33,22 +35,22 @@ export default function AccountingPage() {
 
   return (
     <>
-      <PageHeader title="Accounting" description="Incomes, expenses and invoices" />
+      <PageHeader title={labels.accounting.title} description={labels.accounting.description} />
       <Tabs defaultValue="incomes">
-        <TabsList><TabsTrigger value="incomes">Incomes</TabsTrigger><TabsTrigger value="expenses">Expenses</TabsTrigger></TabsList>
+        <TabsList><TabsTrigger value="incomes">{labels.accounting.incomes}</TabsTrigger><TabsTrigger value="expenses">{labels.accounting.expenses}</TabsTrigger></TabsList>
         <TabsContent value="incomes">
           <DataTable
             rows={incomeRecords}
-            empty={loading ? "Loading income records..." : "No income records."}
+            empty={loading ? labels.common.loading : labels.common.noData}
             rowKey={(r) => r.id}
             columns={[
-              { header: "Invoice ID", accessor: (r) => r.code },
-              { header: "Patient name", accessor: (r) => r.customer },
-              { header: "Date & time", accessor: (r) => new Date(r.date).toLocaleDateString() },
-              { header: "Description", accessor: (r) => r.status },
-              { header: "Employee", accessor: () => "-" },
-              { header: "Service", accessor: () => "Order" },
-              { header: "Amount", accessor: (r) => formatCurrency(r.total) },
+              { header: labels.accounting.invoiceId, accessor: (r) => r.code },
+              { header: labels.appointments.patient, accessor: (r) => r.customer },
+              { header: labels.appointments.date, accessor: (r) => new Date(r.date).toLocaleDateString() },
+              { header: labels.departments.descriptionLabel, accessor: (r) => r.status },
+              { header: labels.appointments.employee, accessor: () => "-" },
+              { header: labels.appointments.service, accessor: () => "Order" },
+              { header: labels.accounting.amount, accessor: (r) => formatCurrency(r.total) },
             ]}
           />
           <Pagination total={incomeRecords.length} />

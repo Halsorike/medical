@@ -8,6 +8,7 @@ import { StatusBadge } from "@/components/admin/status-badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Plus, Pencil, Trash2 } from "lucide-react";
+import { useAdminLocale } from "@/components/admin/admin-locale-provider";
 
 type ApiDoctor = {
   id: string;
@@ -21,6 +22,7 @@ type ApiDoctor = {
 };
 
 export default function TeamPage() {
+  const { labels } = useAdminLocale();
   const [q, setQ] = useState("");
   const [rows, setRows] = useState<ApiDoctor[]>([]);
   const [loading, setLoading] = useState(true);
@@ -37,7 +39,7 @@ export default function TeamPage() {
   }, [q]);
 
   async function deleteDoctor(id: string) {
-    if (!window.confirm("Are you sure you want to delete this doctor?")) return;
+    if (!window.confirm(labels.common.confirmDelete)) return;
 
     const response = await fetch(`/api/doctors/${id}`, { method: "DELETE" });
 
@@ -52,29 +54,29 @@ export default function TeamPage() {
   return (
     <>
       <PageHeader
-        title="Team"
-        description="Doctors, nurses and other staff"
+        title={labels.team.title}
+        description={labels.team.description}
         action={
           <div className="flex gap-2">
-            <Link href="/admin/clinic/roles"><Button variant="outline">Permission groups</Button></Link>
-            <Link href="/admin/clinic/team/new"><Button variant="gradient"><Plus className="mr-1 h-4 w-4" /> New employee</Button></Link>
+            <Link href="/admin/clinic/roles"><Button variant="outline">{labels.team.permissionGroups}</Button></Link>
+            <Link href="/admin/clinic/team/new"><Button variant="gradient"><Plus className="mr-1 h-4 w-4" /> {labels.team.newMember}</Button></Link>
           </div>
         }
       />
       <div className="mb-3 flex gap-2"><Input placeholder="Search team…" value={q} onChange={(e) => setQ(e.target.value)} className="max-w-xs" /></div>
       <DataTable
         rows={rows}
-        empty={loading ? "Loading team..." : "No team members."}
+        empty={loading ? labels.common.loading : labels.common.noData}
         rowKey={(r) => r.id}
         columns={[
-          { header: "ID", accessor: (r) => r.id },
-          { header: "Employee", accessor: (r) => r.name },
-          { header: "Email", accessor: (r) => r.email },
-          { header: "Phone", accessor: (r) => r.phone },
-          { header: "Department", accessor: (r) => r.department?.name ?? "-" },
-          { header: "Role", accessor: (r) => r.title },
-          { header: "Status", accessor: (r) => <StatusBadge value={r.status} /> },
-          { header: "Action", accessor: (r) => (
+          { header: labels.common.id, accessor: (r) => r.id },
+          { header: labels.team.name, accessor: (r) => r.name },
+          { header: labels.team.email, accessor: (r) => r.email },
+          { header: labels.team.phone, accessor: (r) => r.phone },
+          { header: labels.team.department, accessor: (r) => r.department?.name ?? "-" },
+          { header: labels.team.role, accessor: (r) => r.title },
+          { header: labels.team.status, accessor: (r) => <StatusBadge value={r.status} /> },
+          { header: labels.common.actions, accessor: (r) => (
             <div className="flex gap-2 text-muted-foreground">
               <button className="hover:text-primary" aria-label="Edit"><Pencil className="h-4 w-4" /></button>
               <button className="hover:text-red-600" aria-label="Delete" onClick={() => void deleteDoctor(r.id)}><Trash2 className="h-4 w-4" /></button>

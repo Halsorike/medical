@@ -4,6 +4,7 @@ import { toast } from "sonner";
 import { PageHeader } from "@/components/admin/page-header";
 import { DataTable, Pagination } from "@/components/admin/data-table";
 import { StatusBadge } from "@/components/admin/status-badge";
+import { useAdminLocale } from "@/components/admin/admin-locale-provider";
 
 type ApiContactMessage = {
   id: string;
@@ -16,6 +17,7 @@ type ApiContactMessage = {
 };
 
 export default function ContactPage() {
+  const { labels } = useAdminLocale();
   const [contactRequests, setContactRequests] = useState<ApiContactMessage[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -29,19 +31,19 @@ export default function ContactPage() {
 
   return (
     <>
-      <PageHeader title="Contact us" description="Inbound requests from the public website" />
+      <PageHeader title={labels.contact.title} description={labels.contact.description} />
       <DataTable
         rows={contactRequests}
-        empty={loading ? "Loading contact messages..." : "No contact messages."}
+        empty={loading ? labels.common.loading : labels.common.noData}
         rowKey={(r) => r.id}
         columns={[
-          { header: "ID", accessor: (r) => r.id },
-          { header: "Name", accessor: (r) => r.name },
-          { header: "Phone", accessor: (r) => r.phone },
-          { header: "Email", accessor: (r) => r.email },
-          { header: "Message", accessor: (r) => <span className="line-clamp-1 max-w-md">{r.message}</span> },
-          { header: "Date", accessor: (r) => new Date(r.createdAt).toLocaleDateString() },
-          { header: "Status", accessor: (r) => <StatusBadge value={r.status} /> },
+          { header: labels.common.id, accessor: (r) => r.id },
+          { header: labels.patients.name, accessor: (r) => r.name },
+          { header: labels.patients.phone, accessor: (r) => r.phone },
+          { header: labels.patients.email, accessor: (r) => r.email },
+          { header: labels.contact.message, accessor: (r) => <span className="line-clamp-1 max-w-md">{r.message}</span> },
+          { header: labels.appointments.date, accessor: (r) => new Date(r.createdAt).toLocaleDateString() },
+          { header: labels.appointments.status, accessor: (r) => <StatusBadge value={r.status} /> },
         ]}
       />
       <Pagination total={contactRequests.length} />
