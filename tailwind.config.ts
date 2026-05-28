@@ -27,6 +27,7 @@ const config: Config = {
           blue: "#005F9E",
           gold: "#F5A623",
           pink: "#E91E8C",
+          "light-teal": "#4DC9D6",
           dark: "#1A2B3C",
           text: "#1A2B3C",
           muted: "#42526b",

@@ -4,7 +4,7 @@ import { Link } from "@/navigation";
 import { useState } from "react";
 import { usePathname } from "@/navigation";
 import { useLocale, useTranslations } from "next-intl";
-import { ArrowRight, Clock, Heart, Mail, Menu, Phone, ShoppingCart, X } from "lucide-react";
+import { CalendarDays, Clock, Heart, Mail, Menu, Phone, ShoppingCart, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useCart } from "./cart-context";
 
@@ -33,28 +33,28 @@ export function StoreHeader() {
   }
 
   return (
-    <header className="sticky top-0 z-40 bg-white shadow-[0_8px_30px_rgba(6,28,61,0.08)]">
-      <div className="container flex h-[92px] items-center justify-between gap-4 lg:h-[148px]">
+    <header className="sticky top-0 z-40 bg-white/95 shadow-[0_8px_30px_rgba(6,28,61,0.08)] backdrop-blur">
+      <div className="container flex h-20 items-center justify-between gap-4">
         <Link href="/" className="flex shrink-0 items-center gap-3">
-          <div className="flex h-14 w-14 items-center justify-center rounded-full bg-white text-white shadow-[0_12px_24px_rgba(0,95,158,0.18)] ring-1 ring-brand-100 lg:h-[82px] lg:w-[82px]">
+          <div className="flex h-14 w-14 items-center justify-center rounded-full bg-white text-white shadow-[0_12px_24px_rgba(0,95,158,0.18)] ring-1 ring-brand-100">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/logo.svg" alt="Echo Wellness logo" className="h-10 w-10 lg:h-16 lg:w-16" />
+            <img src="/logo.svg" alt="Echo Wellness logo" className="h-10 w-10" />
           </div>
-          <div className="hidden max-w-[120px] leading-tight sm:block lg:max-w-[198px]">
-            <p className="gradient-text text-sm font-semibold lg:text-[22px]">Echo Wellness</p>
-            <p className="text-xs font-light text-brand-dark lg:text-[15px]">Empower. Enhance. Thrive.</p>
+          <div className="hidden max-w-[176px] leading-tight sm:block">
+            <p className="gradient-text text-[18px] font-semibold">Echo Wellness</p>
+            <p className="text-[12px] font-light text-brand-dark">Empower. Enhance. Thrive.</p>
           </div>
         </Link>
 
-        <nav className="hidden items-center gap-6 lg:flex">
+        <nav className="hidden items-center gap-5 xl:flex">
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
               className={
                 isActive(link.href)
-                  ? "gradient-text text-[15.8px] font-semibold"
-                  : "text-[15.8px] font-normal text-brand-dark transition-colors hover:text-brand-blue"
+                  ? "relative text-[14.5px] font-semibold text-brand-teal after:absolute after:-bottom-2 after:left-0 after:h-0.5 after:w-full after:rounded-full after:bg-brand-teal"
+                  : "text-[14.5px] font-medium text-brand-dark transition-colors hover:text-brand-teal"
               }
             >
               {link.label}
@@ -89,10 +89,10 @@ export function StoreHeader() {
           >
             {otherLocaleLabel}
           </Link>
-          <Button asChild variant="gradient" className="hidden h-12 gap-2 px-7 py-3 sm:inline-flex">
+          <Button asChild className="hidden h-12 gap-2 rounded-full bg-brand-gold px-7 py-3 text-white hover:bg-brand-gold/90 sm:inline-flex">
             <Link href="/book-appointment">
               {t("bookAppointment")}
-              <ArrowRight className="h-5 w-5" />
+              <CalendarDays className="h-5 w-5" />
             </Link>
           </Button>
           <Button
@@ -133,10 +133,10 @@ export function StoreHeader() {
             >
               {otherLocaleLabel}
             </Link>
-            <Button asChild variant="gradient" className="mt-2 w-full gap-2">
+            <Button asChild className="mt-2 w-full gap-2 rounded-full bg-brand-gold text-white hover:bg-brand-gold/90">
               <Link href="/book-appointment" onClick={() => setMobileOpen(false)}>
                 {t("bookAppointment")}
-                <ArrowRight className="h-4 w-4" />
+                <CalendarDays className="h-4 w-4" />
               </Link>
             </Button>
             <div className="mt-4 flex flex-col gap-2 rounded-[20px] bg-brand-50 p-4 text-xs text-[#42526b]">
