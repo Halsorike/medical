@@ -40,7 +40,7 @@ model Customer {
 }
 
 model Appointment {
-  id           String   @id @default(cuid())
+  id           String    @id @default(cuid())
   patientName  String
   email        String
   phone        String?
@@ -49,8 +49,10 @@ model Appointment {
   date         String
   slot         String
   confirmation String?
-  status       String   @default("pending")
-  createdAt    DateTime @default(now())
+  status       String    @default("pending")
+  createdAt    DateTime  @default(now())
+  patientId    String?
+  patient      Patient?  @relation(fields: [patientId], references: [id])
 }
 
 model Evaluation {
@@ -62,18 +64,22 @@ model Evaluation {
   answers     String
   score       Int
   createdAt   DateTime @default(now())
+  patientId   String?
+  patient     Patient? @relation(fields: [patientId], references: [id])
 }
 
 model BlogPost {
-  id        String   @id
-  slug      String   @unique
-  title     String
-  excerpt   String
-  content   String
-  category  String
-  date      String
-  readTime  String
-  createdAt DateTime @default(now())
+  id           String        @id
+  slug         String        @unique
+  title        String
+  excerpt      String
+  content      String
+  category     String
+  date         String
+  readTime     String
+  createdAt    DateTime      @default(now())
+  categoryId   String?
+  blogCategory BlogCategory? @relation(fields: [categoryId], references: [id])
 }
 
 model CartItem {
@@ -84,4 +90,142 @@ model CartItem {
   qty       Int
 
   @@unique([sessionId, productId])
+}
+
+// ══════════════════════════════════════════
+// CLINIC MODELS — مضافة في v2.0
+// ══════════════════════════════════════════
+
+model Patient {
+  id             String        @id @default(cuid())
+  name           String
+  nameAr         String?
+  email          String        @unique
+  phone          String
+  dateOfBirth    DateTime?
+  gender         String?       // male, female
+  address        String?
+  medicalHistory String?
+  notes          String?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  appointments   Appointment[]
+  evaluations    Evaluation[]
+}
+
+model Doctor {
+  id             String      @id @default(cuid())
+  name           String
+  nameAr         String?
+  title          String
+  titleAr        String?
+  email          String      @unique
+  phone          String
+  bio            String?
+  bioAr          String?
+  specialization String
+  experience     Int?
+  qualification  String?
+  image          String?
+  slug           String      @unique
+  departmentId   String?
+  status         String      @default("active")
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+
+  department     Department? @relation(fields: [departmentId], references: [id])
+  schedules      Schedule[]
+}
+
+model Department {
+  id            String    @id @default(cuid())
+  name          String    @unique
+  nameAr        String?
+  description   String?
+  descriptionAr String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  doctors       Doctor[]
+  services      Service[]
+}
+
+model Service {
+  id            String     @id @default(cuid())
+  name          String
+  nameAr        String?
+  description   String?
+  descriptionAr String?
+  price         Float?
+  duration      Int?       // دقائق
+  departmentId  String
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+
+  department    Department @relation(fields: [departmentId], references: [id])
+}
+
+model Schedule {
+  id         String   @id @default(cuid())
+  doctorId   String
+  dayOfWeek  String   // Sunday, Monday, Tuesday, ...
+  startTime  String   // HH:mm
+  endTime    String   // HH:mm
+  maxSlots   Int      @default(10)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  doctor     Doctor   @relation(fields: [doctorId], references: [id])
+}
+
+model Holiday {
+  id          String   @id @default(cuid())
+  name        String
+  nameAr      String?
+  date        DateTime
+  description String?
+  recurring   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model ContactMessage {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  phone     String?
+  subject   String?
+  message   String
+  status    String   @default("new") // new, read, replied
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model BlogCategory {
+  id          String     @id @default(cuid())
+  name        String     @unique
+  nameAr      String?
+  slug        String     @unique
+  description String?
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  posts       BlogPost[]
+}
+
+model Role {
+  id          String   @id @default(cuid())
+  name        String   @unique // admin, doctor, staff
+  nameAr      String?
+  permissions String   // JSON: ["appointments:read", "patients:write", ...]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model SiteSetting {
+  id        String   @id @default(cuid())
+  key       String   @unique // "clinic.name", "hero.title.ar", etc.
+  value     String
+  updatedAt DateTime @updatedAt
 }

@@ -41,6 +41,9 @@
     "tailwind-merge": "^2.5.4",
     "zod": "^4.4.3"
   },
+  "prisma": {
+    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
+  },
   "devDependencies": {
     "@playwright/test": "^1.44.0",
     "@types/node": "^20",

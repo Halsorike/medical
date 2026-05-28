@@ -34,6 +34,10 @@ export function validationError(error: z.ZodError) {
   return fail("Validation failed", 422, error.flatten());
 }
 
+export function notFound(entity = "Resource") {
+  return NextResponse.json({ error: `${entity} not found` }, { status: 404 });
+}
+
 export function toPublicProduct(product: DbProduct) {
   const parsedImages = JSON.parse(product.images) as unknown;
   const images = Array.isArray(parsedImages) ? parsedImages.filter((item): item is string => typeof item === "string") : [];
