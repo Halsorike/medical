@@ -1,7 +1,7 @@
 import { Link } from "@/navigation";
 import { Briefcase, Facebook, Instagram, Twitter } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import type { Doctor } from "@/data/team";
+import type { Doctor } from "@/types/doctor";
 
 type TeamCardProps = {
   doctor: Doctor;
