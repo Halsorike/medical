@@ -2,7 +2,10 @@ import { Link } from "@/navigation";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ArrowLeft, BookOpen, Clock } from "lucide-react";
-import { getPostLocale, posts } from "@/data/blog";
+import { posts as fallbackPosts } from "@/data/blog";
+import { getApiData } from "@/lib/server-api";
+import { getPostLocale, normalizeBlogPost } from "@/lib/blog-format";
+import type { StorefrontBlogPost } from "@/types/blog";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { BlogPostInteractive } from "./blog-post-interactive";
@@ -16,8 +19,11 @@ const BLOG_IMAGES = [
   "https://images.unsplash.com/photo-1505751172876-fa1923c5c528?w=900&h=420&fit=crop",
 ];
 
+export const dynamic = "force-dynamic";
+
 export async function generateMetadata({ params }: { params: { locale: string; slug: string } }): Promise<Metadata> {
-  const post = posts.find((item) => item.slug === params.slug);
+  const apiPost = await getApiData<StorefrontBlogPost>(`/api/blog/${params.slug}`);
+  const post = apiPost ? normalizeBlogPost(apiPost) : fallbackPosts.find((item) => item.slug === params.slug);
 
   if (!post) {
     return {
@@ -42,15 +48,18 @@ export async function generateMetadata({ params }: { params: { locale: string; s
   };
 }
 
-export default function BlogPostPage({ params }: { params: { locale: string; slug: string } }) {
-  const post = posts.find((item) => item.slug === params.slug);
+export default async function BlogPostPage({ params }: { params: { locale: string; slug: string } }) {
+  const apiPost = await getApiData<StorefrontBlogPost>(`/api/blog/${params.slug}`);
+  const post = apiPost ? normalizeBlogPost(apiPost) : fallbackPosts.find((item) => item.slug === params.slug);
 
   if (!post) {
     notFound();
   }
 
   const localePost = getPostLocale(post, params.locale);
-  const relatedPosts = posts
+  const apiPosts = await getApiData<StorefrontBlogPost[]>("/api/blog");
+  const relatedSource = apiPosts?.length ? apiPosts.map(normalizeBlogPost) : fallbackPosts;
+  const relatedPosts = relatedSource
     .filter((item) => item.slug !== post.slug)
     .slice(0, 3)
     .map((item) => getPostLocale(item, params.locale));
@@ -59,9 +68,9 @@ export default function BlogPostPage({ params }: { params: { locale: string; slu
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: "https://jordanhearing.com" },
-      { "@type": "ListItem", position: 2, name: "Blog", item: "https://jordanhearing.com/blog" },
-      { "@type": "ListItem", position: 3, name: localePost.title, item: `https://jordanhearing.com/blog/${post.slug}` },
+      { "@type": "ListItem", position: 1, name: "Home", item: "https://echowellness.me" },
+      { "@type": "ListItem", position: 2, name: "Blog", item: "https://echowellness.me/blog" },
+      { "@type": "ListItem", position: 3, name: localePost.title, item: `https://echowellness.me/blog/${post.slug}` },
     ],
   };
 

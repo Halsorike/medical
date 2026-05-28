@@ -1,6 +1,11 @@
 import type { Metadata } from "next";
-import { getPostLocale, posts } from "@/data/blog";
+import { posts as fallbackPosts } from "@/data/blog";
+import { getApiData } from "@/lib/server-api";
+import { getPostLocale, normalizeBlogPost } from "@/lib/blog-format";
+import type { StorefrontBlogPost } from "@/types/blog";
 import { BlogListClient } from "./blog-list-client";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Blog",
@@ -15,11 +20,13 @@ export const metadata: Metadata = {
   },
 };
 
-export default function BlogPage({
+export default async function BlogPage({
   params: { locale },
 }: {
   params: { locale: string };
 }) {
+  const apiPosts = await getApiData<StorefrontBlogPost[]>("/api/blog");
+  const posts = apiPosts?.length ? apiPosts.map(normalizeBlogPost) : fallbackPosts;
   const localePosts = posts.map((post) => getPostLocale(post, locale));
 
   return (

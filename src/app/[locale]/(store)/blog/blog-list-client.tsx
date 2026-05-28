@@ -5,7 +5,7 @@ import { Search } from "lucide-react";
 import { BlogCard } from "@/components/store/blog-card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import type { BlogPost } from "@/data/blog";
+import type { StorefrontBlogPost } from "@/types/blog";
 
 const BLOG_IMAGES = [
   "https://images.unsplash.com/photo-1516574187841-cb9cc2ca948b?w=360&h=360&fit=crop",
@@ -16,7 +16,7 @@ const BLOG_IMAGES = [
   "https://images.unsplash.com/photo-1505751172876-fa1923c5c528?w=360&h=360&fit=crop",
 ];
 
-export function BlogListClient({ posts }: { posts: BlogPost[] }) {
+export function BlogListClient({ posts }: { posts: StorefrontBlogPost[] }) {
   const [query, setQuery] = useState("");
 
   const filtered = useMemo(() => {
