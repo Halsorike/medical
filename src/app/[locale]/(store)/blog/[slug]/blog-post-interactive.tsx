@@ -59,7 +59,7 @@ export function BlogPostInteractive() {
         <h2 className="text-lg font-semibold text-gray-800">Comments</h2>
         <div className="mt-4 space-y-4">
           {comments.map((comment, index) => (
-            <div key={`${comment.name}-${index}`} className="rounded-xl bg-purple-50 p-4">
+            <div key={`${comment.name}-${index}`} className="rounded-xl bg-brand-50 p-4">
               <p className="font-medium text-gray-800">{comment.name}</p>
               <p className="mt-1 text-sm text-muted-foreground">{comment.text}</p>
             </div>

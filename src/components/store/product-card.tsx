@@ -15,7 +15,7 @@ export function ProductCard({ p }: { p: Product }) {
 
   return (
     <div className="group overflow-hidden rounded-[15px] bg-white shadow-[0_11px_26px_rgba(6,28,61,0.1)] transition hover:-translate-y-1 hover:shadow-[0_18px_34px_rgba(6,28,61,0.14)]">
-      <Link href={`/product/${p.slug}`} className="relative block aspect-square overflow-hidden bg-[rgba(255,53,245,0.04)]">
+      <Link href={`/product/${p.slug}`} className="relative block aspect-square overflow-hidden bg-[rgba(0,153,168,0.06)]">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={p.image} alt={displayName} className="h-full w-full object-cover transition group-hover:scale-105" />
         {p.stock === 0 && (
@@ -26,7 +26,7 @@ export function ProductCard({ p }: { p: Product }) {
         {/* Wishlist button overlay */}
         <button
           aria-label={`Wishlist ${displayName}`}
-          className="absolute right-2 top-2 flex h-8 w-8 items-center justify-center rounded-full bg-white shadow opacity-0 group-hover:opacity-100 transition-opacity hover:text-purple-600"
+          className="absolute right-2 top-2 flex h-8 w-8 items-center justify-center rounded-full bg-white shadow opacity-0 group-hover:opacity-100 transition-opacity hover:text-brand-teal"
         >
           <Heart className="h-4 w-4" />
         </button>
@@ -44,7 +44,7 @@ export function ProductCard({ p }: { p: Product }) {
       </Link>
       <div className="p-4">
         <Link href={`/product/${p.slug}`}>
-          <h3 className="line-clamp-1 text-sm font-medium text-[#061c3d] hover:text-[#9b1fe1]">
+          <h3 className="line-clamp-1 text-sm font-medium text-[#061c3d] hover:text-[#005F9E]">
             {displayName}
           </h3>
         </Link>

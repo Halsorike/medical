@@ -2,13 +2,13 @@ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 
 export const metadata: Metadata = {
-  title: "Contact Us",
+  title: "Contact Us | Echo Wellness Center Muscat Oman",
   description:
-    "Get in touch with Jordan Hearing & Speech Therapy in Amman, Jordan. Call +962 6 123 4567 or send us a message.",
+    "Contact Echo Wellness Center in Sarooj, Muscat, Oman for audiology, speech therapy, occupational therapy, psychology, and behavioral support.",
   alternates: { canonical: "/contact" },
   openGraph: {
-    title: "Contact Jordan Hearing & Speech Therapy",
-    description: "Reach our clinic in Amman for hearing and speech therapy inquiries.",
+    title: "Contact Echo Wellness Center",
+    description: "Reach our clinic in Muscat for multidisciplinary therapy inquiries.",
     images: ["/og-image.jpg"],
   },
 };

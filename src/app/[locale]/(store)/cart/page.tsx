@@ -116,9 +116,9 @@ export default function CartPage() {
   return (
     <>
       {/* Page hero */}
-      <div className="relative overflow-hidden bg-purple-50 pb-8 pt-6">
+      <div className="relative overflow-hidden bg-brand-50 pb-8 pt-6">
         <div className="container">
-          <h1 className="text-2xl font-bold text-purple-600">Cart</h1>
+          <h1 className="text-2xl font-bold text-brand-teal">Cart</h1>
         </div>
         <div className="absolute bottom-0 left-0 right-0 overflow-hidden">
           <svg viewBox="0 0 1440 30" className="w-full fill-white">
@@ -132,13 +132,13 @@ export default function CartPage() {
           {/* Left â€” items + order summary */}
           <div className="space-y-4">
             {items.map((item) => (
-              <div key={item.product.id} className="flex gap-4 rounded-2xl border border-purple-100 bg-white p-4">
+              <div key={item.product.id} className="flex gap-4 rounded-2xl border border-brand-100 bg-white p-4">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={item.product.image}
                     alt={item.product.name}
                     loading="lazy"
-                    className="h-16 w-16 rounded-xl object-cover bg-purple-50 shrink-0"
+                    className="h-16 w-16 rounded-xl object-cover bg-brand-50 shrink-0"
                   />
                 <div className="flex-1 min-w-0">
                   <p className="font-semibold text-gray-800 truncate">{item.product.name}</p>
@@ -156,7 +156,7 @@ export default function CartPage() {
                   <div className="flex items-center rounded-full border border-gray-200">
                     <button
                       onClick={() => setQty(item.product.id, item.qty - 1)}
-                      className="flex h-7 w-7 items-center justify-center rounded-full hover:bg-purple-50"
+                      className="flex h-7 w-7 items-center justify-center rounded-full hover:bg-brand-50"
                       aria-label="Decrease quantity"
                     >
                       <Minus className="h-3 w-3" />
@@ -164,7 +164,7 @@ export default function CartPage() {
                     <span className="w-6 text-center text-xs font-medium">{item.qty}</span>
                     <button
                       onClick={() => setQty(item.product.id, item.qty + 1)}
-                      className="flex h-7 w-7 items-center justify-center rounded-full hover:bg-purple-50"
+                      className="flex h-7 w-7 items-center justify-center rounded-full hover:bg-brand-50"
                       aria-label="Increase quantity"
                     >
                       <Plus className="h-3 w-3" />
@@ -175,7 +175,7 @@ export default function CartPage() {
             ))}
 
             {/* Order Summary */}
-            <div className="rounded-2xl border border-purple-100 bg-white p-5">
+            <div className="rounded-2xl border border-brand-100 bg-white p-5">
               <h3 className="mb-4 font-semibold text-gray-800">Order Summary</h3>
               <div className="mb-3">
                 <div className="flex gap-2">
@@ -202,7 +202,7 @@ export default function CartPage() {
                 </div>
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Shipping</span>
-                  <span className="text-muted-foreground">Free delivery within Amman</span>
+                  <span className="text-muted-foreground">Free delivery within Muscat</span>
                 </div>
                 {appliedCoupon && (
                   <div className="flex justify-between text-green-700">
@@ -216,19 +216,19 @@ export default function CartPage() {
                 </div>
                 <div className="flex justify-between border-t pt-2 font-semibold">
                   <span>Total</span>
-                  <span className="text-purple-700">{formatCurrency(total)}</span>
+                  <span className="text-brand-blue">{formatCurrency(total)}</span>
                 </div>
               </div>
             </div>
 
             <div className="flex justify-between">
-              <Link href="/shop" className="text-sm text-purple-600 hover:underline">â† Continue shopping</Link>
+              <Link href="/shop" className="text-sm text-brand-teal hover:underline">â† Continue shopping</Link>
               <Button variant="ghost" size="sm" onClick={clear} className="text-sm text-red-500">Clear cart</Button>
             </div>
           </div>
 
           {/* Right â€” shipping + payment */}
-          <form onSubmit={handlePay} className="rounded-2xl border border-purple-100 bg-white p-6 space-y-5 h-fit">
+          <form onSubmit={handlePay} className="rounded-2xl border border-brand-100 bg-white p-6 space-y-5 h-fit">
             <h3 className="font-semibold text-gray-800">Shipping Information</h3>
 
             <div className="grid grid-cols-2 gap-3">
@@ -249,14 +249,14 @@ export default function CartPage() {
               <button
                 type="button"
                 onClick={() => setPayMethod("paypal")}
-                className={`rounded-xl border py-3 text-sm font-medium transition-colors ${payMethod === "paypal" ? "border-purple-500 bg-purple-50 text-purple-700" : "border-gray-200 text-gray-500 hover:border-purple-300"}`}
+                className={`rounded-xl border py-3 text-sm font-medium transition-colors ${payMethod === "paypal" ? "border-brand-500 bg-brand-50 text-brand-blue" : "border-gray-200 text-gray-500 hover:border-brand-300"}`}
               >
                 PayPal
               </button>
               <button
                 type="button"
                 onClick={() => setPayMethod("card")}
-                className={`rounded-xl border py-3 text-sm font-medium transition-colors ${payMethod === "card" ? "border-purple-500 bg-purple-50 text-purple-700" : "border-gray-200 text-gray-500 hover:border-purple-300"}`}
+                className={`rounded-xl border py-3 text-sm font-medium transition-colors ${payMethod === "card" ? "border-brand-500 bg-brand-50 text-brand-blue" : "border-gray-200 text-gray-500 hover:border-brand-300"}`}
               >
                 Credit Card
               </button>
@@ -285,7 +285,7 @@ export default function CartPage() {
                     type="checkbox"
                     checked={form.saveCard}
                     onChange={(e) => setForm({ ...form, saveCard: e.target.checked })}
-                    className="accent-purple-600"
+                    className="accent-brand-teal"
                   />
                   Save card data for future payments
                 </label>

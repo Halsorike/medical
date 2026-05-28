@@ -1,20 +1,6 @@
-export type Doctor = {
-  name: string;
-  nameAr: string;
-  title: string;
-  titleAr: string;
-  slug: string;
-  image: string;
-  bio: string;
-  bioAr: string;
-  tags: string[];
-  tagsAr: string[];
-  socials: {
-    facebook: string;
-    instagram: string;
-    twitter: string;
-  };
-};
+import type { Doctor } from "@/types/doctor";
+
+export type { Doctor };
 
 export const doctors: Doctor[] = [
   {

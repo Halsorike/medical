@@ -23,29 +23,31 @@ const config: Config = {
         card: { DEFAULT: "hsl(var(--card))", foreground: "hsl(var(--card-foreground))" },
         popover: { DEFAULT: "hsl(var(--popover))", foreground: "hsl(var(--popover-foreground))" },
         brand: {
-          pink: "#ca79c6",
-          purple: "#9b1fe1",
-          dark: "#1e1e1e",
-          text: "#061c3d",
+          teal: "#0099A8",
+          blue: "#005F9E",
+          gold: "#F5A623",
+          pink: "#E91E8C",
+          dark: "#1A2B3C",
+          text: "#1A2B3C",
           muted: "#42526b",
-          50: "#faf5ff",
-          100: "#f3e8ff",
-          200: "#e9d5ff",
-          300: "#d8b4fe",
-          400: "#c084fc",
-          500: "#a855f7",
-          600: "#9333ea",
-          700: "#7e22ce",
-          800: "#6b21a8",
-          900: "#581c87"
+          50: "#F0F4F5",
+          100: "#D8EEF1",
+          200: "#B8E1E6",
+          300: "#86CCD5",
+          400: "#4EB4C0",
+          500: "#0099A8",
+          600: "#007E8B",
+          700: "#00656F",
+          800: "#005F9E",
+          900: "#0A3554"
         }
       },
       borderRadius: { lg: "var(--radius)", md: "calc(var(--radius) - 2px)", sm: "calc(var(--radius) - 4px)" },
       backgroundImage: {
-        "brand-gradient": "linear-gradient(175deg, #ca79c6 15%, #9b1fe1 68%)",
-        "button-gradient": "linear-gradient(82deg, #ec74e7 45%, #8468f5 74%)",
-        "button-blur": "linear-gradient(80deg, rgba(236,116,231,0.7) 45%, rgba(132,104,245,0.7) 74%)",
-        "text-gradient": "linear-gradient(257deg, #9b1fe1 0%, #ca79c6 75%)"
+        "brand-gradient": "linear-gradient(175deg, #0099A8 15%, #005F9E 68%)",
+        "button-gradient": "linear-gradient(82deg, #F5A623 0%, #E91E8C 100%)",
+        "button-blur": "linear-gradient(80deg, rgba(245,166,35,0.7) 0%, rgba(233,30,140,0.7) 100%)",
+        "text-gradient": "linear-gradient(257deg, #005F9E 0%, #0099A8 75%)"
       }
     }
   },

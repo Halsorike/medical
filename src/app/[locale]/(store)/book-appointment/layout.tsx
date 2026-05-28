@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 
 export const metadata: Metadata = {
   title: "Book an Appointment",
-  description: "Schedule a hearing or speech therapy appointment at Jordan Hearing & Speech Therapy in Amman.",
+  description: "Schedule a hearing or speech therapy appointment at Echo Wellness Center in Muscat.",
   alternates: { canonical: "/book-appointment" },
 };
 

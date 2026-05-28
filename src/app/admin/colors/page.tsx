@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Plus, Trash2 } from "lucide-react";
 
 const presets = [
-  { name: "Brand purple", hex: "#9333ea" }, { name: "Brand violet", hex: "#a855f7" },
+  { name: "Brand teal", hex: "#0099A8" }, { name: "Brand blue", hex: "#005F9E" },
   { name: "Success", hex: "#16a34a" }, { name: "Warning", hex: "#f59e0b" },
   { name: "Danger", hex: "#dc2626" }, { name: "Slate", hex: "#475569" },
 ];

@@ -1,32 +1,55 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { Link } from "@/navigation";
-import { Heart, MapPin, Settings, ShoppingBag, Star } from "lucide-react";
-import type { Order } from "@/types";
-import { getApiData } from "@/lib/server-api";
-import { formatCurrency, formatDate } from "@/lib/utils";
-import { Badge, type BadgeProps } from "@/components/ui/badge";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { CalendarDays, Heart, MapPin, Settings, ShoppingBag, Star } from "lucide-react";
 
-export const dynamic = "force-dynamic";
-
-const statusVariant: Record<Order["status"], BadgeProps["variant"]> = {
-  delivered: "success",
-  shipped: "info",
-  pending: "warning",
-  cancelled: "destructive",
-  refunded: "secondary",
-  confirmed: "default",
+type PatientUser = {
+  id: string;
+  name: string;
+  email: string;
+  phone?: string | null;
+  createdAt?: string;
 };
 
 const quickLinks = [
+  { label: "My appointments", href: "/account/appointments", icon: CalendarDays },
   { label: "Manage addresses", href: "/account/addresses", icon: MapPin },
   { label: "Profile settings", href: "/account/profile", icon: Settings },
 ];
 
-export default async function AccountHome() {
-  const orders = await getApiData<Order[]>("/api/orders") ?? [];
-  const recentOrders = orders.slice(0, 3);
+export default function AccountHome() {
+  const router = useRouter();
+  const [patient, setPatient] = useState<PatientUser | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("/api/auth/patient/me")
+      .then((response) => {
+        if (response.status === 401) {
+          router.push("/login");
+          return null;
+        }
+        return response.ok ? response.json() : Promise.reject();
+      })
+      .then((payload: { data: { user: PatientUser } } | null) => {
+        if (payload) setPatient(payload.data.user);
+      })
+      .catch(() => router.push("/login"))
+      .finally(() => setLoading(false));
+  }, [router]);
+
+  if (loading) {
+    return <div className="rounded-lg border bg-white p-8 text-sm text-muted-foreground">Loading account...</div>;
+  }
+
+  if (!patient) {
+    return null;
+  }
+
   const stats = [
-    { label: "Total orders", value: orders.length, icon: ShoppingBag },
+    { label: "Appointments", value: "View", icon: CalendarDays },
     { label: "Wishlist items", value: "6", icon: Heart },
     { label: "Club points", value: "430", icon: Star },
   ];
@@ -34,8 +57,8 @@ export default async function AccountHome() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-2xl font-bold">Welcome back, Alex ðŸ‘‹</h1>
-        <p className="text-sm text-muted-foreground">Member since January 2024</p>
+        <h1 className="text-2xl font-bold">Welcome back, {patient.name}</h1>
+        <p className="text-sm text-muted-foreground">{patient.email}</p>
       </div>
 
       <section className="grid grid-cols-1 gap-4 sm:grid-cols-3">
@@ -55,35 +78,12 @@ export default async function AccountHome() {
         })}
       </section>
 
-      <section>
-        <h2 className="mb-3 text-lg font-semibold">Recent orders</h2>
-        <div className="overflow-hidden rounded-lg border bg-white">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Order</TableHead>
-                <TableHead>Date</TableHead>
-                <TableHead>Total</TableHead>
-                <TableHead>Status</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {recentOrders.map((order) => (
-                <TableRow key={order.id}>
-                  <TableCell className="font-medium">{order.code}</TableCell>
-                  <TableCell>{formatDate(order.date)}</TableCell>
-                  <TableCell>{formatCurrency(order.total)}</TableCell>
-                  <TableCell>
-                    <Badge variant={statusVariant[order.status]}>{order.status}</Badge>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-          <div className="border-t p-4">
-            <Link href="/account/orders" className="text-sm font-medium text-primary hover:underline">
-              View all orders &rarr;
-            </Link>
+      <section className="rounded-lg border bg-white p-5">
+        <div className="flex items-center gap-3">
+          <ShoppingBag className="h-5 w-5 text-primary" />
+          <div>
+            <h2 className="text-lg font-semibold">Your clinic profile is ready</h2>
+            <p className="text-sm text-muted-foreground">Use this account to review upcoming appointments and update your information.</p>
           </div>
         </div>
       </section>
@@ -92,11 +92,7 @@ export default async function AccountHome() {
         {quickLinks.map((item) => {
           const Icon = item.icon;
           return (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="flex cursor-pointer items-center gap-3 rounded-lg border bg-white p-4 transition hover:bg-muted"
-            >
+            <Link key={item.href} href={item.href} className="flex cursor-pointer items-center gap-3 rounded-lg border bg-white p-4 transition hover:bg-muted">
               <Icon className="h-5 w-5 text-primary" />
               <span className="font-medium">{item.label}</span>
             </Link>

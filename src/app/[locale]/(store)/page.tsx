@@ -6,14 +6,19 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { BlogCard } from "@/components/store/blog-card";
 import { TeamCard } from "@/components/store/team-card";
-import { doctors } from "@/data/team";
+import { getApiData } from "@/lib/server-api";
+import type { Doctor } from "@/types/doctor";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Home",
-  description: "Professional hearing, speech, and occupational therapy services in Jordan.",
+  title: "Echo Wellness Center | Audiology, Speech and OT in Muscat",
+  description:
+    "Echo Wellness Center in Sarooj, Muscat - hearing assessment, speech therapy, occupational therapy, psychology and behavioral support for children and adults in Oman.",
   openGraph: {
-    title: "Jordan Hearing & Speech Therapy",
-    description: "Professional hearing, speech, and occupational therapy services in Jordan.",
+    title: "Echo Wellness Center",
+    description:
+      "Integrated speech, occupational, behavioral, psychology, and audiology care by certified specialists in Muscat.",
     images: ["/og-image.jpg"],
   },
   alternates: {
@@ -52,6 +57,7 @@ export default async function HomePage({
   params: { locale: string };
 }) {
   const t = await getTranslations({ locale });
+  const doctors = await getApiData<Doctor[]>("/api/doctors") ?? [];
 
   return (
     <>
@@ -138,7 +144,7 @@ export default async function HomePage({
           {/* LEFT: mock dashboard UI card — exact Figma layout */}
           <div className="relative flex items-center justify-center min-h-[380px]">
             {/* outer pink accent square */}
-            <div className="absolute left-0 top-6 h-[220px] w-[220px] rounded-[28px] bg-[rgba(202,121,198,0.08)] shadow-[0_11px_26px_rgba(6,28,61,0.06)]" />
+            <div className="absolute left-0 top-6 h-[220px] w-[220px] rounded-[28px] bg-brand-50 shadow-[0_11px_26px_rgba(6,28,61,0.06)]" />
             {/* main dashboard card */}
             <div className="relative left-12 top-4 w-[300px] rounded-[20px] bg-white shadow-[0_18px_45px_rgba(6,28,61,0.12)] overflow-hidden">
               {/* pink header bar */}
@@ -150,24 +156,24 @@ export default async function HomePage({
                     // eslint-disable-next-line @next/next/no-img-element
                     <img key={doctor.slug} src={doctor.image} alt={doctor.name} className="h-10 w-10 rounded-full border-2 border-white object-cover object-top" />
                   ))}
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-white bg-[#ca79c6]/20 text-[11px] font-semibold text-[#9b1fe1]">+6</div>
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-white bg-[#0099A8]/20 text-[11px] font-semibold text-[#005F9E]">+6</div>
                 </div>
                 {/* skeleton lines */}
-                <div className="h-2.5 w-40 rounded-full bg-[#ca79c6]/25" />
-                <div className="mt-2.5 h-2.5 w-28 rounded-full bg-[#9b1fe1]/20" />
+                <div className="h-2.5 w-40 rounded-full bg-[#0099A8]/25" />
+                <div className="mt-2.5 h-2.5 w-28 rounded-full bg-[#005F9E]/20" />
                 {/* mini stats row */}
                 <div className="mt-5 grid grid-cols-3 gap-2.5">
-                  <div className="flex flex-col items-center justify-center h-[60px] rounded-[12px] bg-[#ca79c6]/10">
-                    <p className="text-[13px] font-semibold text-[#9b1fe1]">142</p>
-                    <p className="text-[9px] font-light text-[#42526b]">Patients</p>
+                  <div className="flex flex-col items-center justify-center h-[60px] rounded-[12px] bg-[#0099A8]/10">
+                    <p className="text-[13px] font-semibold text-[#005F9E]">5</p>
+                    <p className="text-[9px] font-light text-[#42526b]">Specialists</p>
                   </div>
-                  <div className="flex flex-col items-center justify-center h-[60px] rounded-[12px] bg-[#9b1fe1]/10">
-                    <p className="text-[13px] font-semibold text-[#9b1fe1]">98%</p>
-                    <p className="text-[9px] font-light text-[#42526b]">Success</p>
+                  <div className="flex flex-col items-center justify-center h-[60px] rounded-[12px] bg-[#005F9E]/10">
+                    <p className="text-[13px] font-semibold text-[#005F9E]">5</p>
+                    <p className="text-[9px] font-light text-[#42526b]">Services</p>
                   </div>
-                  <div className="flex flex-col items-center justify-center h-[60px] rounded-[12px] bg-[#8468f5]/10">
-                    <p className="text-[13px] font-semibold text-[#8468f5]">5?</p>
-                    <p className="text-[9px] font-light text-[#42526b]">Rating</p>
+                  <div className="flex flex-col items-center justify-center h-[60px] rounded-[12px] bg-[#E91E8C]/10">
+                    <p className="text-[13px] font-semibold text-[#E91E8C]">1:1</p>
+                    <p className="text-[9px] font-light text-[#42526b]">Care</p>
                   </div>
                 </div>
               </div>
@@ -226,7 +232,7 @@ export default async function HomePage({
 
       <section className="bg-white py-16 lg:min-h-[429px]">
         <div className="container">
-          <div className="mx-auto flex max-w-5xl flex-col items-center rounded-[20px] bg-[rgba(255,53,245,0.04)] px-6 py-12 text-center">
+          <div className="mx-auto flex max-w-5xl flex-col items-center rounded-[20px] bg-[rgba(0,153,168,0.06)] px-6 py-12 text-center">
             <h2 className="gradient-text text-[30px] font-semibold">{t("subscribe.heading")}</h2>
             <p className="mt-3 text-[20px] font-light text-[#1e1e1e]">{t("subscribe.subtext")}</p>
             <form className="mt-8 flex w-full max-w-[590px] flex-col gap-3 rounded-[20px] bg-white p-2 shadow-sm sm:flex-row">

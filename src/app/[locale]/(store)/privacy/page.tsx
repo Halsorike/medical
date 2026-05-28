@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
-  description: "Privacy policy for Jordan Hearing & Speech Therapy â€” how we collect, use, and protect your personal information.",
+  description: "Privacy policy for Echo Wellness Center â€” how we collect, use, and protect your personal information.",
   alternates: { canonical: "/privacy" },
 };
 
@@ -40,10 +40,10 @@ export default function PrivacyPage() {
           <h2 className="mb-3 text-[20px] font-semibold text-[#061c3d]">4. Contact Us</h2>
           <p className="text-[15px] font-light leading-relaxed text-[#42526b]">
             If you have any questions about this privacy policy, please contact us at{" "}
-            <a href="mailto:info@jordanhearing.com" className="text-[#9b1fe1] underline">
-              info@jordanhearing.com
+            <a href="mailto:info@echowellness.me" className="text-[#005F9E] underline">
+              info@echowellness.me
             </a>{" "}
-            or call +962 6 123 4567.
+            or call +968 XXXX XXXX.
           </p>
         </section>
       </div>

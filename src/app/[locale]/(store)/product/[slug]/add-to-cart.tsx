@@ -30,7 +30,7 @@ export function AddToCartBlock({ product }: { product: Product }) {
             <button
               onClick={() => setQty(Math.max(1, qty - 1))}
               aria-label="Decrease"
-              className="flex h-8 w-8 items-center justify-center rounded-full hover:bg-purple-50 transition-colors"
+              className="flex h-8 w-8 items-center justify-center rounded-full hover:bg-brand-50 transition-colors"
             >
               <Minus className="h-3 w-3" />
             </button>
@@ -38,7 +38,7 @@ export function AddToCartBlock({ product }: { product: Product }) {
             <button
               onClick={() => setQty(Math.min(product.stock || 99, qty + 1))}
               aria-label="Increase"
-              className="flex h-8 w-8 items-center justify-center rounded-full hover:bg-purple-50 transition-colors"
+              className="flex h-8 w-8 items-center justify-center rounded-full hover:bg-brand-50 transition-colors"
             >
               <Plus className="h-3 w-3" />
             </button>

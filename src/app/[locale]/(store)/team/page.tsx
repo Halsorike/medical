@@ -2,14 +2,18 @@ import { Link } from "@/navigation";
 import type { Metadata } from "next";
 import { Button } from "@/components/ui/button";
 import { TeamCard } from "@/components/store/team-card";
-import { doctors } from "@/data/team";
+import { getApiData } from "@/lib/server-api";
+import type { Doctor } from "@/types/doctor";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Team",
-  description: "Meet the Jordan Hearing & Speech Therapy clinical team.",
+  title: "Our Team | Echo Wellness Center Muscat",
+  description:
+    "Meet our audiologists, speech therapists, occupational therapists, psychologists, and behavioral specialists at Echo Wellness Center in Muscat, Oman.",
   openGraph: {
-    title: "Our Team | Jordan Hearing & Speech Therapy",
-    description: "Meet our hearing, speech, and occupational therapy specialists.",
+    title: "Our Team | Echo Wellness Center Muscat",
+    description: "Meet our certified multidisciplinary therapy team in Muscat, Oman.",
     images: ["/og-image.jpg"],
   },
   alternates: {
@@ -17,11 +21,13 @@ export const metadata: Metadata = {
   },
 };
 
-export default function TeamPage({
+export default async function TeamPage({
   params: { locale },
 }: {
   params: { locale: string };
 }) {
+  const doctors = await getApiData<Doctor[]>("/api/doctors") ?? [];
+
   return (
     <>
       <section className="relative overflow-hidden bg-brand-gradient pb-16 pt-12 text-white">
@@ -43,7 +49,7 @@ export default function TeamPage({
           <div className="mb-12 text-center">
             <h2 className="gradient-text text-[30px] font-semibold">Our Main Team</h2>
             <p className="mx-auto mt-4 max-w-3xl text-[18px] font-light leading-8 text-[#42526b]">
-              Six real specialists covering hearing care, speech therapy, pediatric audiology, hearing aids, and occupational therapy.
+            Five certified specialists covering audiology, speech therapy, occupational therapy, psychology, and behavioral support.
             </p>
           </div>
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">

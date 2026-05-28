@@ -1,22 +1,26 @@
 "use client";
 
-import { type FormEvent, useState } from "react";
+import { type FormEvent, useEffect, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
-import { CheckCircle2, Mail, Phone, MapPin } from "lucide-react";
+import { CheckCircle2, Mail, MapPin, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
-const CONTACT = {
-  address: "123 Mecca Street, Amman, Jordan 11180",
-  phone: "+962 6 123 4567",
-  emergency: "+962 7 9876 5432",
-  email: "info@jordanhearing.com",
+const DEFAULT_CONTACT = {
+  name: "Echo Wellness Center",
+  address: "Sarooj, Muscat, Sultanate of Oman",
+  addressAr: "الساروج، مسقط، سلطنة عمان",
+  phone: "+968 XXXX XXXX",
+  emergency: "+968 XXXX XXXX",
+  email: "info@echowellness.me",
 };
 
-const SUBJECTS_EN = ["General Inquiry", "Book Appointment", "Product Inquiry", "Complaint", "Partnership", "Other"];
-const SUBJECTS_AR = ["استفسار عام", "حجز موعد", "استفسار عن منتج", "شكوى", "شراكة", "أخرى"];
+const SUBJECTS_EN = ["General Inquiry", "Book Appointment", "Service Inquiry", "Complaint", "Partnership", "Other"];
+const SUBJECTS_AR = ["استفسار عام", "حجز موعد", "استفسار عن خدمة", "شكوى", "شراكة", "أخرى"];
+
+type WebsiteSettings = Record<string, string | undefined>;
 
 export default function Contact() {
   const locale = useLocale();
@@ -24,9 +28,46 @@ export default function Contact() {
   const subjects = locale === "ar" ? SUBJECTS_AR : SUBJECTS_EN;
   const [submitted, setSubmitted] = useState(false);
   const [agree, setAgree] = useState(false);
+  const [contact, setContact] = useState(DEFAULT_CONTACT);
   const [form, setForm] = useState({
-    firstName: "", lastName: "", email: "", phone: "", subject: subjects[0] ?? "General Inquiry", message: "",
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    subject: subjects[0] ?? "General Inquiry",
+    message: "",
   });
+
+  useEffect(() => {
+    let mounted = true;
+
+    fetch("/api/website-settings")
+      .then((response) => (response.ok ? response.json() : Promise.reject()))
+      .then((payload: { data?: WebsiteSettings }) => {
+        if (!mounted) return;
+        const settings = payload.data ?? {};
+        const localizedAddress =
+          locale === "ar"
+            ? settings["clinic.address.ar"] ?? settings["clinic.address"] ?? DEFAULT_CONTACT.addressAr
+            : settings["clinic.address.en"] ?? settings["clinic.address"] ?? DEFAULT_CONTACT.address;
+
+        setContact({
+          name: settings["clinic.name.en"] ?? settings["clinic.name"] ?? DEFAULT_CONTACT.name,
+          address: localizedAddress,
+          addressAr: settings["clinic.address.ar"] ?? DEFAULT_CONTACT.addressAr,
+          phone: settings["clinic.phone"] ?? DEFAULT_CONTACT.phone,
+          emergency: settings["clinic.emergency"] ?? settings["clinic.phone"] ?? DEFAULT_CONTACT.emergency,
+          email: settings["clinic.email"] ?? DEFAULT_CONTACT.email,
+        });
+      })
+      .catch(() => {
+        if (mounted) setContact(DEFAULT_CONTACT);
+      });
+
+    return () => {
+      mounted = false;
+    };
+  }, [locale]);
 
   async function sendMessage(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -48,27 +89,28 @@ export default function Contact() {
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
             "@context": "https://schema.org",
-            "@type": "LocalBusiness",
-            name: "Jordan Hearing & Speech Therapy",
-            email: CONTACT.email,
-            telephone: CONTACT.phone,
+            "@type": "MedicalClinic",
+            name: contact.name,
+            alternateName: "Echo Wellness",
+            email: contact.email,
+            telephone: contact.phone,
             address: {
               "@type": "PostalAddress",
-              streetAddress: "123 Mecca Street",
-              addressLocality: "Amman",
-              postalCode: "11180",
-              addressCountry: "JO",
+              streetAddress: "Sarooj",
+              addressLocality: "Muscat",
+              addressRegion: "Muscat Governorate",
+              postalCode: "100",
+              addressCountry: "OM",
             },
-            openingHours: ["Su-Th 08:00-18:00", "Fr 09:00-14:00"],
+            geo: { "@type": "GeoCoordinates", latitude: 23.588, longitude: 58.3829 },
+            openingHours: ["Su-Th 08:00-18:00", "Sa 09:00-14:00"],
           }),
         }}
       />
-      {/* Hero */}
-      <div className="relative overflow-hidden bg-purple-50 pb-10 pt-8">
+
+      <div className="relative overflow-hidden bg-brand-50 pb-10 pt-8">
         <div className="container text-center">
-          <h1 className="gradient-text text-[38px] font-semibold">
-            {t("heading")}
-          </h1>
+          <h1 className="gradient-text text-[38px] font-semibold">{t("heading")}</h1>
         </div>
         <div className="absolute bottom-0 left-0 right-0 overflow-hidden">
           <svg viewBox="0 0 1440 30" className="w-full fill-white">
@@ -79,43 +121,41 @@ export default function Contact() {
 
       <div className="container py-12">
         <div className="mx-auto grid max-w-5xl gap-8 md:grid-cols-[auto_1fr]">
-          {/* Left sidebar */}
           <aside className="w-56 shrink-0 space-y-4">
-            <div className="rounded-2xl bg-purple-50 p-5">
+            <div className="rounded-2xl bg-brand-50 p-5">
               <p className="mb-4 text-sm font-semibold text-gray-700">{t("infoTitle")}</p>
               <div className="space-y-3 text-sm">
                 <div className="flex items-start gap-2">
-                  <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-purple-600" />
-                    <span className="text-gray-600">{CONTACT.address}</span>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <Mail className="mt-0.5 h-4 w-4 shrink-0 text-purple-600" />
-                    <div>
-                      <p className="text-gray-600">{t("emailPhone")}</p>
-                    <p className="text-xs text-muted-foreground">{CONTACT.email}</p>
-                    <p className="text-xs text-muted-foreground">{CONTACT.phone}</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <Phone className="mt-0.5 h-4 w-4 shrink-0 text-purple-600" />
+                  <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-brand-teal" />
+                  <span className="text-gray-600">{contact.address}</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <Mail className="mt-0.5 h-4 w-4 shrink-0 text-brand-teal" />
                   <div>
-                    <p className="text-gray-600">{CONTACT.phone}</p>
-                    <p className="text-xs text-muted-foreground">{t("emergency")}: {CONTACT.emergency}</p>
+                    <p className="text-gray-600">{t("emailPhone")}</p>
+                    <p className="text-xs text-muted-foreground">{contact.email}</p>
+                    <p className="text-xs text-muted-foreground">{contact.phone}</p>
                   </div>
+                </div>
+                <div className="flex items-start gap-2">
+                  <Phone className="mt-0.5 h-4 w-4 shrink-0 text-brand-teal" />
+                  <div>
+                    <p className="text-gray-600">{contact.phone}</p>
+                    <p className="text-xs text-muted-foreground">
+                      {t("emergency")}: {contact.emergency}
+                    </p>
                   </div>
+                </div>
               </div>
             </div>
           </aside>
 
-          {/* Form */}
-          <div className="rounded-2xl border border-purple-100 bg-white p-8 shadow-sm">
+          <div className="rounded-2xl border border-brand-100 bg-white p-8 shadow-sm">
             {submitted ? (
               <div className="flex min-h-[320px] flex-col items-center justify-center text-center">
                 <CheckCircle2 className="h-14 w-14 text-green-500" />
                 <h2 className="mt-4 text-xl font-semibold">{t("successTitle")}</h2>
-                <p className="mt-2 text-sm text-muted-foreground">
-                  {t("successMsg")}
-                </p>
+                <p className="mt-2 text-sm text-muted-foreground">{t("successMsg")}</p>
                 <Button variant="outline" className="mt-5 rounded-full" onClick={() => setSubmitted(false)}>
                   {t("sendAnother")}
                 </Button>
@@ -165,7 +205,7 @@ export default function Contact() {
                       {t("phone")}<span className="text-red-500">*</span>
                     </label>
                     <div className="flex gap-2">
-                      <span className="flex h-10 w-12 items-center justify-center rounded-lg border border-input bg-muted text-sm">JO</span>
+                      <span className="flex h-10 w-12 items-center justify-center rounded-lg border border-input bg-muted text-sm">OM</span>
                       <Input
                         type="tel"
                         value={form.phone}
@@ -214,7 +254,7 @@ export default function Contact() {
                     type="checkbox"
                     checked={agree}
                     onChange={(e) => setAgree(e.target.checked)}
-                    className="mt-0.5 accent-purple-600"
+                    className="mt-0.5 accent-brand-teal"
                     required
                   />
                   {t("consent")}
@@ -230,28 +270,23 @@ export default function Contact() {
           </div>
         </div>
 
-        {/* Clinic Location + Hours */}
         <div className="mx-auto mt-12 max-w-5xl">
-          <h2 className="mb-6 text-xl font-bold">
-            {t("clinicLocation")}
-          </h2>
-          <div className="relative overflow-hidden rounded-2xl border border-purple-100">
-            {/* Map placeholder */}
+          <h2 className="mb-6 text-xl font-bold">{t("clinicLocation")}</h2>
+          <div className="relative overflow-hidden rounded-2xl border border-brand-100">
             <iframe
-              title="Jordan Hearing & Speech Therapy location in Amman"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3384.0!2d35.9106!3d31.9539!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzHCsDU3JzE0LjAiTiAzNcKwNTQnMzguMiJF!5e0!3m2!1sen!2sjo!4v1234567890"
+              title="Echo Wellness Center location in Muscat"
+              src="https://www.google.com/maps?q=23.5880,58.3829&z=15&output=embed"
               className="h-72 w-full border-0"
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
               allowFullScreen
             />
-            {/* Hours overlay card */}
             <div className="absolute right-4 top-4 rounded-2xl bg-white p-4 shadow-lg">
               <p className="mb-1 text-xs uppercase tracking-wide text-muted-foreground">TIME</p>
               <p className="font-bold text-gray-800">{t("workingHours")}</p>
               <p className="mt-1 text-xs text-gray-600">Sun-Thu 8:00 AM - 6:00 PM</p>
-              <p className="text-xs text-gray-600">Fri 9:00 AM - 2:00 PM</p>
-              <p className="text-xs text-gray-600">Sat Closed</p>
+              <p className="text-xs text-gray-600">Sat 9:00 AM - 2:00 PM</p>
+              <p className="text-xs text-gray-600">Fri Closed</p>
             </div>
           </div>
         </div>

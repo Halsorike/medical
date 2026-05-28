@@ -12,7 +12,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
-const COLORS = ["Red", "Blue", "Green", "White", "Black", "Silver", "Pink", "Purple"];
+const COLORS = ["Red", "Blue", "Green", "White", "Black", "Silver", "Pink", "Teal"];
 const ATTRIBUTES = ["Size: S", "Size: M", "Size: L", "Size: XL", "Material: Cotton", "Material: Plastic"];
 
 function UploadZone({ label, hint }: { label: string; hint?: string }) {

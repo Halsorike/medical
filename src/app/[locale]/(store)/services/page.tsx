@@ -126,7 +126,7 @@ export default function ServicesPage() {
             We provide a comprehensive range of specialized services in audiology, speech therapy, and occupational therapy, designed to improve quality of life at every stage.
           </p>
           <Link href="/book-appointment" className="mt-6 inline-block">
-            <Button className="rounded-full bg-white text-purple-700 font-semibold px-8 hover:bg-white/90">
+            <Button className="rounded-full bg-white text-brand-blue font-semibold px-8 hover:bg-white/90">
               Book Appointment -&gt;
             </Button>
           </Link>
@@ -146,13 +146,13 @@ export default function ServicesPage() {
             const detail = SERVICE_DETAILS[sourceTitle];
 
             return (
-            <div key={s.title} className="rounded-2xl border border-purple-100 bg-white p-6 shadow-sm hover:shadow-md transition-shadow">
-              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-purple-50">
-                <s.icon className="h-6 w-6 text-purple-600" />
+            <div key={s.title} className="rounded-2xl border border-brand-100 bg-white p-6 shadow-sm hover:shadow-md transition-shadow">
+              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-brand-50">
+                <s.icon className="h-6 w-6 text-brand-teal" />
               </div>
               <h3 className="mb-2 font-semibold text-gray-800">{s.title}</h3>
               <div className="mb-3 flex flex-wrap gap-2 text-xs">
-                <span className="rounded-full bg-purple-50 px-2.5 py-1 text-purple-700">{detail.department}</span>
+                <span className="rounded-full bg-brand-50 px-2.5 py-1 text-brand-blue">{detail.department}</span>
                 <span className="rounded-full bg-slate-100 px-2.5 py-1 text-slate-700">{detail.duration}</span>
               </div>
               <p className="text-sm text-muted-foreground leading-relaxed">{s.description}</p>
@@ -182,7 +182,7 @@ export default function ServicesPage() {
       </section>
 
       {/* CTA */}
-      <section className="bg-purple-50/60 py-16">
+      <section className="bg-brand-50/60 py-16">
         <div className="container text-center">
           <h2 className="text-2xl font-bold">Ready to get started?</h2>
           <p className="mt-2 text-muted-foreground">Book an appointment with one of our specialists today.</p>

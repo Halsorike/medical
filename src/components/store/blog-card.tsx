@@ -40,7 +40,7 @@ export function BlogCard({ id = 0, slug, title, date, image }: BlogCardProps) {
         <div className="relative px-[29px] pb-10 pt-0">
           {/* date + comments row */}
           <div className="flex items-center gap-[18px] pt-[18px] text-[16px]">
-            <p className="font-medium text-[#ca79c6]">{date}</p>
+            <p className="font-medium text-[#0099A8]">{date}</p>
             <p className="flex items-center gap-[5.5px] font-medium text-[#42526b]">
               <MessageCircle className="h-[22px] w-[22px] text-[#42526b]/60" />
               <span className="text-[#061c3d]">{comments}</span>
@@ -54,7 +54,7 @@ export function BlogCard({ id = 0, slug, title, date, image }: BlogCardProps) {
           </h3>
 
           {/* READ MORE â€” absolute bottom Figma position */}
-          <div className="absolute bottom-8 left-[29px] flex items-center gap-2 text-[#ca79c6]">
+          <div className="absolute bottom-8 left-[29px] flex items-center gap-2 text-[#0099A8]">
             <span className="text-[9px] font-bold uppercase tracking-widest">{t("readMore")}</span>
             <ArrowRight className="h-[18px] w-[18px]" />
           </div>

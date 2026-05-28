@@ -5,8 +5,8 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
-      disallow: "/admin",
+      disallow: ["/admin", "/api", "/checkout"],
     },
-    sitemap: "https://jordanhearing.com/sitemap.xml",
+    sitemap: "https://echowellness.me/sitemap.xml",
   };
 }

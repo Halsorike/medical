@@ -2,7 +2,7 @@
 
 import { Link } from "@/navigation";
 import { useTranslations } from "next-intl";
-import { Ear, Facebook, Instagram, Mail, MapPin, Phone, Twitter } from "lucide-react";
+import { Facebook, Instagram, Mail, MapPin, Phone, Twitter } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export function StoreFooter() {
@@ -32,23 +32,23 @@ export function StoreFooter() {
             <h3 className="text-[20px] font-semibold uppercase text-white">{t("contact")}</h3>
             <div className="mt-8 flex flex-col gap-5 text-[18px] font-medium text-white/90">
               <p className="flex items-center gap-3">
-                <Mail className="h-6 w-6" /> info@jordanhearing.com
+                <Mail className="h-6 w-6" /> info@echowellness.me
               </p>
               <p className="flex items-center gap-3">
-                <Phone className="h-6 w-6" /> +962 6 123 4567
+                <Phone className="h-6 w-6" /> +968 XXXX XXXX
               </p>
               <p className="flex items-start gap-3 leading-7">
-                <MapPin className="mt-1 h-6 w-6 shrink-0" /> 123 Mecca Street, Amman, Jordan
+                <MapPin className="mt-1 h-6 w-6 shrink-0" /> Sarooj, Muscat, Sultanate of Oman
               </p>
             </div>
             <div className="mt-8 flex gap-4">
-              <a href="https://facebook.com/jordanhearing" aria-label="Facebook" className="flex h-11 w-11 items-center justify-center rounded-full bg-white/15 text-white transition hover:bg-white/25">
+              <a href="https://www.facebook.com/echowellness.me" aria-label="Facebook" className="flex h-11 w-11 items-center justify-center rounded-full bg-white/15 text-white transition hover:bg-white/25">
                 <Facebook className="h-5 w-5" />
               </a>
-              <a href="https://instagram.com/jordanhearing" aria-label="Instagram" className="flex h-11 w-11 items-center justify-center rounded-full bg-white/15 text-white transition hover:bg-white/25">
+              <a href="https://www.instagram.com/echowellness.om/" aria-label="Instagram" className="flex h-11 w-11 items-center justify-center rounded-full bg-white/15 text-white transition hover:bg-white/25">
                 <Instagram className="h-5 w-5" />
               </a>
-              <a href="https://twitter.com/jordanhearing" aria-label="Twitter" className="flex h-11 w-11 items-center justify-center rounded-full bg-white/15 text-white transition hover:bg-white/25">
+              <a href="https://x.com/echowellness" aria-label="Twitter" className="flex h-11 w-11 items-center justify-center rounded-full bg-white/15 text-white transition hover:bg-white/25">
                 <Twitter className="h-5 w-5" />
               </a>
             </div>
@@ -63,7 +63,7 @@ export function StoreFooter() {
                 </Link>
               ))}
             </nav>
-            <Button asChild className="mt-8 rounded-[10px] bg-white px-8 py-3 text-[#ca79c6] hover:bg-white/90">
+            <Button asChild className="mt-8 rounded-[10px] bg-white px-8 py-3 text-brand-blue hover:bg-white/90">
               <Link href="/shop">Shop Now</Link>
             </Button>
           </div>
@@ -79,11 +79,12 @@ export function StoreFooter() {
 
           <div className="flex items-start justify-center lg:justify-end">
             <div className="flex flex-col items-center gap-4 text-center">
-              <div className="flex h-32 w-32 items-center justify-center rounded-full bg-white/15 text-white shadow-[0_18px_48px_rgba(6,28,61,0.12)]">
-                <Ear className="h-20 w-20" />
+              <div className="flex h-32 w-32 items-center justify-center rounded-full bg-white text-white shadow-[0_18px_48px_rgba(6,28,61,0.12)]">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="/logo.svg" alt="Echo Wellness logo" className="h-24 w-24" />
               </div>
               <p className="max-w-[220px] text-[22px] font-bold uppercase leading-tight text-white">
-                Jordan Hearing &amp; Speech Therapy
+                Echo Wellness
               </p>
             </div>
           </div>

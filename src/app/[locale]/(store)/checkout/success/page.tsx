@@ -39,10 +39,10 @@ export default function Success() {
       </p>
 
       {order && (
-        <div className="mt-8 rounded-2xl border border-purple-100 bg-white p-6 text-left shadow-sm">
+        <div className="mt-8 rounded-2xl border border-brand-100 bg-white p-6 text-left shadow-sm">
           <div className="mb-4 flex items-center justify-between border-b pb-3">
             <span className="text-sm text-muted-foreground">Order number</span>
-            <span className="font-bold text-purple-700">#{order.orderNumber}</span>
+            <span className="font-bold text-brand-blue">#{order.orderNumber}</span>
           </div>
           <div className="space-y-3">
             {order.items.map((item) => (
@@ -60,7 +60,7 @@ export default function Success() {
           )}
           <div className="mt-2 flex justify-between text-sm">
             <span>Shipping</span>
-            <span>{order.shipping === 0 ? "Free delivery within Amman" : formatCurrency(order.shipping)}</span>
+            <span>{order.shipping === 0 ? "Free delivery within Muscat" : formatCurrency(order.shipping)}</span>
           </div>
           <div className="mt-4 flex justify-between border-t pt-4 text-lg font-bold">
             <span>Total paid</span>
