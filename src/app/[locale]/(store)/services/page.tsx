@@ -1,196 +1,146 @@
 "use client";
 
 import { Link } from "@/navigation";
-import { useState } from "react";
 import { useLocale } from "next-intl";
+import { Activity, Brain, ChevronRight, Ear, MessageCircle, Puzzle } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Ear, MessageCircle, BriefcaseMedical, Brain, Eye, Activity } from "lucide-react";
+import { HeroSection } from "@/components/store/hero-section";
+import { Testimonials } from "@/components/store/testimonials";
 
-const SERVICES = [
+const services = [
   {
     icon: Ear,
-    title: "Hearing Evaluation",
-    description:
-      "Comprehensive audiological assessments using state-of-the-art equipment to accurately measure hearing levels and diagnose hearing disorders across all age groups.",
+    title: "Audiology",
+    titleAr: "السمعيات",
+    description: "Hearing tests, auditory processing guidance, and hearing-care recommendations for children and adults.",
+    descriptionAr: "تقييمات سمعية وإرشاد سمعي وتوصيات مناسبة للأطفال والبالغين.",
   },
   {
     icon: MessageCircle,
     title: "Speech Therapy",
-    description:
-      "Specialized therapy for individuals with speech, language, and communication disorders ? from articulation and fluency challenges to language delays.",
+    titleAr: "علاج النطق",
+    description: "Support for speech delay, articulation, language development, fluency, and communication confidence.",
+    descriptionAr: "دعم تأخر النطق، اللغة، الطلاقة، ومهارات التواصل بثقة.",
   },
   {
-    icon: BriefcaseMedical,
+    icon: Activity,
     title: "Occupational Therapy",
-    description:
-      "Evidence-based occupational therapy that helps patients develop the skills needed for daily activities, improving independence and quality of life.",
+    titleAr: "العلاج الوظيفي",
+    description: "Sensory, motor, handwriting, feeding, and daily living skill development through practical therapy.",
+    descriptionAr: "تنمية المهارات الحسية والحركية ومهارات الحياة اليومية من خلال علاج عملي.",
   },
   {
     icon: Brain,
-    title: "Auditory Processing",
-    description:
-      "Assessment and treatment of auditory processing disorders, helping patients interpret sounds more effectively in everyday environments.",
+    title: "Psychology",
+    titleAr: "علم النفس",
+    description: "Assessment and family-centered support for emotional, developmental, and learning needs.",
+    descriptionAr: "تقييم ودعم نفسي للأسرة والطفل للاحتياجات النمائية والتعليمية والانفعالية.",
   },
   {
-    icon: Eye,
-    title: "Hearing Aid Fitting",
-    description:
-      "Professional fitting, calibration and follow-up for hearing aids from leading manufacturers, tailored to each patient's hearing profile.",
-  },
-  {
-    icon: Activity,
-    title: "Hearing Rehabilitation",
-    description:
-      "Structured rehabilitation programs for patients post-cochlear implant surgery or after significant hearing loss, maximizing outcomes.",
+    icon: Puzzle,
+    title: "Behavioral Support / ABA",
+    titleAr: "الدعم السلوكي",
+    description: "Behavioral support plans and practical parent coaching for daily routines and skill-building.",
+    descriptionAr: "خطط دعم سلوكي وتدريب عملي للأهل لبناء المهارات اليومية.",
   },
 ];
 
-const SERVICES_AR = [
-  {
-    icon: Ear,
-    title: "تقييم السمع",
-    description: "تقييمات سمعية شاملة باستخدام أحدث الأجهزة لقياس مستويات السمع بدقة وتشخيص اضطرابات السمع لجميع الأعمار.",
-  },
-  {
-    icon: MessageCircle,
-    title: "علاج النطق",
-    description: "علاج متخصص للأفراد الذين يعانون من اضطرابات الكلام واللغة والتواصل — من مشكلات النطق والطلاقة إلى تأخر اللغة.",
-  },
-  {
-    icon: BriefcaseMedical,
-    title: "العلاج الوظيفي",
-    description: "برامج علاج وظيفي شاملة تساعد الأطفال والبالغين على تطوير مهاراتهم الحسية والحركية ومهارات الحياة اليومية.",
-  },
-  {
-    icon: Brain,
-    title: "اضطرابات المعالجة السمعية",
-    description: "تشخيص وعلاج متخصص لاضطرابات المعالجة السمعية المركزية التي تؤثر على الفهم في البيئات الصاخبة.",
-  },
-  {
-    icon: Eye,
-    title: "تركيب أجهزة السمع",
-    description: "اختيار وتركيب وضبط أجهزة السمع المناسبة لكل مريض من قِبل متخصصين معتمدين.",
-  },
-  {
-    icon: Activity,
-    title: "إعادة التأهيل السمعي",
-    description: "برامج إعادة تأهيل سمعي شاملة تشمل التدريب على الاستماع وتحسين التواصل بعد تركيب الأجهزة.",
-  },
-];
+function ServiceMiniCard({ item, locale }: { item: (typeof services)[number]; locale: string }) {
+  const title = locale === "ar" ? item.titleAr : item.title;
+  const description = locale === "ar" ? item.descriptionAr : item.description;
 
-const SERVICE_DETAILS: Record<string, { department: string; duration: string; fullDescription: string }> = {
-  "Hearing Evaluation": {
-    department: "Audiology",
-    duration: "45-60 minutes",
-    fullDescription: "Includes pure tone testing, speech understanding review, middle-ear screening, and a personalized next-step plan.",
-  },
-  "Speech Therapy": {
-    department: "Speech Therapy",
-    duration: "45-60 minutes",
-    fullDescription: "Sessions may include articulation practice, language development, fluency support, and home exercises.",
-  },
-  "Occupational Therapy": {
-    department: "Occupational Therapy",
-    duration: "45-60 minutes",
-    fullDescription: "Therapy focuses on sensory regulation, motor planning, daily living routines, and independence skills.",
-  },
-  "Auditory Processing": {
-    department: "Audiology",
-    duration: "45-60 minutes",
-    fullDescription: "Our specialists assess listening challenges and build practical strategies for school, work, and noisy environments.",
-  },
-  "Hearing Aid Fitting": {
-    department: "Hearing Aid Fitting",
-    duration: "45-60 minutes",
-    fullDescription: "Includes device selection, ear-fit review, programming, comfort checks, and follow-up adjustments.",
-  },
-  "Hearing Rehabilitation": {
-    department: "Audiology",
-    duration: "45-60 minutes",
-    fullDescription: "Rehabilitation combines listening exercises, communication strategies, family coaching, and progress tracking.",
-  },
-};
+  return (
+    <article className="figma-card flex items-start gap-4 p-5">
+      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-brand-gold text-white">
+        <item.icon className="h-6 w-6" />
+      </div>
+      <div>
+        <h3 className="gradient-text text-[16px] font-semibold">{title}</h3>
+        <p className="mt-2 text-[13px] leading-6 text-[#42526b]">{description}</p>
+      </div>
+    </article>
+  );
+}
 
 export default function ServicesPage() {
   const locale = useLocale();
-  const [expanded, setExpanded] = useState<string | null>(null);
-  const servicesDisplay = locale === "ar" ? SERVICES_AR : SERVICES;
+  const isAr = locale === "ar";
 
   return (
     <>
-      {/* Hero */}
-      <section className="relative overflow-hidden bg-brand-gradient pb-16 pt-12 text-white">
-        <div className="container">
-          <h1 className="text-3xl font-bold md:text-4xl">Our Services</h1>
-          <p className="mt-3 max-w-xl text-white/85 leading-relaxed">
-            We provide a comprehensive range of specialized services in audiology, speech therapy, and occupational therapy, designed to improve quality of life at every stage.
-          </p>
-          <Link href="/book-appointment" className="mt-6 inline-block">
-            <Button className="rounded-full bg-white text-brand-blue font-semibold px-8 hover:bg-white/90">
-              Book Appointment -&gt;
+      <HeroSection
+        title={isAr ? "خدماتنا" : "Our Services"}
+        description={
+          isAr
+            ? "خدمات علاجية متكاملة في السمعيات، النطق، العلاج الوظيفي، علم النفس، والدعم السلوكي في مسقط."
+            : "Integrated audiology, speech therapy, occupational therapy, psychology, and behavioral support in Muscat."
+        }
+        ctaLabel={isAr ? "احجز تقييم طفلك" : "Book Your Child's Assessment"}
+      />
+
+      <section className="figma-section bg-white">
+        <div className="container grid items-center gap-12 lg:grid-cols-[1.1fr_0.9fr]">
+          <div className="grid gap-5 md:grid-cols-2">
+            {services.slice(0, 3).map((service) => (
+              <ServiceMiniCard key={service.title} item={service} locale={locale} />
+            ))}
+          </div>
+          <div>
+            <h2 className="gradient-text text-[30px] font-semibold">{isAr ? "رعاية متكاملة" : "Our Services"}</h2>
+            <p className="mt-6 text-[20px] font-light leading-9 text-[#1e1e1e]">
+              {isAr
+                ? "ننسق بين التخصصات ليحصل الطفل والأسرة على خطة واضحة من التقييم إلى المتابعة."
+                : "We coordinate across specialties so every child and family receives a clear path from assessment to therapy and follow-up."}
+            </p>
+            <Button asChild className="mt-8 rounded-full bg-brand-gold px-8 text-white hover:bg-brand-gold/90">
+              <Link href="/book-appointment">{isAr ? "ابدأ الآن" : "All Services"}</Link>
             </Button>
-          </Link>
-        </div>
-        <div className="absolute bottom-0 left-0 right-0 overflow-hidden">
-          <svg viewBox="0 0 1440 60" className="w-full fill-white">
-            <path d="M0,30 C360,60 1080,0 1440,30 L1440,60 L0,60 Z" />
-          </svg>
+          </div>
         </div>
       </section>
 
-      {/* Services Grid */}
-      <section className="container py-16">
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {servicesDisplay.map((s, index) => {
-            const sourceTitle = SERVICES[index]?.title ?? s.title;
-            const detail = SERVICE_DETAILS[sourceTitle];
-
-            return (
-            <div key={s.title} className="rounded-2xl border border-brand-100 bg-white p-6 shadow-sm hover:shadow-md transition-shadow">
-              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-brand-50">
-                <s.icon className="h-6 w-6 text-brand-teal" />
+      {[
+        { title: "Audiology and Hearing Care", items: services.slice(0, 3) },
+        { title: "Speech and Communication", items: [services[1], services[3], services[4]] },
+        { title: "Occupational and Behavioral Support", items: [services[2], services[3], services[4]] },
+      ].map((section) => (
+        <section key={section.title} className="figma-section bg-white even:bg-brand-50/60">
+          <div className="container">
+            <div className="mb-10 flex flex-col justify-between gap-4 md:flex-row md:items-end">
+              <div>
+                <h2 className="gradient-text text-[30px] font-semibold">{section.title}</h2>
+                <p className="mt-3 max-w-2xl text-[17px] leading-7 text-[#42526b]">
+                  Focused treatment cards built around assessment, family coaching, and measurable progress.
+                </p>
               </div>
-              <h3 className="mb-2 font-semibold text-gray-800">{s.title}</h3>
-              <div className="mb-3 flex flex-wrap gap-2 text-xs">
-                <span className="rounded-full bg-brand-50 px-2.5 py-1 text-brand-blue">{detail.department}</span>
-                <span className="rounded-full bg-slate-100 px-2.5 py-1 text-slate-700">{detail.duration}</span>
-              </div>
-              <p className="text-sm text-muted-foreground leading-relaxed">{s.description}</p>
-              {expanded === sourceTitle && (
-                <p className="mt-3 text-sm leading-relaxed text-gray-600">{detail.fullDescription}</p>
-              )}
-              <div className="mt-5 flex flex-col gap-2 sm:flex-row">
-                <Button
-                  type="button"
-                  variant="outline"
-                  size="sm"
-                  className="rounded-full"
-                  onClick={() => setExpanded((current) => (current === sourceTitle ? null : sourceTitle))}
-                >
-                  {expanded === sourceTitle ? "Show Less" : "Learn More"}
-                </Button>
-                <Link href={`/book-appointment?service=${encodeURIComponent(sourceTitle)}`}>
-                  <Button variant="gradient" size="sm" className="w-full rounded-full sm:w-auto">
-                    Book This Service
-                  </Button>
-                </Link>
+              <div className="flex gap-3">
+                <button className="flex h-11 w-11 items-center justify-center rounded-full border border-brand-100 bg-white text-brand-teal" aria-label="Previous">
+                  <ChevronRight className="h-5 w-5 rotate-180" />
+                </button>
+                <button className="flex h-11 w-11 items-center justify-center rounded-full bg-brand-teal text-white" aria-label="Next">
+                  <ChevronRight className="h-5 w-5" />
+                </button>
               </div>
             </div>
-            );
-          })}
-        </div>
-      </section>
+            <div className="grid gap-6 md:grid-cols-3">
+              {section.items.map((item) => (
+                <article key={`${section.title}-${item.title}`} className="figma-card p-7">
+                  <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-brand-50 text-brand-teal">
+                    <item.icon className="h-7 w-7" />
+                  </div>
+                  <h3 className="text-[20px] font-semibold text-[#061c3d]">{item.title}</h3>
+                  <p className="mt-4 text-[15px] leading-7 text-[#42526b]">{item.description}</p>
+                  <Link href={`/book-appointment?service=${encodeURIComponent(item.title)}`} className="mt-6 inline-flex items-center text-sm font-semibold text-brand-teal">
+                    Book service <ChevronRight className="ml-1 h-4 w-4" />
+                  </Link>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+      ))}
 
-      {/* CTA */}
-      <section className="bg-brand-50/60 py-16">
-        <div className="container text-center">
-          <h2 className="text-2xl font-bold">Ready to get started?</h2>
-          <p className="mt-2 text-muted-foreground">Book an appointment with one of our specialists today.</p>
-          <Link href="/book-appointment" className="mt-6 inline-block">
-            <Button variant="gradient" className="rounded-full px-10">Book Appointment</Button>
-          </Link>
-        </div>
-      </section>
+      <Testimonials />
     </>
   );
 }

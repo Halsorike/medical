@@ -29,23 +29,5 @@ export default async function BlogPage({
   const posts = apiPosts?.length ? apiPosts.map(normalizeBlogPost) : fallbackBlogPosts;
   const localePosts = posts.map((post) => getPostLocale(post, locale));
 
-  return (
-    <>
-      <section className="relative overflow-hidden bg-brand-gradient pb-16 pt-12 text-white">
-        <div className="container text-center">
-          <h1 className="text-[38px] font-semibold">Our Blogs</h1>
-          <p className="mx-auto mt-4 max-w-2xl text-[18px] font-light leading-8 text-white/85">
-            Explore insights, stay informed. Our blogs offer concise expertise for your well-being journey.
-          </p>
-        </div>
-        <div className="absolute bottom-0 left-0 right-0 overflow-hidden">
-          <svg viewBox="0 0 1440 60" className="w-full fill-white">
-            <path d="M0,30 C360,60 1080,0 1440,30 L1440,60 L0,60 Z" />
-          </svg>
-        </div>
-      </section>
-
-      <BlogListClient posts={localePosts} />
-    </>
-  );
+  return <BlogListClient posts={localePosts} />;
 }
