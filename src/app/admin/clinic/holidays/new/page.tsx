@@ -12,6 +12,30 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 export default function NewHolidayPage() {
   const router = useRouter();
 
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    const formData = new FormData(event.currentTarget);
+    const response = await fetch("/api/holidays", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: String(formData.get("period") ?? "Clinic Holiday"),
+        date: String(formData.get("startDate") ?? ""),
+        description: String(formData.get("reason") ?? ""),
+        recurring: false,
+      }),
+    });
+
+    if (!response.ok) {
+      toast.error("Holiday could not be created");
+      return;
+    }
+
+    toast.success("Holiday created");
+    router.push("/admin/clinic/holidays");
+  }
+
   return (
     <>
       <PageHeader title="" description="" />
@@ -28,32 +52,28 @@ export default function NewHolidayPage() {
       <div className="rounded-lg border bg-white p-6 max-w-2xl">
         <h2 className="mb-6 text-lg font-semibold text-primary">New Holiday</h2>
         <form
-          onSubmit={(event) => {
-            event.preventDefault();
-            toast.success("Holiday created");
-            router.push("/admin/clinic/holidays");
-          }}
+          onSubmit={handleSubmit}
           className="space-y-4"
         >
           <div>
             <Label htmlFor="period">Period of Holiday *</Label>
-            <Input id="period" required placeholder="" />
+            <Input id="period" name="period" required placeholder="" />
           </div>
 
           <div className="grid gap-4 md:grid-cols-2">
             <div>
               <Label htmlFor="start-date">Start Date *</Label>
-              <Input id="start-date" type="date" required />
+              <Input id="start-date" name="startDate" type="date" required />
             </div>
             <div>
               <Label htmlFor="end-date">End Date *</Label>
-              <Input id="end-date" type="date" required />
+              <Input id="end-date" name="endDate" type="date" required />
             </div>
           </div>
 
           <div>
             <Label htmlFor="reason">Reason of Holiday *</Label>
-            <Textarea id="reason" rows={5} required placeholder="" />
+            <Textarea id="reason" name="reason" rows={5} required placeholder="" />
           </div>
 
           <div className="flex gap-3 pt-2">

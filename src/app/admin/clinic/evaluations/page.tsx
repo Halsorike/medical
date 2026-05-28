@@ -1,31 +1,65 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { toast } from "sonner";
 import { PageHeader } from "@/components/admin/page-header";
 import { DataTable, Pagination } from "@/components/admin/data-table";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Plus, Eye, Pencil, Trash2, Search, Filter } from "lucide-react";
-import { evaluations, evaluationSubmissions } from "@/data/clinic";
 
-// Mock hearing test data (same shape as evaluations)
-const hearingTests = evaluations.map((e) => ({
-  ...e,
-  id: `HT-${e.id}`,
-  name: e.name.replace("Eval", "Hearing Test"),
-}));
+type ApiEvaluation = {
+  id: string;
+  patientName: string;
+  email: string;
+  score: number;
+  createdAt: string;
+};
+
+type EvaluationDef = { id: string; name: string; submissions: number };
 
 export default function EvaluationsPage() {
   const [q, setQ] = useState("");
+  const [evaluationSubmissions, setEvaluationSubmissions] = useState<ApiEvaluation[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("/api/evaluations")
+      .then((response) => (response.ok ? response.json() : Promise.reject()))
+      .then((payload: { data: ApiEvaluation[] }) => setEvaluationSubmissions(payload.data))
+      .catch(() => toast.error("Evaluations could not be loaded"))
+      .finally(() => setLoading(false));
+  }, []);
+
+  const evaluations = useMemo<EvaluationDef[]>(
+    () => [
+      {
+        id: "EVL-HEARING",
+        name: "Hearing Evaluation",
+        submissions: evaluationSubmissions.length,
+      },
+    ],
+    [evaluationSubmissions.length]
+  );
+
+  const hearingTests = useMemo(
+    () =>
+      evaluations.map((evaluation) => ({
+        ...evaluation,
+        id: `HT-${evaluation.id}`,
+        name: evaluation.name,
+      })),
+    [evaluations]
+  );
 
   const filteredEvals = useMemo(
     () => evaluations.filter((e) => q === "" || e.name.toLowerCase().includes(q.toLowerCase())),
-    [q]
+    [evaluations, q]
   );
   const filteredHearing = useMemo(
     () => hearingTests.filter((e) => q === "" || e.name.toLowerCase().includes(q.toLowerCase())),
-    [q]
+    [hearingTests, q]
   );
 
   const actionCell = (name: string) => (
@@ -43,17 +77,17 @@ export default function EvaluationsPage() {
   );
 
   const evalColumns = [
-    { header: "Evaluation ID", accessor: (r: typeof evaluations[number]) => r.id },
-    { header: "Evaluation Name", accessor: (r: typeof evaluations[number]) => r.name },
-    { header: "# of Submissions", accessor: (r: typeof evaluations[number]) => r.submissions },
-    { header: "Action", accessor: (r: typeof evaluations[number]) => actionCell(r.name) },
+    { header: "Evaluation ID", accessor: (r: EvaluationDef) => r.id },
+    { header: "Evaluation Name", accessor: (r: EvaluationDef) => r.name },
+    { header: "# of Submissions", accessor: (r: EvaluationDef) => r.submissions },
+    { header: "Action", accessor: (r: EvaluationDef) => actionCell(r.name) },
   ];
 
   const hearingColumns = [
-    { header: "Evaluation ID", accessor: (r: typeof hearingTests[number]) => r.id },
-    { header: "Evaluation Name", accessor: (r: typeof hearingTests[number]) => r.name },
-    { header: "# of Submissions", accessor: (r: typeof hearingTests[number]) => r.submissions },
-    { header: "Action", accessor: (r: typeof hearingTests[number]) => actionCell(r.name) },
+    { header: "Evaluation ID", accessor: (r: EvaluationDef) => r.id },
+    { header: "Evaluation Name", accessor: (r: EvaluationDef) => r.name },
+    { header: "# of Submissions", accessor: (r: EvaluationDef) => r.submissions },
+    { header: "Action", accessor: (r: EvaluationDef) => actionCell(r.name) },
   ];
 
   return (
@@ -95,14 +129,15 @@ export default function EvaluationsPage() {
         <TabsContent value="submissions">
           <DataTable
             rows={evaluationSubmissions}
+            empty={loading ? "Loading submissions..." : "No submissions."}
             rowKey={(r) => r.id}
             columns={[
               { header: "Submissions ID", accessor: (r) => r.id },
-              { header: "Evaluation", accessor: (r) => r.evaluationName },
+              { header: "Evaluation", accessor: () => "Hearing Evaluation" },
               { header: "Email", accessor: (r) => r.email },
               { header: "Score", accessor: (r) => r.score },
-              { header: "Results", accessor: (r) => r.result },
-              { header: "Date", accessor: (r) => r.date },
+              { header: "Results", accessor: (r) => (r.score >= 70 ? "Good" : "Needs Attention") },
+              { header: "Date", accessor: (r) => new Date(r.createdAt).toLocaleDateString() },
             ]}
           />
           <Pagination total={evaluationSubmissions.length} />
