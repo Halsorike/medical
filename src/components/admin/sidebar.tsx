@@ -62,7 +62,7 @@ function NavLink({ item, pathname, siblings = [] }: { item: AdminNavItem; pathna
   const Icon = getIcon(item.icon);
   const active = isItemActive(item, pathname, siblings);
   return (
-    <Link href={item.href} className={cn("flex items-center gap-2 rounded-md px-3 py-2 transition", active ? "bg-brand-gradient text-white" : "text-foreground hover:bg-muted")}>
+    <Link href={item.href} className={cn("flex items-center gap-2 rounded-md px-3 py-2 transition", active ? "bg-brand-gradient text-white shadow-sm" : "text-foreground hover:bg-brand-50 hover:text-brand-700")}>
       <Icon className="h-4 w-4" /><span className="truncate">{translatedNavLabel(item.href, item.label, labels)}</span>
     </Link>
   );
@@ -117,14 +117,14 @@ function NavGroup({ group, pathname }: { group: AdminNavGroup; pathname: string 
         onKeyDown={handleKeyDown}
         className={cn(
           "flex cursor-pointer select-none items-center gap-2 rounded-md px-3 py-2 text-sm transition",
-          active ? "bg-muted text-foreground" : "text-muted-foreground hover:bg-muted hover:text-foreground",
+          active ? "bg-brand-50 text-brand-700" : "text-muted-foreground hover:bg-brand-50 hover:text-brand-700",
         )}
       >
         <Icon className="h-4 w-4" />
         <span className="min-w-0 flex-1 truncate font-medium">{group.id === "clinic" ? labels.nav.clinic : group.id === "ecommerce" ? labels.nav.ecommerce : group.label}</span>
         <Icons.ChevronDown className={cn("h-4 w-4 transition-transform", open ? "rotate-180" : "")} />
       </div>
-      <div id={panelId} role="region" aria-labelledby={headingId} className={cn("space-y-1 pl-2", open ? "block" : "hidden")}>
+      <div id={panelId} role="region" aria-labelledby={headingId} className={cn("space-y-1 ps-2", open ? "block" : "hidden")}>
         {group.children.map((item) => <NavLink key={item.href} item={item} pathname={pathname} siblings={group.children} />)}
       </div>
     </div>
@@ -135,8 +135,8 @@ export function AdminSidebar() {
   const pathname = usePathname();
   const { labels } = useAdminLocale();
   return (
-    <aside className="hidden w-64 shrink-0 overflow-y-auto border-r bg-white md:block">
-      <div className="border-b p-4">
+    <aside className="hidden w-64 shrink-0 overflow-y-auto border-e border-brand-100 bg-white md:block">
+      <div className="border-b border-brand-100 p-4">
         <Link href="/admin" className="text-xl font-bold"><span className="bg-brand-gradient bg-clip-text text-transparent">Medical</span><span className="ms-1 text-xs text-muted-foreground">{labels.common.admin}</span></Link>
       </div>
       <nav className="space-y-1 p-3 text-sm">
@@ -152,7 +152,7 @@ export function AdminSidebar() {
 
 export function MobileAdminSidebar({ open, onClose }: { open: boolean; onClose: () => void }) {
   const pathname = usePathname();
-  const { labels } = useAdminLocale();
+  const { labels, dir } = useAdminLocale();
 
   useEffect(() => {
     if (open) onClose();
@@ -178,8 +178,9 @@ export function MobileAdminSidebar({ open, onClose }: { open: boolean; onClose: 
         aria-modal="true"
         aria-label="Navigation menu"
         className={cn(
-          "fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-xl flex flex-col transition-transform duration-300 ease-in-out md:hidden",
-          open ? "translate-x-0" : "-translate-x-full",
+          "fixed inset-y-0 z-50 flex w-64 flex-col bg-white shadow-xl transition-transform duration-300 ease-in-out md:hidden",
+          dir === "rtl" ? "right-0" : "left-0",
+          open ? "translate-x-0" : dir === "rtl" ? "translate-x-full" : "-translate-x-full",
         )}
       >
         <div className="flex items-center justify-between border-b p-4">
