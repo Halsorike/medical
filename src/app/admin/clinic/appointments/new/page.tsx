@@ -1,4 +1,5 @@
 "use client";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { PageHeader } from "@/components/admin/page-header";
@@ -7,22 +8,50 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
-import { patients, employees, services } from "@/data/clinic";
+
+type ApiPatient = { id: string; name: string; email: string; phone?: string | null };
+type ApiDoctor = { id: string; name: string };
+type ApiService = { id: string; name: string; departmentId: string };
 
 export default function NewAppointment() {
   const router = useRouter();
+  const [patients, setPatients] = useState<ApiPatient[]>([]);
+  const [doctors, setDoctors] = useState<ApiDoctor[]>([]);
+  const [services, setServices] = useState<ApiService[]>([]);
+  const [patientId, setPatientId] = useState("");
+  const [doctorId, setDoctorId] = useState("");
+  const [serviceId, setServiceId] = useState("");
+
+  useEffect(() => {
+    Promise.all([
+      fetch("/api/patients").then((response) => (response.ok ? response.json() : Promise.reject())),
+      fetch("/api/doctors").then((response) => (response.ok ? response.json() : Promise.reject())),
+      fetch("/api/services").then((response) => (response.ok ? response.json() : Promise.reject())),
+    ])
+      .then(([patientPayload, doctorPayload, servicePayload]: [{ data: ApiPatient[] }, { data: ApiDoctor[] }, { data: ApiService[] }]) => {
+        setPatients(patientPayload.data);
+        setDoctors(doctorPayload.data);
+        setServices(servicePayload.data);
+      })
+      .catch(() => toast.error("Appointment options could not be loaded"));
+  }, []);
+
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
+    const selectedPatient = patients.find((patient) => patient.id === patientId);
+    const selectedDoctor = doctors.find((doctor) => doctor.id === doctorId);
+    const selectedService = services.find((service) => service.id === serviceId);
+
     const response = await fetch("/api/appointments", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        patientName: String(formData.get("patient") || "Clinic patient"),
-        email: String(formData.get("email") ?? ""),
-        phone: String(formData.get("phone") ?? ""),
-        department: String(formData.get("employee") || "Clinic"),
-        service: String(formData.get("service") || "Consultation"),
+        patientName: selectedPatient?.name ?? "Clinic patient",
+        email: String(formData.get("email") || selectedPatient?.email || ""),
+        phone: String(formData.get("phone") || selectedPatient?.phone || ""),
+        department: selectedDoctor?.name ?? "Clinic",
+        service: selectedService?.name ?? "Consultation",
         date: String(formData.get("date") ?? ""),
         slot: String(formData.get("time") ?? ""),
         confirmation: "email",
@@ -47,7 +76,7 @@ export default function NewAppointment() {
         className="grid gap-4 rounded-lg border bg-white p-6 md:grid-cols-2"
       >
         <div><Label>Patient name EN *</Label>
-          <Select name="patient"><SelectTrigger><SelectValue placeholder="Select patient" /></SelectTrigger>
+          <Select value={patientId} onValueChange={setPatientId}><SelectTrigger><SelectValue placeholder="Select patient" /></SelectTrigger>
             <SelectContent>{patients.slice(0, 12).map((p) => <SelectItem key={p.id} value={p.id}>{p.name}</SelectItem>)}</SelectContent>
           </Select>
         </div>
@@ -57,13 +86,13 @@ export default function NewAppointment() {
         <div><Label>Date *</Label><Input name="date" type="date" required /></div>
         <div><Label>Time *</Label><Input name="time" type="time" required /></div>
         <div><Label>Service *</Label>
-          <Select name="service"><SelectTrigger><SelectValue placeholder="Select" /></SelectTrigger>
+          <Select value={serviceId} onValueChange={setServiceId}><SelectTrigger><SelectValue placeholder="Select" /></SelectTrigger>
             <SelectContent>{services.map((s) => <SelectItem key={s.id} value={s.id}>{s.name}</SelectItem>)}</SelectContent>
           </Select>
         </div>
         <div><Label>Employee *</Label>
-          <Select name="employee"><SelectTrigger><SelectValue placeholder="Select" /></SelectTrigger>
-            <SelectContent>{employees.slice(0, 12).map((e) => <SelectItem key={e.id} value={e.id}>{e.name}</SelectItem>)}</SelectContent>
+          <Select value={doctorId} onValueChange={setDoctorId}><SelectTrigger><SelectValue placeholder="Select" /></SelectTrigger>
+            <SelectContent>{doctors.slice(0, 12).map((e) => <SelectItem key={e.id} value={e.id}>{e.name}</SelectItem>)}</SelectContent>
           </Select>
         </div>
         <div><Label>Session type *</Label>
