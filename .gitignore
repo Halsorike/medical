@@ -1,0 +1,16 @@
+node_modules
+.next
+out
+.env.local
+.env
+*.log
+$log
+`$log
+.DS_Store
+prisma/dev.db
+screenshots/
+.vercel
+playwright-report/
+test-results/
+tsconfig.tsbuildinfo
+Figma/*.pdf

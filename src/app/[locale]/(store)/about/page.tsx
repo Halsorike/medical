@@ -1,0 +1,180 @@
+import { Link } from "@/navigation";
+import type { Metadata } from "next";
+import { Button } from "@/components/ui/button";
+import { TeamCard } from "@/components/store/team-card";
+import { doctors } from "@/data/team";
+
+const CONTENT = {
+  ar: {
+    heading: "من نحن",
+    mission: "تأسس مركزنا عام ٢٠١٠ بهدف واحد: تقديم رعاية سمعية ونطقية ووظيفية من أعلى مستوى لكل أسرة في الأردن. نعمل مع الأطفال من عمر الولادة، والبالغين في كل مرحلة من مراحل الحياة.",
+    vision: "رؤيتنا عالم يستطيع فيه كل شخص أن يسمع بوضوح ويتحدث بثقة ويشارك بفاعلية في الحياة اليومية.",
+    stats: [
+      { label: "مريض تمت معالجته", value: "٥٠٠٠+" },
+      { label: "سنوات خبرة", value: "١٤+" },
+      { label: "متخصص معتمد", value: "١٢" },
+      { label: "نسبة رضا المرضى", value: "٩٨٪" },
+    ],
+    teamHeading: "فريقنا من المتخصصين",
+    teamDesc: "فريقنا من أخصائيي السمع والنطق والعلاج الوظيفي يعمل على دعم التواصل والمهارات الحسية والحركية لكل مريض.",
+    techHeading: "أحدث التقنيات",
+    techDesc: "نستخدم أحدث الأجهزة التشخيصية والعلاجية المعتمدة دولياً لضمان أفضل النتائج لمرضانا.",
+    testimonialsHeading: "آراء مرضانا",
+    testimonials: [
+      { name: "أم أحمد", text: "بعد جلسات النطق، بدأ ابني يتكلم بشكل واضح. الفريق رائع ومتفانٍ.", role: "والدة مريض" },
+      { name: "عبدالله م.", text: "الأجهزة ممتازة والأطباء محترفون جداً. أنصح كل من يعاني من مشكلة سمع بزيارة المركز.", role: "مريض بالغ" },
+      { name: "سمر خ.", text: "ابنتي تحسنت كثيراً في العلاج الوظيفي. الحمد لله على هذا المركز.", role: "والدة مريضة" },
+    ],
+  },
+  en: {
+    heading: "About Us",
+    mission: "Founded in 2010 with one goal: delivering the highest standard of hearing, speech, and occupational therapy care to every family in Jordan. We work with children from birth and adults at every stage of life.",
+    vision: "Our vision is a world where everyone can hear clearly, speak confidently, and take part fully in daily life.",
+    stats: [
+      { label: "Patients Treated", value: "5000+" },
+      { label: "Years Experience", value: "14+" },
+      { label: "Certified Specialists", value: "12" },
+      { label: "Patient Satisfaction", value: "98%" },
+    ],
+    teamHeading: "Our Specialists Team",
+    teamDesc: "Our team of audiologists, speech therapists, and occupational therapists supports communication, sensory, and motor skills for every patient.",
+    techHeading: "Latest Technology",
+    techDesc: "We use the latest internationally certified diagnostic and therapeutic equipment to ensure the best outcomes for our patients.",
+    testimonialsHeading: "Real Stories from Satisfied Customers",
+    testimonials: [
+      { name: "Ahmad's Mother", text: "After speech sessions, my son started speaking clearly. The team is wonderful and dedicated.", role: "Patient Parent" },
+      { name: "Abdullah M.", text: "Excellent equipment and very professional doctors. I recommend the center to anyone with hearing issues.", role: "Adult Patient" },
+      { name: "Samar K.", text: "My daughter improved so much in occupational therapy. Thank God for this center.", role: "Patient Parent" },
+    ],
+  },
+} as const;
+
+export const metadata: Metadata = {
+  title: "About",
+  description: "About Jordan Hearing & Speech Therapy, a leading hearing and speech therapy center in Jordan.",
+  openGraph: {
+    title: "About Jordan Hearing & Speech Therapy",
+    description: "Advanced diagnostic and therapeutic services for hearing, speech, and occupational therapy in Jordan.",
+    images: ["/og-image.jpg"],
+  },
+  alternates: {
+    canonical: "/about",
+  },
+};
+
+export default function AboutPage({
+  params: { locale },
+}: {
+  params: { locale: string };
+}) {
+  const c = CONTENT[locale as "ar" | "en"] ?? CONTENT.ar;
+
+  return (
+    <>
+      <section className="relative overflow-hidden bg-brand-gradient pb-16 pt-12 text-white">
+        <div className="container grid items-center gap-8 md:grid-cols-2">
+          <div>
+            <h1 className="text-[38px] font-semibold leading-tight">{c.heading}</h1>
+            <p className="mt-4 text-[18px] font-light leading-8 text-white/90">
+              {c.mission}
+            </p>
+            <p className="mt-3 text-[16px] font-light leading-7 text-white/80">
+              {c.vision}
+            </p>
+            <div className="mt-6 grid grid-cols-2 gap-3">
+              {c.stats.map((stat) => (
+                <div key={stat.label} className="rounded-2xl bg-white/15 p-4 backdrop-blur-sm">
+                  <p className="text-2xl font-semibold">{stat.value}</p>
+                  <p className="text-xs text-white/80">{stat.label}</p>
+                </div>
+              ))}
+            </div>
+            <Button asChild variant="gradient" className="mt-6">
+              <Link href="/team">All Doctors</Link>
+            </Button>
+          </div>
+          <div className="hidden md:flex justify-center">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=500&h=400&fit=crop"
+              alt="Jordan Hearing team"
+              className="rounded-[26px] object-cover shadow-2xl"
+            />
+          </div>
+        </div>
+        <div className="absolute bottom-0 left-0 right-0 overflow-hidden">
+          <svg viewBox="0 0 1440 60" className="w-full fill-white">
+            <path d="M0,30 C360,60 1080,0 1440,30 L1440,60 L0,60 Z" />
+          </svg>
+        </div>
+      </section>
+
+      <section className="bg-white py-20">
+        <div className="container">
+          <div className="mb-12 text-center">
+            <h2 className="gradient-text text-[30px] font-semibold">{c.teamHeading}</h2>
+            <p className="mx-auto mt-4 max-w-3xl text-[18px] font-light leading-8 text-[#42526b]">
+              {c.teamDesc}
+            </p>
+          </div>
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            {doctors.slice(0, 3).map((doctor) => (
+              <TeamCard key={doctor.slug} doctor={doctor} locale={locale} />
+            ))}
+          </div>
+          <div className="mt-12 flex justify-center gap-4">
+            <Button asChild variant="outline" className="rounded-full border-[#ca79c6] px-8 text-[#ca79c6]">
+              <Link href="/team">More Detail</Link>
+            </Button>
+            <Button asChild variant="gradient">
+              <Link href="/team">All Doctors</Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-[rgba(255,53,245,0.04)] py-20">
+        <div className="container grid items-center gap-10 md:grid-cols-2">
+          <div>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=600&h=400&fit=crop"
+              alt="Clinic technology"
+              className="rounded-[24px] shadow-[0_11px_26px_rgba(6,28,61,0.1)]"
+            />
+          </div>
+          <div>
+            <h2 className="gradient-text mb-5 text-[30px] font-semibold">{c.techHeading}</h2>
+            <p className="text-[20px] font-light leading-9 text-[#1e1e1e]">
+              {c.techDesc}
+            </p>
+            <Button asChild variant="gradient" className="mt-6">
+              <Link href="/shop">Shop Now</Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-white py-20">
+        <div className="container">
+          <div className="mb-12 text-center">
+            <h2 className="gradient-text text-[30px] font-semibold">{c.testimonialsHeading}</h2>
+            <p className="mt-3 text-[18px] font-light text-[#42526b]">Get inspired by these stories.</p>
+          </div>
+          <div className="grid gap-6 md:grid-cols-3">
+            {c.testimonials.map((testimonial) => (
+              <article key={testimonial.name} className="rounded-[20px] bg-white p-6 shadow-[0_11px_26px_rgba(6,28,61,0.1)]">
+                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-button-gradient text-lg font-bold text-white">
+                  {testimonial.name[0]}
+                </div>
+                <p className="text-sm leading-7 text-[#42526b]">{testimonial.text}</p>
+                <p className="mt-4 font-semibold text-[#061c3d]">{testimonial.name}</p>
+                <p className="text-xs text-muted-foreground">{testimonial.role}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+    </>
+  );
+}

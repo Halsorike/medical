@@ -1,0 +1,74 @@
+[
+  {
+    "name": "P1_admin_products_edit_price_stock",
+    "route": "/admin/products/[id]",
+    "part": "Price+Stock",
+    "priority": "P1",
+    "nodeId": "4254:7643",
+    "status": "EXPORTED",
+    "output": "P1__P1_admin_products_edit_price_stock__4254_7643.png"
+  },
+  {
+    "name": "P1_admin_products_edit_files_media",
+    "route": "/admin/products/[id]",
+    "part": "Files & Media",
+    "priority": "P1",
+    "nodeId": "4254:7833",
+    "status": "EXPORTED",
+    "output": "P1__P1_admin_products_edit_files_media__4254_7833.png"
+  },
+  {
+    "name": "P1_admin_products_edit_seo",
+    "route": "/admin/products/[id]",
+    "part": "SEO",
+    "priority": "P1",
+    "nodeId": "4254:7999",
+    "status": "EXPORTED",
+    "output": "P1__P1_admin_products_edit_seo__4254_7999.png"
+  },
+  {
+    "name": "P1_admin_products_edit_shipping",
+    "route": "/admin/products/[id]",
+    "part": "Shipping",
+    "priority": "P1",
+    "nodeId": "4254:8139",
+    "status": "EXPORTED",
+    "output": "P1__P1_admin_products_edit_shipping__4254_8139.png"
+  },
+  {
+    "name": "P1_admin_customers_detail_or_list_castomer",
+    "route": "/admin/customers/[id]",
+    "part": "Castomer",
+    "priority": "P1",
+    "nodeId": "4254:11225",
+    "status": "EXPORTED",
+    "output": "P1__P1_admin_customers_detail_or_list_castomer__4254_11225.png"
+  },
+  {
+    "name": "P2_admin_clinic_departments_new_desktop_13",
+    "route": "/admin/clinic/departments/new",
+    "part": "Desktop - 13",
+    "priority": "P2",
+    "nodeId": "4254:34107",
+    "status": "EXPORTED",
+    "output": "P2__P2_admin_clinic_departments_new_desktop_13__4254_34107.png"
+  },
+  {
+    "name": "P2_blog_slug_desktop_61",
+    "route": "/blog/[slug]",
+    "part": "Desktop - 61",
+    "priority": "P2",
+    "nodeId": "4254:27413",
+    "status": "EXPORTED",
+    "output": "P2__P2_blog_slug_desktop_61__4254_27413.png"
+  },
+  {
+    "name": "P2_account_orders_detail_desktop_32",
+    "route": "/account/orders/[id]",
+    "part": "Desktop - 32",
+    "priority": "P2",
+    "nodeId": "4254:29637",
+    "status": "EXPORTED",
+    "output": "P2__P2_account_orders_detail_desktop_32__4254_29637.png"
+  }
+]

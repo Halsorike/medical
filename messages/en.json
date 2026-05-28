@@ -1,0 +1,205 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About Us",
+    "services": "Services",
+    "team": "Team",
+    "blog": "Blog",
+    "contact": "Contact Us",
+    "evaluation": "Evaluation",
+    "shop": "Shop",
+    "bookAppointment": "Book Appointment",
+    "cart": "Cart",
+    "wishlist": "Wishlist"
+  },
+  "hero": {
+    "title": "At The Jordanian Center for Hearing, Speech, and Occupational Therapy,",
+    "subtitle": "we help children and adults overcome hearing, speech, and sensory challenges — so every person can communicate clearly and live independently.",
+    "cta": "Book Appointment"
+  },
+  "services": {
+    "heading": "Our Services",
+    "description": "JHSM provides a large scale of services to the society due to the multiplicity of specialties in our center. Our clinics work together to improve each client's quality of life through personalized care.",
+    "cta": "All Services",
+    "hearing": {
+      "title": "Hearing and Their Treatments",
+      "desc": "Advanced hearing assessment, diagnosis, device fitting, and treatment planning for children and adults."
+    },
+    "speech": {
+      "title": "Speech and its Treatment",
+      "desc": "Personalized speech therapy for language delay, articulation, fluency, and communication development."
+    },
+    "occupational": {
+      "title": "Occupational Therapy",
+      "desc": "Therapy programs that build sensory, motor, and daily living skills through meaningful activities."
+    }
+  },
+  "about": {
+    "heading": "About Us",
+    "description": "We work with families, schools, and specialists to support every patient's progress — not just during sessions. Our goal is for every person we treat to hear clearly, speak confidently, and take part fully in daily life.",
+    "cta": "Contact Us",
+    "statsPatients": "Patients Treated",
+    "statsYears": "Years Experience",
+    "statsSpecialists": "Certified Specialists",
+    "statsSatisfaction": "Patient Satisfaction"
+  },
+  "team": {
+    "heading": "Our Main Team",
+    "description": "Our audiologists, speech therapists, and occupational therapists work together on every case — building each treatment plan around clinical assessment, not guesswork."
+  },
+  "blog": {
+    "heading": "Our Blogs",
+    "description": "Read practical guides on hearing health, speech development, and therapy tips you can use at home.",
+    "cta": "All Blogs",
+    "readMore": "Read More",
+    "comments": "Comments"
+  },
+  "subscribe": {
+    "heading": "Subscribe now",
+    "subtext": "Subscribe to get our Newsletter",
+    "placeholder": "Enter your email here",
+    "cta": "Subscribe"
+  },
+  "footer": {
+    "quickLinks": "Quick Links",
+    "contact": "Email & Phone",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Use",
+    "rights": "© 2024 Jordan Hearing & Speech Therapy. All Rights Reserved."
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Something went wrong",
+    "notFound": "Page not found",
+    "backHome": "Back to Home"
+  },
+  "pages": {
+    "about": {
+      "title": "About Us",
+      "description": "About Jordan Hearing & Speech Therapy."
+    },
+    "services": {
+      "title": "Our Services",
+      "description": "Hearing evaluation, speech therapy, occupational therapy, hearing aid fitting."
+    },
+    "team": {
+      "title": "Team",
+      "description": "Meet our clinical team."
+    },
+    "blog": {
+      "title": "Blog",
+      "description": "Health tips and clinic news."
+    },
+    "contact": {
+      "title": "Contact Us",
+      "description": "Get in touch with Jordan Hearing & Speech Therapy in Amman."
+    },
+    "shop": {
+      "title": "Shop",
+      "description": "Hearing aids and accessories."
+    },
+    "bookAppointment": {
+      "title": "Book an Appointment",
+      "description": "Schedule your appointment."
+    },
+    "evaluation": {
+      "title": "Hearing Evaluation",
+      "description": "Free online hearing screening."
+    },
+    "privacy": {
+      "title": "Privacy Policy"
+    },
+    "terms": {
+      "title": "Terms of Use"
+    }
+  },
+  "shop": {
+    "heading": "Shop",
+    "search": "Search products...",
+    "allCategories": "All Categories",
+    "sortBy": "Sort by",
+    "popular": "Most Popular",
+    "priceLow": "Price: Low to High",
+    "priceHigh": "Price: High to Low",
+    "newest": "Newest",
+    "addToCart": "Add to Cart",
+    "outOfStock": "Out of Stock",
+    "loadMore": "Load More",
+    "shopNow": "Shop Now",
+    "minPrice": "Min price",
+    "maxPrice": "Max price",
+    "searchButton": "Search",
+    "resetFilters": "Reset Filters",
+    "allProduct": "All Products",
+    "loadingProducts": "Loading products...",
+    "noProducts": "No products found.",
+    "topRated": "Top rated"
+  },
+  "contact": {
+    "heading": "Let's get in touch!",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "email": "Email",
+    "phone": "Phone",
+    "subject": "Subject",
+    "message": "Message",
+    "send": "Send Message",
+    "consent": "I agree to the Privacy Policy",
+    "successTitle": "Message sent!",
+    "successMsg": "Thank you, we will be in touch soon.",
+    "infoTitle": "Contact Us For Any Information",
+    "emailPhone": "Email & Phone",
+    "emergency": "Emergency",
+    "selectSubject": "Select inquiry type",
+    "messagePlaceholder": "Write your message here...",
+    "sendAnother": "Send another message",
+    "clinicLocation": "Clinic Location",
+    "workingHours": "Working Hours"
+  },
+  "evaluation": {
+    "heading": "Hearing Evaluation",
+    "subtext": "Answer the following questions for a preliminary hearing assessment",
+    "never": "Never",
+    "rarely": "Rarely",
+    "sometimes": "Sometimes",
+    "often": "Often",
+    "always": "Always",
+    "submit": "Get My Result",
+    "resultNormal": "Your hearing appears normal",
+    "resultMild": "You may have mild hearing difficulty",
+    "resultModerate": "A specialist hearing evaluation is recommended",
+    "resultSevere": "An urgent visit to a hearing specialist is recommended",
+    "bookNow": "Book an Evaluation"
+  },
+  "bookAppointment": {
+    "heading": "Book an Appointment",
+    "selectDepartment": "Select Department",
+    "selectService": "Select Service",
+    "selectDoctor": "Select Doctor",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "phone": "Phone Number",
+    "notes": "Additional Notes",
+    "morning": "Morning",
+    "afternoon": "Afternoon",
+    "confirm": "Confirm Booking",
+    "confirmed": "Your appointment is confirmed!",
+    "back": "Back",
+    "next": "Next"
+  },
+  "cart": {
+    "heading": "Shopping Cart",
+    "empty": "Your cart is empty",
+    "continueShopping": "Continue Shopping",
+    "total": "Total",
+    "checkout": "Checkout",
+    "remove": "Remove",
+    "quantity": "Quantity"
+  },
+  "checkout": {
+    "heading": "Checkout",
+    "orderSummary": "Order Summary",
+    "placeOrder": "Place Order",
+    "success": "Your order is confirmed!"
+  }
+}

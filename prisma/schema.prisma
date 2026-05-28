@@ -1,0 +1,87 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Product {
+  id          String     @id
+  name        String
+  slug        String     @unique
+  price       Float
+  stock       Int
+  category    String
+  description String?
+  images      String
+  deleted     Boolean    @default(false)
+  createdAt   DateTime   @default(now())
+  cartItems   CartItem[]
+}
+
+model Order {
+  id              String   @id
+  status          String
+  total           Float
+  items           String
+  shippingAddress String
+  createdAt       DateTime @default(now())
+}
+
+model Customer {
+  id        String   @id
+  name      String
+  email     String   @unique
+  phone     String?
+  address   String?
+  createdAt DateTime @default(now())
+}
+
+model Appointment {
+  id           String   @id @default(cuid())
+  patientName  String
+  email        String
+  phone        String?
+  department   String
+  service      String
+  date         String
+  slot         String
+  confirmation String?
+  status       String   @default("pending")
+  createdAt    DateTime @default(now())
+}
+
+model Evaluation {
+  id          String   @id @default(cuid())
+  patientName String
+  age         Int
+  email       String
+  phone       String?
+  answers     String
+  score       Int
+  createdAt   DateTime @default(now())
+}
+
+model BlogPost {
+  id        String   @id
+  slug      String   @unique
+  title     String
+  excerpt   String
+  content   String
+  category  String
+  date      String
+  readTime  String
+  createdAt DateTime @default(now())
+}
+
+model CartItem {
+  id        String  @id @default(cuid())
+  sessionId String
+  productId String
+  product   Product @relation(fields: [productId], references: [id])
+  qty       Int
+
+  @@unique([sessionId, productId])
+}

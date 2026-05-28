@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title i18next-key="home.properties.title">Aptoide TV - Your independent app store for Android TV and set top boxes.</title>
+<meta name="description" content="Your independent app store for Android TV and set top boxes. All free apps with no restrictions!">
+<link href="css/apttv.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap" rel="stylesheet">
+<link href="img/favicon.png" rel="icon">
+<link rel="canonical" href="https://tv.aptoide.com/" type="text/html"/>
+<script src="js/i18n.min.js"></script>
+<script src="js/i18n-init.js"></script>
+</head>
+<body>
+	<div id="main">
+	 <div class="logo">
+		 <img src="img/aptoidetv-logo.svg" width="100%" height="auto" alt="">
+		</div>
+
+				<div class="a-right">
+		 <img src="img/tv_img.png" class="img-tv" alt="" width="auto" height="auto">
+		</div>
+
+		<div class="a-left">
+		     <div class="intro">
+	  <h1 i18next-key="home.body">A free alternative app store for Android TV and set top boxes.</h1></div>
+	<div class="devices">
+	  <img src="img/devices.svg" width="100%" height="auto" alt=""/> </div>
+	  <div class="btn">
+	  <a data-autofocus="" href="howtoinstall.html" onclick="javascript:_gaq.push(['_trackEvent', 'AptoideAPK - Installer AptoideTV', 'Download', 'AptoideTV-5.0.2']);"  class="butn" tabindex="1" i18next-key="home.download_button">Download Aptoide TV</a>
+				 </div>
+	  </div>
+
+
+
+		<div class="value">
+			<p class="intruction_step" i18next-key="home.bullet_1">No restrictions</p> <img src="img/red.svg" style="padding-right: 10px;" alt=""/> <p class="intruction_step" i18next-key="home.bullet_2">All apps are free</p> <img src="img/red.svg" style="padding-right: 10px;" alt=""/> <p class="intruction_step" i18next-key="home.bullet_3">2500 + apps available</p>
+		</div>
+		<div style="clear: both"></div>
+		<a href="https://en.aptoide.com" style="color: rgb(254, 100, 70); font-size: 16px; text-decoration: none; margin-top: 50px; display: block; width: 100%;">
+			Aptoide App Store
+		</a>
+
+	</div>
+  <div id="preloader"></div>
+	<script src="js/jquery.min.js"></script>
+	  <!-- Template Main Javascript File -->
+  <script src="js/main.js"></script>
+</body>
+</html>

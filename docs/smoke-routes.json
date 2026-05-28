@@ -1,0 +1,270 @@
+﻿[
+    {
+        "route":  "/account/addresses",
+        "file":  "src\\app\\(store)\\account\\addresses\\page.tsx"
+    },
+    {
+        "route":  "/account/orders",
+        "file":  "src\\app\\(store)\\account\\orders\\page.tsx"
+    },
+    {
+        "route":  "/account",
+        "file":  "src\\app\\(store)\\account\\page.tsx"
+    },
+    {
+        "route":  "/account/profile",
+        "file":  "src\\app\\(store)\\account\\profile\\page.tsx"
+    },
+    {
+        "route":  "/blog",
+        "file":  "src\\app\\(store)\\blog\\page.tsx"
+    },
+    {
+        "route":  "/brands",
+        "file":  "src\\app\\(store)\\brands\\page.tsx"
+    },
+    {
+        "route":  "/cart",
+        "file":  "src\\app\\(store)\\cart\\page.tsx"
+    },
+    {
+        "route":  "/categories",
+        "file":  "src\\app\\(store)\\categories\\page.tsx"
+    },
+    {
+        "route":  "/checkout",
+        "file":  "src\\app\\(store)\\checkout\\page.tsx"
+    },
+    {
+        "route":  "/checkout/success",
+        "file":  "src\\app\\(store)\\checkout\\success\\page.tsx"
+    },
+    {
+        "route":  "/contact",
+        "file":  "src\\app\\(store)\\contact\\page.tsx"
+    },
+    {
+        "route":  "/deals",
+        "file":  "src\\app\\(store)\\deals\\page.tsx"
+    },
+    {
+        "route":  "/help",
+        "file":  "src\\app\\(store)\\help\\page.tsx"
+    },
+    {
+        "route":  "/login",
+        "file":  "src\\app\\(store)\\login\\page.tsx"
+    },
+    {
+        "route":  "/login-2",
+        "file":  "src\\app\\(store)\\login-2\\page.tsx"
+    },
+    {
+        "route":  "/login-2/register",
+        "file":  "src\\app\\(store)\\login-2\\register\\page.tsx"
+    },
+    {
+        "route":  "/",
+        "file":  "src\\app\\(store)\\page.tsx"
+    },
+    {
+        "route":  "/product/[slug]",
+        "file":  "src\\app\\(store)\\product\\[slug]\\page.tsx"
+    },
+    {
+        "route":  "/register",
+        "file":  "src\\app\\(store)\\register\\page.tsx"
+    },
+    {
+        "route":  "/returns",
+        "file":  "src\\app\\(store)\\returns\\page.tsx"
+    },
+    {
+        "route":  "/shop",
+        "file":  "src\\app\\(store)\\shop\\page.tsx"
+    },
+    {
+        "route":  "/track",
+        "file":  "src\\app\\(store)\\track\\page.tsx"
+    },
+    {
+        "route":  "/wishlist",
+        "file":  "src\\app\\(store)\\wishlist\\page.tsx"
+    },
+    {
+        "route":  "/admin/affiliate",
+        "file":  "src\\app\\admin\\affiliate\\page.tsx"
+    },
+    {
+        "route":  "/admin/attributes",
+        "file":  "src\\app\\admin\\attributes\\page.tsx"
+    },
+    {
+        "route":  "/admin/brands",
+        "file":  "src\\app\\admin\\brands\\page.tsx"
+    },
+    {
+        "route":  "/admin/categories",
+        "file":  "src\\app\\admin\\categories\\page.tsx"
+    },
+    {
+        "route":  "/admin/clinic/accounting",
+        "file":  "src\\app\\admin\\clinic\\accounting\\page.tsx"
+    },
+    {
+        "route":  "/admin/clinic/appointments/new",
+        "file":  "src\\app\\admin\\clinic\\appointments\\new\\page.tsx"
+    },
+    {
+        "route":  "/admin/clinic/appointments",
+        "file":  "src\\app\\admin\\clinic\\appointments\\page.tsx"
+    },
+    {
+        "route":  "/admin/clinic/blog",
+        "file":  "src\\app\\admin\\clinic\\blog\\page.tsx"
+    },
+    {
+        "route":  "/admin/clinic/blog-categories",
+        "file":  "src\\app\\admin\\clinic\\blog-categories\\page.tsx"
+    },
+    {
+        "route":  "/admin/clinic/contact",
+        "file":  "src\\app\\admin\\clinic\\contact\\page.tsx"
+    },
+    {
+        "route":  "/admin/clinic/departments",
+        "file":  "src\\app\\admin\\clinic\\departments\\page.tsx"
+    },
+    {
+        "route":  "/admin/clinic/evaluations",
+        "file":  "src\\app\\admin\\clinic\\evaluations\\page.tsx"
+    },
+    {
+        "route":  "/admin/clinic/holidays",
+        "file":  "src\\app\\admin\\clinic\\holidays\\page.tsx"
+    },
+    {
+        "route":  "/admin/clinic/mail",
+        "file":  "src\\app\\admin\\clinic\\mail\\page.tsx"
+    },
+    {
+        "route":  "/admin/clinic",
+        "file":  "src\\app\\admin\\clinic\\page.tsx"
+    },
+    {
+        "route":  "/admin/clinic/patients",
+        "file":  "src\\app\\admin\\clinic\\patients\\page.tsx"
+    },
+    {
+        "route":  "/admin/clinic/roles",
+        "file":  "src\\app\\admin\\clinic\\roles\\page.tsx"
+    },
+    {
+        "route":  "/admin/clinic/schedule",
+        "file":  "src\\app\\admin\\clinic\\schedule\\page.tsx"
+    },
+    {
+        "route":  "/admin/clinic/services",
+        "file":  "src\\app\\admin\\clinic\\services\\page.tsx"
+    },
+    {
+        "route":  "/admin/clinic/team/new",
+        "file":  "src\\app\\admin\\clinic\\team\\new\\page.tsx"
+    },
+    {
+        "route":  "/admin/clinic/team",
+        "file":  "src\\app\\admin\\clinic\\team\\page.tsx"
+    },
+    {
+        "route":  "/admin/club-points",
+        "file":  "src\\app\\admin\\club-points\\page.tsx"
+    },
+    {
+        "route":  "/admin/colors",
+        "file":  "src\\app\\admin\\colors\\page.tsx"
+    },
+    {
+        "route":  "/admin/customers",
+        "file":  "src\\app\\admin\\customers\\page.tsx"
+    },
+    {
+        "route":  "/admin/delivery",
+        "file":  "src\\app\\admin\\delivery\\page.tsx"
+    },
+    {
+        "route":  "/admin/login",
+        "file":  "src\\app\\admin\\login\\page.tsx"
+    },
+    {
+        "route":  "/admin/marketing",
+        "file":  "src\\app\\admin\\marketing\\page.tsx"
+    },
+    {
+        "route":  "/admin/orders",
+        "file":  "src\\app\\admin\\orders\\page.tsx"
+    },
+    {
+        "route":  "/admin",
+        "file":  "src\\app\\admin\\page.tsx"
+    },
+    {
+        "route":  "/admin/pos",
+        "file":  "src\\app\\admin\\pos\\page.tsx"
+    },
+    {
+        "route":  "/admin/products/import",
+        "file":  "src\\app\\admin\\products\\import\\page.tsx"
+    },
+    {
+        "route":  "/admin/products/in-house",
+        "file":  "src\\app\\admin\\products\\in-house\\page.tsx"
+    },
+    {
+        "route":  "/admin/products/new",
+        "file":  "src\\app\\admin\\products\\new\\page.tsx"
+    },
+    {
+        "route":  "/admin/products",
+        "file":  "src\\app\\admin\\products\\page.tsx"
+    },
+    {
+        "route":  "/admin/purchase/[id]",
+        "file":  "src\\app\\admin\\purchase\\[id]\\page.tsx"
+    },
+    {
+        "route":  "/admin/purchase/new",
+        "file":  "src\\app\\admin\\purchase\\new\\page.tsx"
+    },
+    {
+        "route":  "/admin/purchase",
+        "file":  "src\\app\\admin\\purchase\\page.tsx"
+    },
+    {
+        "route":  "/admin/refunds",
+        "file":  "src\\app\\admin\\refunds\\page.tsx"
+    },
+    {
+        "route":  "/admin/reports",
+        "file":  "src\\app\\admin\\reports\\page.tsx"
+    },
+    {
+        "route":  "/admin/sales",
+        "file":  "src\\app\\admin\\sales\\page.tsx"
+    },
+    {
+        "route":  "/admin/sellers",
+        "file":  "src\\app\\admin\\sellers\\page.tsx"
+    },
+    {
+        "route":  "/admin/settings",
+        "file":  "src\\app\\admin\\settings\\page.tsx"
+    },
+    {
+        "route":  "/admin/support",
+        "file":  "src\\app\\admin\\support\\page.tsx"
+    },
+    {
+        "route":  "/admin/website-setup",
+        "file":  "src\\app\\admin\\website-setup\\page.tsx"
+    }
+]

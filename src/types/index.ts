@@ -1,0 +1,31 @@
+export type Product = {
+  id: string;
+  slug: string;
+  name: string;
+  nameAr?: string;
+  brand: string;
+  category: string;
+  price: number;
+  oldPrice?: number;
+  rating: number;
+  reviews: number;
+  stock: number;
+  image: string;
+  images?: string[];
+  description?: string;
+  descriptionAr?: string;
+  badges?: string[];
+};
+export type Order = {
+  id: string;
+  code: string;
+  customer: string;
+  email: string;
+  date: string;
+  total: number;
+  status: "pending" | "confirmed" | "shipped" | "delivered" | "cancelled" | "refunded";
+  payment: "paid" | "unpaid" | "refunded";
+  items: number;
+};
+export type Customer = { id: string; name: string; email: string; phone: string; orders: number; spent: number; joined: string; status: "active" | "inactive" };
+export type CartItem = { product: Product; qty: number };
