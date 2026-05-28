@@ -2,8 +2,9 @@ import { NextRequest } from "next/server";
 import { z } from "zod";
 import { db } from "@/lib/db";
 import { ensureSeeded } from "@/lib/seed";
-import { appointmentStatusSchema, ok, validationError } from "@/lib/api";
+import { appointmentStatusSchema, fail, ok, validationError } from "@/lib/api";
 import { sendAppointmentConfirmationEmail } from "@/lib/email";
+import { getPatientSessionId } from "@/lib/patient-auth";
 
 export const dynamic = "force-dynamic";
 
@@ -38,8 +39,28 @@ export async function POST(request: NextRequest) {
     return validationError(parsed.error);
   }
 
+  const existing = await db.appointment.findFirst({
+    where: {
+      email: parsed.data.email,
+      date: parsed.data.date,
+      slot: parsed.data.slot,
+    },
+  });
+
+  if (existing) {
+    return fail("Appointment already exists for this email, date, and time", 409);
+  }
+
+  const sessionPatientId = getPatientSessionId();
+  const existingPatient = sessionPatientId
+    ? await db.patient.findUnique({ where: { id: sessionPatientId } })
+    : await db.patient.findUnique({ where: { email: parsed.data.email } });
+
   const appointment = await db.appointment.create({
-    data: parsed.data,
+    data: {
+      ...parsed.data,
+      patientId: existingPatient?.id,
+    },
   });
 
   await sendAppointmentConfirmationEmail({
