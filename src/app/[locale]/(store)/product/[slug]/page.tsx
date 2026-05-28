@@ -22,10 +22,10 @@ export async function generateMetadata({ params }: { params: { locale: string; s
 
   return {
     title: productName,
-    description: productDescription ?? `${productName} from Jordan Hearing & Speech Therapy.`,
+    description: productDescription ?? `${productName} from Echo Wellness Center.`,
     openGraph: {
       title: productName,
-      description: productDescription ?? `${productName} from Jordan Hearing & Speech Therapy.`,
+      description: productDescription ?? `${productName} from Echo Wellness Center.`,
       images: [product.image],
     },
     alternates: {
@@ -48,9 +48,9 @@ export default async function PDP({ params }: { params: { locale: string; slug: 
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: "https://jordanhearing.com" },
-      { "@type": "ListItem", position: 2, name: "Shop", item: "https://jordanhearing.com/shop" },
-      { "@type": "ListItem", position: 3, name: displayName, item: `https://jordanhearing.com/product/${p.slug}` },
+      { "@type": "ListItem", position: 1, name: "Home", item: "https://echowellness.me" },
+      { "@type": "ListItem", position: 2, name: "Shop", item: "https://echowellness.me/shop" },
+      { "@type": "ListItem", position: 3, name: displayName, item: `https://echowellness.me/product/${p.slug}` },
     ],
   };
 
@@ -61,17 +61,17 @@ export default async function PDP({ params }: { params: { locale: string; slug: 
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
       {/* Page title hero */}
-      <div className="relative overflow-hidden bg-purple-50 pb-8 pt-6">
+      <div className="relative overflow-hidden bg-brand-50 pb-8 pt-6">
         <div className="container">
           <nav className="mb-2 text-xs text-muted-foreground">
-            <Link href="/" className="hover:text-purple-700">Home</Link>
+            <Link href="/" className="hover:text-brand-blue">Home</Link>
             {" / "}
-            <Link href="/shop" className="hover:text-purple-700">Shop</Link>
+            <Link href="/shop" className="hover:text-brand-blue">Shop</Link>
             {" / "}
-            <span className="text-purple-700">{displayName}</span>
+            <span className="text-brand-blue">{displayName}</span>
           </nav>
           <h1 className="text-2xl font-bold">
-            Product <span className="text-purple-600">Details</span>
+            Product <span className="text-brand-teal">Details</span>
           </h1>
         </div>
         <div className="absolute bottom-0 left-0 right-0 overflow-hidden">

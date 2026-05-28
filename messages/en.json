@@ -13,13 +13,13 @@
     "wishlist": "Wishlist"
   },
   "hero": {
-    "title": "At The Jordanian Center for Hearing, Speech, and Occupational Therapy,",
-    "subtitle": "we help children and adults overcome hearing, speech, and sensory challenges — so every person can communicate clearly and live independently.",
-    "cta": "Book Appointment"
+    "title": "Empower Every Child's Potential",
+    "subtitle": "Integrated speech, occupational, behavioral, psychology, and audiology care by certified specialists in Muscat, Oman.",
+    "cta": "Book Your Child's Assessment"
   },
   "services": {
     "heading": "Our Services",
-    "description": "JHSM provides a large scale of services to the society due to the multiplicity of specialties in our center. Our clinics work together to improve each client's quality of life through personalized care.",
+    "description": "Echo Wellness Center offers audiology, speech therapy, occupational therapy, psychology, and behavioral support in Muscat with personalized care for children and adults.",
     "cta": "All Services",
     "hearing": {
       "title": "Hearing and Their Treatments",
@@ -36,16 +36,16 @@
   },
   "about": {
     "heading": "About Us",
-    "description": "We work with families, schools, and specialists to support every patient's progress — not just during sessions. Our goal is for every person we treat to hear clearly, speak confidently, and take part fully in daily life.",
+    "description": "Echo Wellness Center supports families in Muscat through multidisciplinary care that helps every child and adult communicate, participate, and thrive.",
     "cta": "Contact Us",
-    "statsPatients": "Patients Treated",
-    "statsYears": "Years Experience",
-    "statsSpecialists": "Certified Specialists",
-    "statsSatisfaction": "Patient Satisfaction"
+    "statsPatients": "Certified Specialists",
+    "statsYears": "Specialties",
+    "statsSpecialists": "Care Model",
+    "statsSatisfaction": "Muscat Location"
   },
   "team": {
     "heading": "Our Main Team",
-    "description": "Our audiologists, speech therapists, and occupational therapists work together on every case — building each treatment plan around clinical assessment, not guesswork."
+    "description": "Our audiologists, speech therapists, occupational therapists, psychologists, and behavioral specialists build each treatment plan around clinical assessment and family goals."
   },
   "blog": {
     "heading": "Our Blogs",
@@ -65,7 +65,7 @@
     "contact": "Email & Phone",
     "privacy": "Privacy Policy",
     "terms": "Terms of Use",
-    "rights": "© 2024 Jordan Hearing & Speech Therapy. All Rights Reserved."
+    "rights": "? 2026 Echo Wellness. All Rights Reserved."
   },
   "common": {
     "loading": "Loading...",
@@ -76,7 +76,7 @@
   "pages": {
     "about": {
       "title": "About Us",
-      "description": "About Jordan Hearing & Speech Therapy."
+      "description": "About Echo Wellness Center in Muscat, Oman."
     },
     "services": {
       "title": "Our Services",
@@ -92,7 +92,7 @@
     },
     "contact": {
       "title": "Contact Us",
-      "description": "Get in touch with Jordan Hearing & Speech Therapy in Amman."
+      "description": "Get in touch with Echo Wellness Center in Sarooj, Muscat."
     },
     "shop": {
       "title": "Shop",
@@ -100,7 +100,7 @@
     },
     "bookAppointment": {
       "title": "Book an Appointment",
-      "description": "Schedule your appointment."
+      "description": "Book your appointment at Echo Wellness Center in Muscat."
     },
     "evaluation": {
       "title": "Hearing Evaluation",
@@ -144,7 +144,7 @@
     "subject": "Subject",
     "message": "Message",
     "send": "Send Message",
-    "consent": "I agree to the Privacy Policy",
+    "consent": "I agree to the Privacy Policy and allow Echo Wellness to contact me about my inquiry.",
     "successTitle": "Message sent!",
     "successMsg": "Thank you, we will be in touch soon.",
     "infoTitle": "Contact Us For Any Information",
@@ -182,7 +182,7 @@
     "notes": "Additional Notes",
     "morning": "Morning",
     "afternoon": "Afternoon",
-    "confirm": "Confirm Booking",
+    "confirm": "Book Your Child's Assessment",
     "confirmed": "Your appointment is confirmed!",
     "back": "Back",
     "next": "Next"

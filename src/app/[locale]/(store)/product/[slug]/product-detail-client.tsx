@@ -55,7 +55,7 @@ export function ProductDetailClient({ product, related }: ProductDetailClientPro
           <img
             src={selectedImage}
             alt={displayName}
-            className="aspect-square w-full rounded-[24px] border border-[#ca79c6]/15 bg-[rgba(255,53,245,0.04)] object-cover shadow-[0_11px_26px_rgba(6,28,61,0.1)]"
+            className="aspect-square w-full rounded-[24px] border border-[#0099A8]/15 bg-[rgba(0,153,168,0.06)] object-cover shadow-[0_11px_26px_rgba(6,28,61,0.1)]"
           />
           <div className="grid grid-cols-4 gap-3">
             {gallery.slice(0, 4).map((image, index) => (
@@ -64,7 +64,7 @@ export function ProductDetailClient({ product, related }: ProductDetailClientPro
                 type="button"
                 onClick={() => setSelectedImage(image)}
                 className={`overflow-hidden rounded-xl border transition ${
-              selectedImage === image ? "border-[#ca79c6] ring-2 ring-[#ca79c6]/15" : "border-[#ca79c6]/15"
+              selectedImage === image ? "border-[#0099A8] ring-2 ring-[#0099A8]/15" : "border-[#0099A8]/15"
                 }`}
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -98,7 +98,7 @@ export function ProductDetailClient({ product, related }: ProductDetailClientPro
           </div>
 
           <p className="gradient-text mb-3 text-3xl font-bold">{formatCurrency(product.price)}</p>
-          <div className="mb-4 grid gap-2 rounded-[20px] border border-[#ca79c6]/15 bg-[rgba(255,53,245,0.04)] p-4 text-sm sm:grid-cols-2">
+          <div className="mb-4 grid gap-2 rounded-[20px] border border-[#0099A8]/15 bg-[rgba(0,153,168,0.06)] p-4 text-sm sm:grid-cols-2">
             <p><span className="font-medium text-gray-800">Brand:</span> {product.brand}</p>
             <p><span className="font-medium text-gray-800">Category:</span> {product.category}</p>
             <p><span className="font-medium text-gray-800">Stock:</span> {product.stock > 0 ? "In Stock" : "Out of Stock"}</p>
@@ -110,13 +110,13 @@ export function ProductDetailClient({ product, related }: ProductDetailClientPro
             <p className="mb-2 text-sm font-semibold text-gray-700">Share</p>
             <div className="flex gap-3 text-muted-foreground">
               <a href={`https://facebook.com/sharer/sharer.php?u=${encodedUrl}`} aria-label="Share on Facebook">
-                <Facebook className="h-5 w-5 hover:text-purple-600" />
+                <Facebook className="h-5 w-5 hover:text-brand-teal" />
               </a>
               <a href={`https://twitter.com/intent/tweet?url=${encodedUrl}`} aria-label="Share on Twitter">
-                <Twitter className="h-5 w-5 hover:text-purple-600" />
+                <Twitter className="h-5 w-5 hover:text-brand-teal" />
               </a>
               <a href={`https://wa.me/?text=${encodedUrl}`} aria-label="Share on WhatsApp">
-                <MessageCircle className="h-5 w-5 hover:text-purple-600" />
+                <MessageCircle className="h-5 w-5 hover:text-brand-teal" />
               </a>
             </div>
           </div>
@@ -132,7 +132,7 @@ export function ProductDetailClient({ product, related }: ProductDetailClientPro
 
       <section className="mt-16">
         <h3 className="mb-8 text-center text-xl font-bold">
-          Related <span className="text-purple-600">Products</span>
+          Related <span className="text-brand-teal">Products</span>
         </h3>
         {related.length > 0 ? (
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3">
@@ -141,14 +141,14 @@ export function ProductDetailClient({ product, related }: ProductDetailClientPro
             ))}
           </div>
         ) : (
-          <div className="rounded-xl border border-purple-100 bg-white p-8 text-center text-muted-foreground">
+          <div className="rounded-xl border border-brand-100 bg-white p-8 text-center text-muted-foreground">
             No related products found.
           </div>
         )}
       </section>
 
       <div className="mt-10 text-center">
-        <Link href="/shop" className="text-sm font-medium text-purple-600 hover:underline">
+        <Link href="/shop" className="text-sm font-medium text-brand-teal hover:underline">
           Back to shop
         </Link>
       </div>

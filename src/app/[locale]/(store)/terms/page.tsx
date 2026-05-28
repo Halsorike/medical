@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Terms of Use",
-  description: "Terms of use for Jordan Hearing & Speech Therapy website and services.",
+  description: "Terms of use for Echo Wellness Center website and services.",
   alternates: { canonical: "/terms" },
 };
 
@@ -18,7 +18,7 @@ export default function TermsPage() {
         <section className="mb-8">
           <h2 className="mb-3 text-[20px] font-semibold text-[#061c3d]">1. Acceptance of Terms</h2>
           <p className="text-[15px] font-light leading-relaxed text-[#42526b]">
-            By accessing and using the Jordan Hearing &amp; Speech Therapy website, you accept and agree to be bound by these terms. If you do not agree, please do not use this site.
+            By accessing and using the Echo Wellness &amp; Speech Therapy website, you accept and agree to be bound by these terms. If you do not agree, please do not use this site.
           </p>
         </section>
 
@@ -39,7 +39,7 @@ export default function TermsPage() {
         <section className="mb-8">
           <h2 className="mb-3 text-[20px] font-semibold text-[#061c3d]">4. Intellectual Property</h2>
           <p className="text-[15px] font-light leading-relaxed text-[#42526b]">
-            All content on this website, including text, images, and logos, is the property of Jordan Hearing &amp; Speech Therapy and may not be reproduced without permission.
+            All content on this website, including text, images, and logos, is the property of Echo Wellness &amp; Speech Therapy and may not be reproduced without permission.
           </p>
         </section>
 
@@ -47,8 +47,8 @@ export default function TermsPage() {
           <h2 className="mb-3 text-[20px] font-semibold text-[#061c3d]">5. Contact</h2>
           <p className="text-[15px] font-light leading-relaxed text-[#42526b]">
             Questions about these terms? Contact us at{" "}
-            <a href="mailto:info@jordanhearing.com" className="text-[#9b1fe1] underline">
-              info@jordanhearing.com
+            <a href="mailto:info@echowellness.me" className="text-[#005F9E] underline">
+              info@echowellness.me
             </a>.
           </p>
         </section>

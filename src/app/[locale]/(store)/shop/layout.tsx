@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 
 export const metadata: Metadata = {
   title: "Shop â€” Hearing Aids & Accessories",
-  description: "Browse hearing aids, accessories, and therapeutic devices at Jordan Hearing & Speech Therapy.",
+  description: "Browse hearing aids, accessories, and therapeutic devices at Echo Wellness Center.",
   alternates: { canonical: "/shop" },
 };
 

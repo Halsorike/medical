@@ -31,13 +31,13 @@ const CONTENT = {
   },
   en: {
     heading: "About Us",
-    mission: "Founded in 2010 with one goal: delivering the highest standard of hearing, speech, and occupational therapy care to every family in Jordan. We work with children from birth and adults at every stage of life.",
-    vision: "Our vision is a world where everyone can hear clearly, speak confidently, and take part fully in daily life.",
+    mission: "Echo Wellness Center brings multidisciplinary therapy to families in Muscat, Oman, with certified specialists in audiology, speech therapy, occupational therapy, psychology, and behavioral support.",
+    vision: "Our vision is to empower every child and adult to communicate, participate, and thrive with confidence.",
     stats: [
-      { label: "Patients Treated", value: "5000+" },
-      { label: "Years Experience", value: "14+" },
-      { label: "Certified Specialists", value: "12" },
-      { label: "Patient Satisfaction", value: "98%" },
+      { label: "Certified Specialists", value: "5" },
+      { label: "Specialties", value: "5" },
+      { label: "Care Model", value: "1:1" },
+      { label: "Location", value: "Muscat" },
     ],
     teamHeading: "Our Specialists Team",
     teamDesc: "Our team of audiologists, speech therapists, and occupational therapists supports communication, sensory, and motor skills for every patient.",
@@ -53,11 +53,12 @@ const CONTENT = {
 } as const;
 
 export const metadata: Metadata = {
-  title: "About",
-  description: "About Jordan Hearing & Speech Therapy, a leading hearing and speech therapy center in Jordan.",
+  title: "About Us | Echo Wellness Center",
+  description:
+    "Founded in Muscat, Oman, Echo Wellness Center provides multidisciplinary rehabilitation: audiology, speech therapy, occupational therapy, psychology and behavioral support.",
   openGraph: {
-    title: "About Jordan Hearing & Speech Therapy",
-    description: "Advanced diagnostic and therapeutic services for hearing, speech, and occupational therapy in Jordan.",
+    title: "About Echo Wellness Center",
+    description: "Multidisciplinary therapy and rehabilitation care in Muscat, Oman.",
     images: ["/og-image.jpg"],
   },
   alternates: {
@@ -101,7 +102,7 @@ export default async function AboutPage({
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=500&h=400&fit=crop"
-              alt="Jordan Hearing team"
+              alt="Echo Wellness team"
               className="rounded-[26px] object-cover shadow-2xl"
             />
           </div>
@@ -127,7 +128,7 @@ export default async function AboutPage({
             ))}
           </div>
           <div className="mt-12 flex justify-center gap-4">
-            <Button asChild variant="outline" className="rounded-full border-[#ca79c6] px-8 text-[#ca79c6]">
+            <Button asChild variant="outline" className="rounded-full border-[#0099A8] px-8 text-[#0099A8]">
               <Link href="/team">More Detail</Link>
             </Button>
             <Button asChild variant="gradient">
@@ -137,7 +138,7 @@ export default async function AboutPage({
         </div>
       </section>
 
-      <section className="bg-[rgba(255,53,245,0.04)] py-20">
+      <section className="bg-[rgba(0,153,168,0.06)] py-20">
         <div className="container grid items-center gap-10 md:grid-cols-2">
           <div>
             {/* eslint-disable-next-line @next/next/no-img-element */}

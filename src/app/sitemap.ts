@@ -1,8 +1,8 @@
 import type { MetadataRoute } from "next";
-import { posts } from "@/data/blog";
 import { products } from "@/data/products";
+import { fallbackBlogPosts } from "@/lib/blog-fallback";
 
-const baseUrl = "https://jordanhearing.com";
+const baseUrl = "https://echowellness.me";
 const locales = ["ar", "en"] as const;
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -19,6 +19,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/services",
     "/team",
     "/contact",
+    "/login",
+    "/register",
+    "/account",
     "/returns",
     "/track",
     "/help",
@@ -42,10 +45,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
       });
     }
 
-    for (const post of posts) {
+    for (const post of fallbackBlogPosts) {
       entries.push({
         url: `${baseUrl}/${locale}/blog/${post.slug}`,
         lastModified: new Date(),
+        alternates: {
+          languages: {
+            ar: `${baseUrl}/ar/blog/${post.slug}`,
+            en: `${baseUrl}/en/blog/${post.slug}`,
+          },
+        },
       });
     }
 
@@ -53,6 +62,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       entries.push({
         url: `${baseUrl}/${locale}/product/${product.slug}`,
         lastModified: new Date(),
+        alternates: {
+          languages: {
+            ar: `${baseUrl}/ar/product/${product.slug}`,
+            en: `${baseUrl}/en/product/${product.slug}`,
+          },
+        },
       });
     }
   }

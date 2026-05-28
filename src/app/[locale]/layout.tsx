@@ -17,23 +17,19 @@ export async function generateMetadata({
   const isAr = locale === "ar";
 
   return {
-    metadataBase: new URL("https://jordanhearing.com"),
+    metadataBase: new URL("https://echowellness.me"),
     title: {
-      default: isAr
-        ? "المركز الأردني للسمع والنطق والعلاج الوظيفي"
-        : "Jordan Hearing & Speech Therapy",
-      template: isAr
-        ? "%s | المركز الأردني للسمع"
-        : "%s | Jordan Hearing & Speech Therapy",
+      default: isAr ? "مركز إيكو للعافية" : "Echo Wellness Center",
+      template: isAr ? "%s | مركز إيكو للعافية" : "%s | Echo Wellness Center",
     },
     description: isAr
-      ? "مركز متخصص في السمع والنطق والعلاج الوظيفي في الأردن."
-      : "Professional hearing and speech therapy clinic in Jordan.",
+      ? "مركز إيكو للعافية في مسقط، عُمان - السمعيات، علاج النطق، العلاج الوظيفي، علم النفس والدعم السلوكي للأطفال والبالغين."
+      : "Echo Wellness Center in Muscat, Oman - Audiology, Speech Therapy, Occupational Therapy, Psychology and Behavioral Support.",
     alternates: {
-      canonical: `https://jordanhearing.com/${locale}`,
+      canonical: `https://echowellness.me/${locale}`,
       languages: {
-        ar: "https://jordanhearing.com/ar",
-        en: "https://jordanhearing.com/en",
+        ar: "https://echowellness.me/ar",
+        en: "https://echowellness.me/en",
       },
     },
   };

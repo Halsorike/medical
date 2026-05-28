@@ -4,11 +4,11 @@ import type { ReactNode } from "react";
 export const metadata: Metadata = {
   title: "Our Services",
   description:
-    "Hearing evaluation, speech therapy, occupational therapy, hearing aid fitting and rehabilitation â€” Jordan Hearing & Speech Therapy.",
+    "Hearing evaluation, speech therapy, occupational therapy, hearing aid fitting and rehabilitation â€” Echo Wellness Center.",
   alternates: { canonical: "/services" },
   openGraph: {
     title: "Hearing & Speech Therapy Services in Jordan",
-    description: "Comprehensive audiology and speech therapy services in Amman, Jordan.",
+    description: "Comprehensive audiology and speech therapy services in Muscat, Oman.",
     images: ["/og-image.jpg"],
   },
 };

@@ -17,22 +17,25 @@ const notoArabic = Noto_Sans_Arabic({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://jordanhearing.com"),
+  metadataBase: new URL("https://echowellness.me"),
   title: {
-    default: "Jordan Hearing & Speech Therapy",
-    template: "%s | Jordan Hearing & Speech Therapy",
+    default: "Echo Wellness Center | مركز إيكو للعافية",
+    template: "%s | Echo Wellness Center",
   },
-  description: "Professional hearing and speech therapy clinic in Jordan.",
+  description:
+    "Echo Wellness Center in Muscat, Oman - Audiology, Speech Therapy, Occupational Therapy, Psychology and Behavioral Support for children and adults.",
   openGraph: {
-    title: "Jordan Hearing & Speech Therapy",
-    description: "Professional hearing and speech therapy clinic in Jordan.",
-    url: "https://jordanhearing.com",
-    siteName: "Jordan Hearing & Speech Therapy",
+    title: "Echo Wellness Center | مركز إيكو للعافية",
+    description:
+      "Audiology, speech therapy, occupational therapy, psychology, and behavioral support in Muscat, Oman.",
+    url: "https://echowellness.me",
+    siteName: "Echo Wellness Center",
+    locale: "ar_OM",
     type: "website",
     images: ["/og-image.jpg"],
   },
   alternates: {
-    canonical: "https://jordanhearing.com",
+    canonical: "https://echowellness.me",
   },
 };
 
@@ -40,16 +43,55 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   const organizationSchema = {
     "@context": "https://schema.org",
     "@type": "MedicalClinic",
-    name: "Jordan Hearing & Speech Therapy",
-    url: "https://jordanhearing.com",
-    telephone: "+962-6-123-4567",
+    "@id": "https://echowellness.me/#clinic",
+    name: "Echo Wellness Center",
+    alternateName: "مركز إيكو للعافية",
+    url: "https://echowellness.me",
+    logo: "https://echowellness.me/logo.png",
+    image: "https://echowellness.me/og-image.jpg",
+    description:
+      "Multidisciplinary rehabilitation clinic offering Audiology, Speech Therapy, Occupational Therapy, Psychology, and Behavioral Support in Muscat, Oman.",
+    telephone: "+968-XXXX-XXXX",
+    email: "info@echowellness.me",
     address: {
       "@type": "PostalAddress",
-      streetAddress: "123 Mecca Street",
-      addressLocality: "Amman",
-      addressCountry: "JO",
+      streetAddress: "Sarooj",
+      addressLocality: "Muscat",
+      addressRegion: "Muscat Governorate",
+      postalCode: "100",
+      addressCountry: "OM",
     },
-    medicalSpecialty: ["Audiology", "SpeechTherapy", "OccupationalTherapy"],
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: 23.588,
+      longitude: 58.3829,
+    },
+    medicalSpecialty: ["Audiology", "SpeechTherapy", "OccupationalTherapy", "Psychology", "BehavioralTherapy"],
+    availableService: [
+      { "@type": "MedicalTherapy", name: "Hearing Assessment and Treatment", alternateName: "تقييم وعلاج السمع" },
+      { "@type": "MedicalTherapy", name: "Speech and Language Therapy", alternateName: "علاج النطق واللغة" },
+      { "@type": "MedicalTherapy", name: "Occupational Therapy", alternateName: "العلاج الوظيفي" },
+      { "@type": "MedicalTherapy", name: "Psychological Assessment and Support", alternateName: "التقييم والدعم النفسي" },
+      { "@type": "MedicalTherapy", name: "Behavioral Support and ABA", alternateName: "الدعم السلوكي وتحليل السلوك التطبيقي" },
+    ],
+    openingHoursSpecification: [
+      {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday"],
+        opens: "08:00",
+        closes: "18:00",
+      },
+      {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: "Saturday",
+        opens: "09:00",
+        closes: "14:00",
+      },
+    ],
+    sameAs: ["https://www.instagram.com/echowellness.om/"],
+    priceRange: "$$",
+    currenciesAccepted: "OMR",
+    paymentAccepted: "Cash, Credit Card",
   };
 
   return (

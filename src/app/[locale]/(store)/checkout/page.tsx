@@ -94,7 +94,7 @@ export default function CheckoutPage() {
             <div className="space-y-2">
               {[["card","Credit / debit card"],["paypal","PayPal"],["cod","Cash on delivery"]].map(([v,l]) => (
                 <label key={v} className="flex items-center gap-2 rounded-md border p-3 text-sm">
-                  <input type="radio" name="pay" checked={pay === v} onChange={() => setPay(v)} className="accent-purple-600" />{l}
+                  <input type="radio" name="pay" checked={pay === v} onChange={() => setPay(v)} className="accent-brand-teal" />{l}
                 </label>
               ))}
             </div>

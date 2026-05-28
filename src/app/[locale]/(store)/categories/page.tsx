@@ -21,7 +21,7 @@ const categoryColors: Record<string, string> = {
   Vitamins: "bg-yellow-100 text-yellow-700",
   "First Aid": "bg-red-100 text-red-600",
   "Diabetes Care": "bg-teal-100 text-teal-600",
-  Mobility: "bg-purple-100 text-purple-600",
+  Mobility: "bg-brand-100 text-brand-teal",
   "OTC Meds": "bg-green-100 text-green-700",
 };
 

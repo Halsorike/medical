@@ -4,7 +4,7 @@ import { Link } from "@/navigation";
 import { useState } from "react";
 import { usePathname } from "@/navigation";
 import { useLocale, useTranslations } from "next-intl";
-import { ArrowRight, Clock, Ear, Heart, Mail, Menu, Phone, ShoppingCart, X } from "lucide-react";
+import { ArrowRight, Clock, Heart, Mail, Menu, Phone, ShoppingCart, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useCart } from "./cart-context";
 
@@ -36,12 +36,13 @@ export function StoreHeader() {
     <header className="sticky top-0 z-40 bg-white shadow-[0_8px_30px_rgba(6,28,61,0.08)]">
       <div className="container flex h-[92px] items-center justify-between gap-4 lg:h-[148px]">
         <Link href="/" className="flex shrink-0 items-center gap-3">
-          <div className="flex h-14 w-14 items-center justify-center rounded-full bg-brand-gradient text-white shadow-[0_12px_24px_rgba(155,31,225,0.22)] lg:h-[82px] lg:w-[82px]">
-            <Ear className="h-8 w-8 lg:h-11 lg:w-11" />
+          <div className="flex h-14 w-14 items-center justify-center rounded-full bg-white text-white shadow-[0_12px_24px_rgba(0,95,158,0.18)] ring-1 ring-brand-100 lg:h-[82px] lg:w-[82px]">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/logo.svg" alt="Echo Wellness logo" className="h-10 w-10 lg:h-16 lg:w-16" />
           </div>
           <div className="hidden max-w-[120px] leading-tight sm:block lg:max-w-[198px]">
-            <p className="gradient-text text-sm font-semibold lg:text-[22px]">Jordan Hearing</p>
-            <p className="text-xs font-light text-[#1e1e1e] lg:text-[15px]">&amp; Speech Therapy</p>
+            <p className="gradient-text text-sm font-semibold lg:text-[22px]">Echo Wellness</p>
+            <p className="text-xs font-light text-brand-dark lg:text-[15px]">Empower. Enhance. Thrive.</p>
           </div>
         </Link>
 
@@ -53,7 +54,7 @@ export function StoreHeader() {
               className={
                 isActive(link.href)
                   ? "gradient-text text-[15.8px] font-semibold"
-                  : "text-[15.8px] font-normal text-[#1e1e1e] transition-colors hover:text-[#9b1fe1]"
+                  : "text-[15.8px] font-normal text-brand-dark transition-colors hover:text-brand-blue"
               }
             >
               {link.label}
@@ -65,7 +66,7 @@ export function StoreHeader() {
           <Link
             href="/cart"
             aria-label={t("cart")}
-            className="relative flex h-11 w-11 items-center justify-center rounded-full text-[#1e1e1e] transition-colors hover:text-[#9b1fe1]"
+            className="relative flex h-11 w-11 items-center justify-center rounded-full text-brand-dark transition-colors hover:text-brand-blue"
           >
             <ShoppingCart className="h-5 w-5" />
             {count > 0 && (
@@ -77,14 +78,14 @@ export function StoreHeader() {
           <Link
             href="/wishlist"
             aria-label={t("wishlist")}
-            className="hidden h-11 w-11 items-center justify-center rounded-full text-[#1e1e1e] transition-colors hover:text-[#9b1fe1] sm:flex"
+            className="hidden h-11 w-11 items-center justify-center rounded-full text-brand-dark transition-colors hover:text-brand-blue sm:flex"
           >
             <Heart className="h-5 w-5" />
           </Link>
           <Link
             href={pathname}
             locale={otherLocale}
-            className="hidden h-9 items-center rounded-full border border-[#9b1fe1]/30 px-3 text-[13px] font-medium text-[#9b1fe1] transition hover:bg-[#9b1fe1]/10 sm:flex"
+            className="hidden h-9 items-center rounded-full border border-brand-teal/30 px-3 text-[13px] font-medium text-brand-blue transition hover:bg-brand-50 sm:flex"
           >
             {otherLocaleLabel}
           </Link>
@@ -117,7 +118,7 @@ export function StoreHeader() {
                 className={
                   isActive(link.href)
                     ? "gradient-text text-sm font-semibold"
-                    : "text-sm font-medium text-[#1e1e1e] hover:text-[#9b1fe1]"
+                    : "text-sm font-medium text-brand-dark hover:text-brand-blue"
                 }
                 onClick={() => setMobileOpen(false)}
               >
@@ -127,7 +128,7 @@ export function StoreHeader() {
             <Link
               href={pathname}
               locale={otherLocale}
-              className="flex h-9 w-fit items-center rounded-full border border-[#9b1fe1]/30 px-3 text-[13px] font-medium text-[#9b1fe1] transition hover:bg-[#9b1fe1]/10"
+              className="flex h-9 w-fit items-center rounded-full border border-brand-teal/30 px-3 text-[13px] font-medium text-brand-blue transition hover:bg-brand-50"
               onClick={() => setMobileOpen(false)}
             >
               {otherLocaleLabel}
@@ -138,15 +139,15 @@ export function StoreHeader() {
                 <ArrowRight className="h-4 w-4" />
               </Link>
             </Button>
-            <div className="mt-4 flex flex-col gap-2 rounded-[20px] bg-[rgba(255,53,245,0.04)] p-4 text-xs text-[#42526b]">
+            <div className="mt-4 flex flex-col gap-2 rounded-[20px] bg-brand-50 p-4 text-xs text-[#42526b]">
               <p className="flex items-center gap-2">
-                <Phone className="h-3.5 w-3.5 text-[#ca79c6]" /> +962 6 123 4567
+                <Phone className="h-3.5 w-3.5 text-brand-teal" /> +968 XXXX XXXX
               </p>
               <p className="flex items-center gap-2">
-                <Mail className="h-3.5 w-3.5 text-[#ca79c6]" /> info@jordanhearing.com
+                <Mail className="h-3.5 w-3.5 text-brand-teal" /> info@echowellness.me
               </p>
               <p className="flex items-center gap-2">
-                <Clock className="h-3.5 w-3.5 text-[#ca79c6]" /> Sun-Thu 8AM-6PM
+                <Clock className="h-3.5 w-3.5 text-brand-teal" /> Sun-Thu 8AM-6PM
               </p>
             </div>
           </nav>

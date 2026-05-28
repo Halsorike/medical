@@ -37,10 +37,10 @@ export function BlogListClient({ posts }: { posts: StorefrontBlogPost[] }) {
             value={query}
             onChange={(event) => setQuery(event.target.value)}
             placeholder="Search articles..."
-            className="h-12 rounded-full border-[#ca79c6]/20 pl-11"
+            className="h-12 rounded-full border-[#0099A8]/20 pl-11"
           />
         </div>
-        <Button variant="outline" className="rounded-full border-[#ca79c6] px-8 text-[#ca79c6]" onClick={() => setQuery("")}>
+        <Button variant="outline" className="rounded-full border-[#0099A8] px-8 text-[#0099A8]" onClick={() => setQuery("")}>
           All Blogs
         </Button>
       </div>

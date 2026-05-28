@@ -4,7 +4,7 @@ import { db } from "@/lib/db";
 import { ensureSeeded } from "@/lib/seed";
 import { fail, ok, validationError } from "@/lib/api";
 import { toStorefrontDoctor } from "@/lib/doctor-format";
-import { doctors as fallbackDoctors } from "@/data/team";
+import { fallbackDoctors } from "@/lib/doctor-fallback";
 
 export const dynamic = "force-dynamic";
 

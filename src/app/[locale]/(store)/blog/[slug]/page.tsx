@@ -2,8 +2,8 @@ import { Link } from "@/navigation";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ArrowLeft, BookOpen, Clock } from "lucide-react";
-import { posts as fallbackPosts } from "@/data/blog";
 import { getApiData } from "@/lib/server-api";
+import { fallbackBlogPosts } from "@/lib/blog-fallback";
 import { getPostLocale, normalizeBlogPost } from "@/lib/blog-format";
 import type { StorefrontBlogPost } from "@/types/blog";
 import { Badge } from "@/components/ui/badge";
@@ -23,7 +23,7 @@ export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }: { params: { locale: string; slug: string } }): Promise<Metadata> {
   const apiPost = await getApiData<StorefrontBlogPost>(`/api/blog/${params.slug}`);
-  const post = apiPost ? normalizeBlogPost(apiPost) : fallbackPosts.find((item) => item.slug === params.slug);
+  const post = apiPost ? normalizeBlogPost(apiPost) : fallbackBlogPosts.find((item) => item.slug === params.slug);
 
   if (!post) {
     return {
@@ -50,7 +50,7 @@ export async function generateMetadata({ params }: { params: { locale: string; s
 
 export default async function BlogPostPage({ params }: { params: { locale: string; slug: string } }) {
   const apiPost = await getApiData<StorefrontBlogPost>(`/api/blog/${params.slug}`);
-  const post = apiPost ? normalizeBlogPost(apiPost) : fallbackPosts.find((item) => item.slug === params.slug);
+  const post = apiPost ? normalizeBlogPost(apiPost) : fallbackBlogPosts.find((item) => item.slug === params.slug);
 
   if (!post) {
     notFound();
@@ -58,7 +58,7 @@ export default async function BlogPostPage({ params }: { params: { locale: strin
 
   const localePost = getPostLocale(post, params.locale);
   const apiPosts = await getApiData<StorefrontBlogPost[]>("/api/blog");
-  const relatedSource = apiPosts?.length ? apiPosts.map(normalizeBlogPost) : fallbackPosts;
+  const relatedSource = apiPosts?.length ? apiPosts.map(normalizeBlogPost) : fallbackBlogPosts;
   const relatedPosts = relatedSource
     .filter((item) => item.slug !== post.slug)
     .slice(0, 3)

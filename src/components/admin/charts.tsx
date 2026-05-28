@@ -6,7 +6,7 @@ import {
 } from "recharts";
 import { formatCurrency } from "@/lib/utils";
 
-const purples = ["#a855f7", "#9333ea", "#7e22ce", "#6b21a8", "#c084fc", "#e9d5ff"];
+const brandChartColors = ["#0099A8", "#005F9E", "#F5A623", "#E91E8C", "#86CCD5", "#D8EEF1"];
 
 function revenueFormatter(value: number) {
   return formatCurrency(value);
@@ -63,7 +63,7 @@ export function CategoryPie({ data }: { data: { name: string; value: number }[] 
           labelLine={false}
         >
           {data.map((_, i) => (
-            <Cell key={i} fill={purples[i % purples.length]} />
+            <Cell key={i} fill={brandChartColors[i % brandChartColors.length]} />
           ))}
         </Pie>
         <Tooltip />

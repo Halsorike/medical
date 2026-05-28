@@ -148,13 +148,13 @@ export default function EvaluationPage() {
 
       <div className="container py-12">
         {result ? (
-          <div className="mx-auto max-w-lg rounded-2xl border border-purple-100 bg-white p-12 text-center shadow-sm">
+          <div className="mx-auto max-w-lg rounded-2xl border border-brand-100 bg-white p-12 text-center shadow-sm">
             <Badge variant={resultVariant[result.level]} className="mb-4 capitalize">{result.level}</Badge>
             <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-100">
               <span className="text-3xl">?</span>
             </div>
             <h2 className="text-xl font-bold text-gray-800">Your Evaluation Results</h2>
-            <p className="mt-3 text-3xl font-bold text-purple-700">{result.score}/24</p>
+            <p className="mt-3 text-3xl font-bold text-brand-blue">{result.score}/24</p>
             <p className="mt-3 text-muted-foreground">
               {result.level === "normal"
                 ? t("resultNormal")
@@ -176,7 +176,7 @@ export default function EvaluationPage() {
         ) : (
           <form onSubmit={handleSubmit} className="mx-auto max-w-2xl space-y-8">
             {/* Personal info */}
-            <div className="rounded-2xl border border-purple-100 bg-white p-6 shadow-sm">
+            <div className="rounded-2xl border border-brand-100 bg-white p-6 shadow-sm">
               <h3 className="mb-5 font-semibold text-gray-800">Personal Information</h3>
               <div className="grid gap-4 sm:grid-cols-2">
                 <div>
@@ -224,20 +224,20 @@ export default function EvaluationPage() {
             </div>
 
             {/* Questionnaire */}
-            <div className="rounded-2xl border border-purple-100 bg-white p-6 shadow-sm">
+            <div className="rounded-2xl border border-brand-100 bg-white p-6 shadow-sm">
               <div className="mb-5">
                 <div className="mb-2 flex items-center justify-between text-sm">
                   <h3 className="font-semibold text-gray-800">Hearing Self-Assessment</h3>
                   <span className="text-muted-foreground">Question {Math.min(answeredCount + 1, questionsDisplay.length)} of {questionsDisplay.length}</span>
                 </div>
-                <div className="h-2 overflow-hidden rounded-full bg-purple-100">
+                <div className="h-2 overflow-hidden rounded-full bg-brand-100">
                   <div className={`h-full rounded-full bg-brand-gradient transition-all ${progressWidth}`} />
                 </div>
               </div>
               <div className="space-y-5">
                 {questionsDisplay.map((q, i) => (
                   <div key={i} className="flex items-start gap-4">
-                    <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-purple-100 text-xs font-bold text-purple-700">
+                    <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand-100 text-xs font-bold text-brand-blue">
                       {i + 1}
                     </span>
                     <div className="flex-1">

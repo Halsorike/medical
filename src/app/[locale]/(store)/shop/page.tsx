@@ -113,7 +113,7 @@ function ShopInner() {
               Explore our curated shop with hearing devices, accessories, and clinical care essentials.
             </p>
             <Link href="#products" className="mt-6 inline-block">
-              <Button className="rounded-full bg-white px-8 font-semibold text-[#ca79c6] hover:bg-white/90">
+              <Button className="rounded-full bg-white px-8 font-semibold text-[#0099A8] hover:bg-white/90">
                 {t("shopNow")}
               </Button>
             </Link>
@@ -136,7 +136,7 @@ function ShopInner() {
 
       {/* Search / filter bar */}
       <section id="products" className="container py-8">
-        <div className="mb-6 flex flex-wrap items-center gap-3 rounded-[20px] border-l-4 border-[#ca79c6] bg-white p-4 shadow-[0_11px_26px_rgba(6,28,61,0.1)]">
+        <div className="mb-6 flex flex-wrap items-center gap-3 rounded-[20px] border-l-4 border-[#0099A8] bg-white p-4 shadow-[0_11px_26px_rgba(6,28,61,0.1)]">
           <div className="relative flex-1 min-w-48">
             <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
             <Input
@@ -210,7 +210,7 @@ function ShopInner() {
           <div className="mt-10 flex justify-center">
             <Button
               variant="outline"
-              className="rounded-full border-purple-300 px-10 text-purple-700 hover:bg-purple-50"
+              className="rounded-full border-brand-300 px-10 text-brand-blue hover:bg-brand-50"
               onClick={() => setVisible((v) => v + PAGE_SIZE)}
             >
               {t("loadMore")}
