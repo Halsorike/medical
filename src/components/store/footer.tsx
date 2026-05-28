@@ -20,7 +20,7 @@ export function StoreFooter() {
 
   return (
     <footer className="bg-white">
-      <div className="bg-brand-gradient text-white lg:min-h-[680px]">
+      <div className="bg-figma-footer-gradient text-white lg:min-h-[680px]">
         <div className="overflow-hidden">
           <svg viewBox="0 0 1440 80" className="-mb-1 block w-full fill-white">
             <path d="M0,0 C360,80 1080,80 1440,0 L1440,0 L0,0 Z" />
@@ -63,7 +63,7 @@ export function StoreFooter() {
                 </Link>
               ))}
             </nav>
-            <Button asChild className="mt-8 rounded-[10px] bg-white px-8 py-3 text-brand-blue hover:bg-white/90">
+            <Button asChild className="mt-8 rounded-[10px] bg-white px-8 py-3 text-brand-blue shadow-[0_4px_12px_rgba(255,255,255,0.22)] hover:bg-white/90">
               <Link href="/shop">Shop Now</Link>
             </Button>
           </div>
@@ -91,7 +91,7 @@ export function StoreFooter() {
         </div>
 
         <div className="container pb-8">
-          <div className="flex items-center gap-5 text-center text-sm font-medium text-white/90">
+            <div className="flex items-center gap-5 text-center text-sm font-medium text-white/90">
             <div className="h-px flex-1 bg-white/60" />
             <p>{t("rights")}</p>
             <div className="h-px flex-1 bg-white/60" />

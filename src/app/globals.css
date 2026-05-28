@@ -33,6 +33,9 @@
 }
 
 .bg-brand-gradient { background: linear-gradient(175deg, #0099A8 15%, #005F9E 68%); }
+.bg-figma-hero-gradient { background: linear-gradient(135deg, #005F9E 0%, #0099A8 58%, #4DC9D6 100%); }
+.bg-figma-footer-gradient { background: linear-gradient(135deg, #005F9E 0%, #0099A8 100%); }
+.bg-figma-cta { background: #F5A623; }
 
 .btn-primary {
   background: linear-gradient(82deg, #F5A623 0%, #E91E8C 100%);
@@ -54,4 +57,28 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+
+.figma-wave-bottom {
+  position: absolute;
+  inset-inline: 0;
+  bottom: -1px;
+  height: clamp(72px, 8vw, 130px);
+  pointer-events: none;
+}
+
+.figma-wave-bottom svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.figma-card {
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 11px 26px rgba(6, 28, 61, 0.1);
+}
+
+.figma-section {
+  padding-block: clamp(64px, 7vw, 112px);
 }
