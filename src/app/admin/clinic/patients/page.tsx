@@ -1,28 +1,52 @@
 "use client";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
 import { PageHeader } from "@/components/admin/page-header";
 import { DataTable, Pagination } from "@/components/admin/data-table";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Plus, Eye, Pencil } from "lucide-react";
-import { patients } from "@/data/clinic";
-import { useState } from "react";
+
+type ApiPatient = {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  dateOfBirth?: string | null;
+  gender?: string | null;
+  createdAt: string;
+  appointments?: unknown[];
+};
 
 export default function PatientsPage() {
   const [q, setQ] = useState("");
-  const rows = patients.filter((p) => p.name.toLowerCase().includes(q.toLowerCase()));
+  const [rows, setRows] = useState<ApiPatient[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setLoading(true);
+    const query = q ? `?search=${encodeURIComponent(q)}` : "";
+
+    fetch(`/api/patients${query}`)
+      .then((response) => (response.ok ? response.json() : Promise.reject()))
+      .then((payload: { data: ApiPatient[] }) => setRows(payload.data))
+      .catch(() => toast.error("Patients could not be loaded"))
+      .finally(() => setLoading(false));
+  }, [q]);
   return (
     <>
       <PageHeader title="Patients" description="All registered patients" action={<Button variant="gradient"><Plus className="mr-1 h-4 w-4" />New patient</Button>} />
       <div className="mb-3"><Input placeholder="Search patients…" value={q} onChange={(e) => setQ(e.target.value)} className="max-w-xs" /></div>
       <DataTable
         rows={rows}
+        empty={loading ? "Loading patients..." : "No patients."}
         rowKey={(r) => r.id}
         columns={[
           { header: "ID", accessor: (r) => r.id },
           { header: "Patient name", accessor: (r) => r.name },
-          { header: "Total appointments", accessor: (r) => r.totalAppointments },
-          { header: "Next appointment", accessor: (r) => r.nextAppointment },
-          { header: "Employee", accessor: (r) => r.employee },
+          { header: "Appointments", accessor: (r) => r.appointments?.length ?? 0 },
+          { header: "Phone", accessor: (r) => r.phone },
+          { header: "Gender", accessor: (r) => r.gender ?? "-" },
           { header: "Email", accessor: (r) => r.email },
           { header: "Action", accessor: () => (
             <div className="flex gap-2 text-muted-foreground">
