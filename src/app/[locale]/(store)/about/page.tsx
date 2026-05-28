@@ -2,7 +2,10 @@ import { Link } from "@/navigation";
 import type { Metadata } from "next";
 import { Button } from "@/components/ui/button";
 import { TeamCard } from "@/components/store/team-card";
-import { doctors } from "@/data/team";
+import { getApiData } from "@/lib/server-api";
+import type { Doctor } from "@/types/doctor";
+
+export const dynamic = "force-dynamic";
 
 const CONTENT = {
   ar: {
@@ -62,12 +65,13 @@ export const metadata: Metadata = {
   },
 };
 
-export default function AboutPage({
+export default async function AboutPage({
   params: { locale },
 }: {
   params: { locale: string };
 }) {
   const c = CONTENT[locale as "ar" | "en"] ?? CONTENT.ar;
+  const doctors = await getApiData<Doctor[]>("/api/doctors") ?? [];
 
   return (
     <>

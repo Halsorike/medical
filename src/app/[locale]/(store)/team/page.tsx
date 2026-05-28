@@ -2,7 +2,10 @@ import { Link } from "@/navigation";
 import type { Metadata } from "next";
 import { Button } from "@/components/ui/button";
 import { TeamCard } from "@/components/store/team-card";
-import { doctors } from "@/data/team";
+import { getApiData } from "@/lib/server-api";
+import type { Doctor } from "@/types/doctor";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Team",
@@ -17,11 +20,13 @@ export const metadata: Metadata = {
   },
 };
 
-export default function TeamPage({
+export default async function TeamPage({
   params: { locale },
 }: {
   params: { locale: string };
 }) {
+  const doctors = await getApiData<Doctor[]>("/api/doctors") ?? [];
+
   return (
     <>
       <section className="relative overflow-hidden bg-brand-gradient pb-16 pt-12 text-white">

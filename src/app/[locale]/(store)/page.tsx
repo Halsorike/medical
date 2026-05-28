@@ -6,7 +6,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { BlogCard } from "@/components/store/blog-card";
 import { TeamCard } from "@/components/store/team-card";
-import { doctors } from "@/data/team";
+import { getApiData } from "@/lib/server-api";
+import type { Doctor } from "@/types/doctor";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Home",
@@ -52,6 +55,7 @@ export default async function HomePage({
   params: { locale: string };
 }) {
   const t = await getTranslations({ locale });
+  const doctors = await getApiData<Doctor[]>("/api/doctors") ?? [];
 
   return (
     <>
