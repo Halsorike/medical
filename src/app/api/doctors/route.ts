@@ -4,6 +4,8 @@ import { z } from "zod";
 import { db } from "@/lib/db";
 import { ensureSeeded } from "@/lib/seed";
 import { fail, ok, validationError } from "@/lib/api";
+import { toStorefrontDoctor } from "@/lib/doctor-format";
+import { doctors as fallbackDoctors } from "@/data/team";
 
 export const dynamic = "force-dynamic";
 
@@ -26,8 +28,6 @@ const doctorCreateSchema = z.object({
 });
 
 export async function GET(request: NextRequest) {
-  await ensureSeeded();
-
   const { searchParams } = new URL(request.url);
   const q = searchParams.get("q") ?? searchParams.get("search") ?? "";
   const departmentId = searchParams.get("departmentId");
@@ -39,13 +39,25 @@ export async function GET(request: NextRequest) {
     ...(status ? { status } : {}),
   };
 
-  const doctors = await db.doctor.findMany({
-    where,
-    include: { department: true },
-    orderBy: { name: "asc" },
-  });
+  try {
+    await ensureSeeded();
 
-  return ok(doctors);
+    const doctors = await db.doctor.findMany({
+      where,
+      include: { department: true },
+      orderBy: { name: "asc" },
+    });
+
+    return ok(doctors.map(toStorefrontDoctor));
+  } catch (error) {
+    console.warn("[api] /api/doctors fell back to static doctors", error);
+    const normalized = fallbackDoctors.map(toStorefrontDoctor).filter((doctor) => {
+      const matchesQuery = !q || [doctor.name, doctor.title, ...doctor.tags].some((field) => field.toLowerCase().includes(q.toLowerCase()));
+      const matchesStatus = !status || status === "active";
+      return matchesQuery && matchesStatus && !departmentId;
+    });
+    return ok(normalized);
+  }
 }
 
 export async function POST(request: NextRequest) {

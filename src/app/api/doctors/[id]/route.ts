@@ -3,6 +3,8 @@ import { z } from "zod";
 import { db } from "@/lib/db";
 import { ensureSeeded } from "@/lib/seed";
 import { fail, ok, validationError } from "@/lib/api";
+import { toStorefrontDoctor } from "@/lib/doctor-format";
+import { doctors as fallbackDoctors } from "@/data/team";
 
 export const dynamic = "force-dynamic";
 
@@ -25,21 +27,27 @@ const doctorUpdateSchema = z.object({
 });
 
 export async function GET(_request: NextRequest, { params }: { params: { id: string } }) {
-  await ensureSeeded();
+  try {
+    await ensureSeeded();
 
-  const doctor = await db.doctor.findUnique({
-    where: { id: params.id },
-    include: {
-      department: true,
-      schedules: { orderBy: { dayOfWeek: "asc" } },
-    },
-  });
+    const doctor = await db.doctor.findUnique({
+      where: { id: params.id },
+      include: {
+        department: true,
+        schedules: { orderBy: { dayOfWeek: "asc" } },
+      },
+    });
 
-  if (!doctor) {
-    return fail("Doctor not found", 404);
+    if (!doctor) {
+      return fail("Doctor not found", 404);
+    }
+
+    return ok(toStorefrontDoctor(doctor));
+  } catch (error) {
+    console.warn("[api] /api/doctors/[id] fell back to static doctors", error);
+    const doctor = fallbackDoctors.find((item) => item.slug === params.id || item.id === params.id);
+    return doctor ? ok(toStorefrontDoctor(doctor)) : fail("Doctor not found", 404);
   }
-
-  return ok(doctor);
 }
 
 export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
