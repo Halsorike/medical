@@ -1,112 +1,70 @@
 "use client";
-import { useState } from "react";
-import { Link } from "@/navigation";
+
+import { useMemo, useState } from "react";
+import { Check, ChevronLeft, ChevronRight, X } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Badge } from "@/components/ui/badge";
 
-const QUESTIONS = [
-  "Do you have difficulty hearing in noisy environments?",
-  "Do you often ask people to repeat themselves?",
-  "Do you turn up the TV or radio louder than others prefer?",
-  "Do you have ringing or buzzing in your ears?",
-  "Do you miss parts of conversations?",
-  "Do you have difficulty understanding speech on the phone?",
-];
-
-const QUESTIONS_AR = [
-  "هل تجد صعوبة في السمع في البيئات الصاخبة؟",
-  "هل تطلب كثيراً من الآخرين إعادة ما قالوه؟",
-  "هل ترفع صوت التلفاز أو الراديو أكثر مما يفضّل الآخرون؟",
-  "هل تسمع طنيناً أو أزيزاً في أذنيك؟",
-  "هل تفوتك أجزاء من المحادثات؟",
-  "هل تجد صعوبة في فهم الكلام عبر الهاتف؟",
-];
-
-const ANSWER_SCORES: Record<string, number> = {
-  never: 0,
-  rarely: 1,
-  sometimes: 2,
-  often: 3,
-  always: 4,
+const questions = {
+  hearing: [
+    "Do you have difficulty hearing in noisy environments?",
+    "Do you often ask people to repeat themselves?",
+    "Do you miss parts of conversations?",
+  ],
+  speech: [
+    "Does speech sound unclear in daily conversation?",
+    "Is it difficult to find the right words quickly?",
+    "Do communication challenges affect school or family routines?",
+  ],
+  occupational: [
+    "Are daily routines difficult to complete independently?",
+    "Are sensory experiences overwhelming or distracting?",
+    "Are fine-motor or handwriting tasks challenging?",
+  ],
 };
 
-const ANSWERS_AR: Record<string, number> = {
-  "أبداً": 0,
-  "نادراً": 1,
-  "أحياناً": 2,
-  "غالباً": 3,
-  "دائماً": 4,
+const questionsAr = {
+  hearing: ["هل توجد صعوبة في السمع في الأماكن المزدحمة؟", "هل تطلب تكرار الكلام كثيرًا؟", "هل تفوتك أجزاء من المحادثات؟"],
+  speech: ["هل يبدو النطق غير واضح في الحديث اليومي؟", "هل توجد صعوبة في اختيار الكلمات؟", "هل تؤثر صعوبات التواصل على المدرسة أو الأسرة؟"],
+  occupational: ["هل توجد صعوبة في إنجاز الروتين اليومي؟", "هل تسبب الخبرات الحسية تشتتًا أو انزعاجًا؟", "هل توجد صعوبة في المهارات الدقيقة أو الكتابة؟"],
 };
 
-const ANSWER_LABELS = {
-  never: "Never",
-  rarely: "Rarely",
-  sometimes: "Sometimes",
-  often: "Often",
-  always: "Always",
-};
+const tabs = [
+  { key: "hearing", label: "Hearing", labelAr: "السمع" },
+  { key: "speech", label: "Speech", labelAr: "النطق" },
+  { key: "occupational", label: "Occupational Therapy", labelAr: "العلاج الوظيفي" },
+] as const;
 
-type Result = {
-  score: number;
-  level: "normal" | "mild" | "moderate" | "significant";
-  recommendation: string;
-};
-
-function getResult(score: number): Result {
-  if (score <= 8) {
-    return { score, level: "normal", recommendation: "Normal hearing ? no intervention needed" };
-  }
-  if (score <= 16) {
-    return { score, level: "mild", recommendation: "Mild hearing difficulty ? recommend consultation" };
-  }
-  if (score <= 24) {
-    return { score, level: "moderate", recommendation: "Moderate hearing loss ? recommend evaluation" };
-  }
-  return { score, level: "significant", recommendation: "Significant hearing loss ? urgent consultation recommended" };
-}
-
-const resultVariant: Record<Result["level"], "success" | "warning" | "info" | "destructive"> = {
-  normal: "success",
-  mild: "warning",
-  moderate: "info",
-  significant: "destructive",
-};
+type TabKey = (typeof tabs)[number]["key"];
 
 export default function EvaluationPage() {
   const locale = useLocale();
   const t = useTranslations("evaluation");
-  const questionsDisplay = locale === "ar" ? QUESTIONS_AR : QUESTIONS;
-  const answersDisplay = locale === "ar" ? ANSWERS_AR : ANSWER_SCORES;
-  const answerEntries = Object.entries(answersDisplay);
-  const [answers, setAnswers] = useState<Record<number, string>>({});
-  const [personalInfo, setPersonalInfo] = useState({ name: "", age: "", email: "", phone: "" });
-  const [result, setResult] = useState<Result | null>(null);
+  const [activeTab, setActiveTab] = useState<TabKey>("hearing");
+  const [answers, setAnswers] = useState<Record<string, boolean>>({});
   const [submitting, setSubmitting] = useState(false);
-  const answeredCount = Object.keys(answers).length;
-  const progressWidth = ["w-0", "w-1/6", "w-2/6", "w-3/6", "w-4/6", "w-5/6", "w-full"][answeredCount] ?? "w-0";
+  const isAr = locale === "ar";
 
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    if (answeredCount < questionsDisplay.length) {
-      toast.error("Please answer all hearing questions before submitting.");
+  const visibleQuestions = useMemo(() => (isAr ? questionsAr : questions)[activeTab], [activeTab, isAr]);
+  const answeredCount = visibleQuestions.filter((_, index) => answers[`${activeTab}-${index}`] !== undefined).length;
+
+  async function handleDone() {
+    if (answeredCount < visibleQuestions.length) {
+      toast.error("Please answer all questions first.");
       return;
     }
 
-    const score = Object.values(answers).reduce((total, answer) => total + (answersDisplay[answer] ?? 0), 0);
-    const nextResult = getResult(score);
+    const score = visibleQuestions.reduce((total, _, index) => total + (answers[`${activeTab}-${index}`] ? 1 : 0), 0);
     setSubmitting(true);
     const response = await fetch("/api/evaluations", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        patientName: personalInfo.name,
-        age: personalInfo.age,
-        email: personalInfo.email,
-        phone: personalInfo.phone,
+        patientName: "Storefront visitor",
+        age: "0",
+        email: "visitor@echowellness.me",
+        phone: "+968",
         answers,
         score,
       }),
@@ -114,164 +72,79 @@ export default function EvaluationPage() {
     setSubmitting(false);
 
     if (!response.ok) {
-      toast.error("Evaluation submission failed. Please try again.");
+      toast.error("Evaluation submission failed.");
       return;
     }
 
-    setResult(nextResult);
-    toast.success("Evaluation submitted successfully! We will contact you with results.");
-  }
-
-  function resetEvaluation() {
-    setAnswers({});
-    setPersonalInfo({ name: "", age: "", email: "", phone: "" });
-    setResult(null);
+    toast.success("Evaluation submitted. Our team will guide you on next steps.");
   }
 
   return (
-    <>
-      <h1 className="sr-only">Online Hearing Evaluation</h1>
-      {/* Hero */}
-      <section className="relative overflow-hidden bg-brand-gradient pb-16 pt-12 text-white">
-        <div className="container text-center">
-          <h1 className="text-3xl font-bold">{t("heading")}</h1>
-          <p className="mt-3 max-w-xl mx-auto text-white/85 leading-relaxed">
-            {t("subtext")}
-          </p>
-        </div>
-        <div className="absolute bottom-0 left-0 right-0 overflow-hidden">
-          <svg viewBox="0 0 1440 60" className="w-full fill-white">
-            <path d="M0,30 C360,60 1080,0 1440,30 L1440,60 L0,60 Z" />
-          </svg>
-        </div>
-      </section>
-
-      <div className="container py-12">
-        {result ? (
-          <div className="mx-auto max-w-lg rounded-2xl border border-brand-100 bg-white p-12 text-center shadow-sm">
-            <Badge variant={resultVariant[result.level]} className="mb-4 capitalize">{result.level}</Badge>
-            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-100">
-              <span className="text-3xl">?</span>
-            </div>
-            <h2 className="text-xl font-bold text-gray-800">Your Evaluation Results</h2>
-            <p className="mt-3 text-3xl font-bold text-brand-blue">{result.score}/24</p>
-            <p className="mt-3 text-muted-foreground">
-              {result.level === "normal"
-                ? t("resultNormal")
-                : result.level === "mild"
-                  ? t("resultMild")
-                  : result.level === "moderate"
-                    ? t("resultModerate")
-                    : t("resultSevere")}
-            </p>
-            <div className="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
-              <Link href="/book-appointment">
-                <Button variant="gradient" className="rounded-full px-8">{t("bookNow")}</Button>
-              </Link>
-              <Button variant="outline" className="rounded-full px-8" onClick={resetEvaluation}>
-                Retake Evaluation
-              </Button>
-            </div>
-          </div>
-        ) : (
-          <form onSubmit={handleSubmit} className="mx-auto max-w-2xl space-y-8">
-            {/* Personal info */}
-            <div className="rounded-2xl border border-brand-100 bg-white p-6 shadow-sm">
-              <h3 className="mb-5 font-semibold text-gray-800">Personal Information</h3>
-              <div className="grid gap-4 sm:grid-cols-2">
-                <div>
-                  <label className="mb-1.5 block text-sm font-medium text-gray-700">Full Name*</label>
-                  <Input
-                    value={personalInfo.name}
-                    onChange={(e) => setPersonalInfo({ ...personalInfo, name: e.target.value })}
-                    className="rounded-lg"
-                    required
-                  />
-                </div>
-                <div>
-                  <label className="mb-1.5 block text-sm font-medium text-gray-700">Age*</label>
-                  <Input
-                    type="number"
-                    min={1}
-                    max={120}
-                    value={personalInfo.age}
-                    onChange={(e) => setPersonalInfo({ ...personalInfo, age: e.target.value })}
-                    className="rounded-lg"
-                    required
-                  />
-                </div>
-                <div>
-                  <label className="mb-1.5 block text-sm font-medium text-gray-700">Email*</label>
-                  <Input
-                    type="email"
-                    value={personalInfo.email}
-                    onChange={(e) => setPersonalInfo({ ...personalInfo, email: e.target.value })}
-                    className="rounded-lg"
-                    required
-                  />
-                </div>
-                <div>
-                  <label className="mb-1.5 block text-sm font-medium text-gray-700">Phone*</label>
-                  <Input
-                    type="tel"
-                    value={personalInfo.phone}
-                    onChange={(e) => setPersonalInfo({ ...personalInfo, phone: e.target.value })}
-                    className="rounded-lg"
-                    required
-                  />
-                </div>
-              </div>
-            </div>
-
-            {/* Questionnaire */}
-            <div className="rounded-2xl border border-brand-100 bg-white p-6 shadow-sm">
-              <div className="mb-5">
-                <div className="mb-2 flex items-center justify-between text-sm">
-                  <h3 className="font-semibold text-gray-800">Hearing Self-Assessment</h3>
-                  <span className="text-muted-foreground">Question {Math.min(answeredCount + 1, questionsDisplay.length)} of {questionsDisplay.length}</span>
-                </div>
-                <div className="h-2 overflow-hidden rounded-full bg-brand-100">
-                  <div className={`h-full rounded-full bg-brand-gradient transition-all ${progressWidth}`} />
-                </div>
-              </div>
-              <div className="space-y-5">
-                {questionsDisplay.map((q, i) => (
-                  <div key={i} className="flex items-start gap-4">
-                    <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand-100 text-xs font-bold text-brand-blue">
-                      {i + 1}
-                    </span>
-                    <div className="flex-1">
-                      <p className="mb-2 text-sm text-gray-700">{q}</p>
-                      <Select
-                        value={answers[i] ?? ""}
-                        onValueChange={(v) => setAnswers({ ...answers, [i]: v })}
-                        required
-                      >
-                        <SelectTrigger className="rounded-lg">
-                          <SelectValue placeholder="Select your answer" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {answerEntries.map(([answer]) => (
-                            <SelectItem key={answer} value={answer}>
-                              {locale === "ar" ? answer : ANSWER_LABELS[answer as keyof typeof ANSWER_LABELS]}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="flex justify-center">
-              <Button type="submit" variant="gradient" className="rounded-full px-12 py-3 text-base font-semibold" disabled={submitting}>
-                {submitting ? "Submitting..." : t("submit")}
-              </Button>
-            </div>
-          </form>
-        )}
+    <section className="container py-16 md:py-20">
+      <div className="mb-10 flex flex-wrap justify-center gap-3">
+        {tabs.map((tab) => (
+          <button
+            key={tab.key}
+            type="button"
+            onClick={() => setActiveTab(tab.key)}
+            className={`rounded-full px-6 py-3 text-sm font-semibold transition ${
+              activeTab === tab.key ? "bg-brand-gradient text-white shadow-[0_8px_18px_rgba(0,153,168,0.18)]" : "border border-brand-100 bg-white text-[#42526b]"
+            }`}
+          >
+            {isAr ? tab.labelAr : tab.label}
+          </button>
+        ))}
       </div>
-    </>
+
+      <div className="mb-12 text-center">
+        <h1 className="gradient-text text-[34px] font-semibold">{t("heading")}</h1>
+        <p className="mx-auto mt-4 max-w-2xl text-[18px] leading-8 text-[#42526b]">
+          Title Of The Question Will Be Here
+        </p>
+      </div>
+
+      <div className="relative">
+        <div className="grid gap-6 lg:grid-cols-3">
+          {visibleQuestions.map((question, index) => {
+            const key = `${activeTab}-${index}`;
+            return (
+              <article key={key} className="figma-card min-h-[390px] p-6">
+                <div className="mb-8 flex items-center justify-between">
+                  <span className="rounded-full border border-brand-teal px-4 py-1 text-xs font-semibold text-brand-teal">
+                    Question {index + 1}
+                  </span>
+                  <div className="flex gap-2">
+                    <button type="button" onClick={() => setAnswers((current) => ({ ...current, [key]: false }))} className={`flex h-9 w-9 items-center justify-center rounded-full ${answers[key] === false ? "bg-red-500 text-white" : "bg-red-50 text-red-500"}`} aria-label="No">
+                      <X className="h-4 w-4" />
+                    </button>
+                    <button type="button" onClick={() => setAnswers((current) => ({ ...current, [key]: true }))} className={`flex h-9 w-9 items-center justify-center rounded-full ${answers[key] === true ? "bg-green-500 text-white" : "bg-green-50 text-green-500"}`} aria-label="Yes">
+                      <Check className="h-4 w-4" />
+                    </button>
+                  </div>
+                </div>
+                <h2 className="text-[22px] font-semibold leading-8 text-[#061c3d]">{question}</h2>
+                <div className="mt-10 flex h-[160px] items-center justify-center rounded-[20px] bg-brand-50 text-brand-teal">
+                  <span className="text-[54px] font-semibold">{index + 1}</span>
+                </div>
+              </article>
+            );
+          })}
+        </div>
+        <div className="mt-10 flex justify-center gap-3">
+          <button className="flex h-11 w-11 items-center justify-center rounded-full border border-brand-100 bg-white text-brand-teal shadow-sm" aria-label="Previous question">
+            <ChevronLeft className="h-5 w-5" />
+          </button>
+          <button className="flex h-11 w-11 items-center justify-center rounded-full bg-brand-teal text-white shadow-sm" aria-label="Next question">
+            <ChevronRight className="h-5 w-5" />
+          </button>
+        </div>
+      </div>
+
+      <div className="mt-12 flex justify-center">
+        <Button onClick={handleDone} disabled={submitting} className="rounded-full bg-brand-gold px-12 text-white hover:bg-brand-gold/90">
+          {submitting ? "Submitting..." : "Done"}
+        </Button>
+      </div>
+    </section>
   );
 }
